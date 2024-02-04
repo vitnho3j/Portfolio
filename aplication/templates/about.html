@@ -1,0 +1,105 @@
+{%load static %}
+<html>
+    <head>
+        <title>Vitor Daniel - About</title>
+        <link href="{% static 'css/style.css' %}" rel="stylesheet"/> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;500&family=Poppins:wght@100;500&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="left">
+            <img class="me" src="{% static 'assets/me.png' %}">
+        </div>
+
+        <div class="rightPages">
+            <ul class="menu" id="toggleMenu">
+                <a href="/" class="menuIcons"><li class="icon1"><ion-icon name="home-outline"></ion-icon></li></a>
+                <a href="about" class="menuIcons"><li class="icon2"><ion-icon name="person-outline"></ion-icon></li></a>
+                <a href="portfolio" class="menuIcons"><li class="icon3"><ion-icon name="folder-outline"></ion-icon></li></a>
+                <a href="contact" class="menuIcons"><li class="icon4"><ion-icon name="reader-outline"></ion-icon></li></a>
+            </ul>
+            <div class="containerAbout">
+                <div class="titleWhoAbout">
+                    <p>Who am i ?</p>
+                </div>
+                <div class="description">
+                    {{profile.description | safe}}
+                </div>
+            </div>
+            <div class="interests">
+                <div class="interestsTitle">
+
+                    <p>Some of my strong points</p>
+
+                </div>
+                <ul class="interestsUl">
+                    {% for quality in profile.qualities.all %}
+                    <li><ion-icon name="{{quality.icon}}"></ion-icon>{{quality.name}}</li>
+                    {% endfor %}
+                    <!-- <li><ion-icon name="happy-outline"></ion-icon>Friendly</li>
+                    <li><ion-icon name="book-outline"></ion-icon>Self-taught</li>
+                    <li><ion-icon name="people-outline"></ion-icon>Team work</li> -->
+                </ul>
+            </div>
+            <div class="skills">
+                <div class="languages">
+                    <p class="interestsTitle">Languages</p>
+                    <div class="containerTechnology">
+                        {% for technology in languages %}
+                            <div class="containerProgress">
+                                <b class="technologyName">{{technology.name}}</b>
+                                <div class="containerLogo">
+                                    <img class="imageBar" src="{{technology.image}}">
+                                    <div class="imageOverlay"></div>
+                                </div>
+                                <div class="verticalLine"></div>
+                                <div class="containerWave">
+                                    <div class="water_wave" style='--percentageNumber: {{ technology.percentage}}%'>
+                                    </div>
+                                    <div class="percentage">
+                                        <span>{{technology.percentage}}%</span>
+                                    </div>
+                                </div>
+                                <div class="reflexBar"></div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="frameworks">
+                    <p class="interestsTitle">Frameworks/Libs</p>
+                    <div class="containerTechnology">
+                        {% for item in frameworks_libs %}
+                        <div class="containerProgress">
+                            <b class="technologyName">{{item.name}}</b>
+                            <div class="containerLogo">
+                                <img class="imageBar" src="{{item.image}}">
+                                <div class="imageOverlay"></div>
+                            </div>
+                            <div class="verticalLine"></div>
+                            <div class="containerWave">
+                                <div class="water_wave" style="--percentageNumber: {{item.percentage}}%">
+                                </div>
+                                <div class="percentage">
+                                    <span>{{item.percentage}}%</span>
+                                </div>
+                            </div>
+                            <div class="reflexBar"></div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="curriculum">
+                <img class="curriculumIcon" src="{% static 'assets/curriculum.png' %}">
+                <div class="containerTextCurriculum">
+                    <h2 class="curriculumText">You can see my curriculum below</h2>
+                </div>
+                <a href="#" class="clickHere"><span></span>CLICK HERE !</a>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</html>

@@ -1,0 +1,40 @@
+{%load static %}
+<html>
+    <head>
+        <title>Vitor Daniel - Index</title>
+        <link href="{% static 'css/style.css' %}" rel="stylesheet"/> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;500&family=Poppins:wght@100&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="left">
+            <img class="me" src="{% static 'assets/me.png' %}">
+        </div>
+
+        <div class="right">
+            <ul class="menu" id="toggleMenu">
+                <a href="/" class="menuIcons"><li class="icon1"><ion-icon name="home-outline"></ion-icon></li></a>
+                <a href="about" class="menuIcons"><li class="icon2"><ion-icon name="person-outline"></ion-icon></li></a>
+                <a href="portfolio" class="menuIcons"><li class="icon3"><ion-icon name="folder-outline"></ion-icon></li></a>
+                <a href="contact" class="menuIcons"><li class="icon4"><ion-icon name="reader-outline"></ion-icon></li></a>
+            </ul>
+            <div class="name">
+                <h1 class="partOne">Hi there !</h1>
+                <h1 class="partTwo">I'm Vitor Daniel</h1>
+                <div class="qualification">
+                    <p class="partThree">A Brazilian Software Engineer</p>
+                </div>
+            </div>
+            <div class="welcome" id="welcome">
+                <h3 class="partFour">Welcome to my little space</h3>
+            </div>
+        </div>
+    </body>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="{% static 'js/toggleMenu.js' %}"></script>
+    <script src="{% static 'js/typingAnimation.js' %}"></script>
+    <script src="{% static 'js/welcomeAnimationRepeat.js' %}"
+</html>
