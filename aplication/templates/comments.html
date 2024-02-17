@@ -1,0 +1,91 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Vitor Daniel - Comments</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet"/> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;500&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+<body>
+    <div id="fade" class="hide"></div>
+    <div id="info-profile" class="hide">
+        <div class="container-profile-information">
+            <div class="profile-information">
+                <p id="close-info">X</p>
+                <div class="profile-socials">
+                    <a href="#"><ion-icon name="logo-github"></ion-icon></a>
+                    <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
+                    <a href="#"><ion-icon name="logo-linkedin"></ion-icon></a>
+                    <a href="#"><ion-icon name="logo-instagram"></ion-icon></a>
+                </div>
+                <img src="{% static 'assets/man3.jpeg' %}" class="profile-information-image">
+                <div>
+                    <h1>Gary Johnson</h1>
+                    <h2>Software Engineer</h2>
+                </div>
+                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+            </div>
+        </div>
+    </div>
+    <div class="left">
+        <img class="me" src="{% static 'assets/me.png' %}">
+    </div>
+
+    <div class="rightPages" id="comments">
+        <ul class="menu" id="toggleMenu">
+            <a href="{% url 'index' %}" class="menuIcons"><li class="icon1"><ion-icon name="home-outline"></ion-icon></li></a>
+            <a href="{% url 'about' %}" class="menuIcons"><li class="icon2"><ion-icon name="person-outline"></ion-icon></li></a>
+            <a href="{% url 'portfolio' %}" class="menuIcons"><li class="icon3"><ion-icon name="folder-outline"></ion-icon></li></a>
+            <a href="{% url 'testimonials' %}" class="menuIcons"><li class="icon4"><ion-icon name="chatbubbles-outline"></ion-icon></li></a>
+            <a href="{% url 'contact' %}" class="menuIcons"><li class="icon4"><ion-icon name="reader-outline"></ion-icon></li></a>
+        </ul>
+        <div class="containerPortfolio">
+            <h1 class="titlePortfolio">Testimonials</h1>
+            <h4 class="subtitlePortfolio">Testimonials about me from people who already work with me</h4>
+        </div>
+        {% for comment in comments %}
+            <div class="testimonials">
+                <div class="testimonials-profile-image">
+                    {% if comment.profile.photo %}
+                        <img src="{{comment.profile.photo}}">
+                    {% else %}
+                        <img src="{% static 'assets/no-photo.png' %}">
+                    {% endif %}
+                </div>
+                <div class="testimonials-text">
+                    <p>{{comment.comment}}</p>
+                </div>
+                <div class="testimonials-base">
+                    <div class="testimonials-name-occupation">
+                        <p class="testimonials-name">{{ comment.profile.user.first_name|safe }} {{ comment.profile.user.last_name|safe }}</p>
+                        <p class="occupation">{{comment.profile.occupation.name | safe}}</p>
+                    </div>
+                    <div class="testimonials-info-person">
+                        <p class="who">Who is this person ?</p>
+                        <a href="#">
+                            <ion-icon
+                            id="open-info-{{comment.id}}"
+                            onclick="getIdClicked('{{comment.id}}')"
+                            name="information-circle-outline"
+                            socials="{{comment.profile.medias.all|join:', '}}"
+                            profile-name="{{comment.profile.name}}"
+                            occupation="{{comment.profile.occupation}}"
+                            description="{{comment.profile.description}}"
+                            photo="{{comment.profile.photo}}"
+                        ></ion-icon></a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+        
+</body>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script src="{% static 'js/toggleProfile.js' %}" defer></script>
+</html>

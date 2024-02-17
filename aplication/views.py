@@ -1,6 +1,6 @@
 from typing import Any
 from django.views.generic import TemplateView
-from .models import Project, ProfileSocialMedia, Profile, Technology
+from .models import Project, ProfileSocialMedia, Profile, Technology, Comment
 
 class IndexView(TemplateView):
     template_name = 'index.html'
@@ -31,3 +31,12 @@ class ContactView(TemplateView):
         context = super(ContactView, self).get_context_data(**kwargs)
         context['contacts'] = ProfileSocialMedia.objects.filter(profile = 1)
         return context
+    
+class CommentsView(TemplateView):
+    template_name = 'comments.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CommentsView, self).get_context_data(**kwargs)
+        context['comments'] = Comment.objects.all()
+        return context
+    

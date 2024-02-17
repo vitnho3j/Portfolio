@@ -35,12 +35,24 @@ class Qualities(models.Model):
         verbose_name = 'Qualitie'
         verbose_name_plural = 'Qualities'
 
+
+class Occupation(models.Model):
+    name = models.CharField("Name of Occupation", max_length=50)
+    description = models.CharField("Description of Occupation", max_length=500)
+
+    def __str__(self):
+        return self.name
+    
+    class Meta:
+        verbose_name = 'Occupation'
+        verbose_name_plural = 'Occupations'
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     description = RichTextField()
     photo = StdImageField('Photo', null=True, blank=True, upload_to=get_file_path, variations={'thumb':{'width':480, 'height': 480, 'crop':True}})
-    qualities = models.ManyToManyField(Qualities)
-
+    qualities = models.ManyToManyField(Qualities, blank=True)
+    occupation = models.ForeignKey(Occupation, related_name="professionals", on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
         return self.user.username

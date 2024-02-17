@@ -1,7 +1,11 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 
-from .models import Profile, SocialMedia, ProfileSocialMedia, Category, Comment, Technology, Project, TypesTechnology, Qualities
+from .models import Profile, SocialMedia, ProfileSocialMedia, Category, Comment, Technology, Project, TypesTechnology, Qualities, Occupation
+
+@admin.register(Occupation)
+class OcuppationAdmin(admin.ModelAdmin):
+    list_display = ["name", "description"]
 
 @admin.register(Qualities)
 class QualitiesAdmin(admin.ModelAdmin):
@@ -44,7 +48,7 @@ class ProfileInline(admin.StackedInline):
 
 class UserAdmin(admin.ModelAdmin):
     model = User
-    fields = ['username', 'first_name', 'password']
+    fields = ['username', 'first_name', 'password', 'last_name']
     list_display = ['username', 'first_name']
     inlines = [ProfileInline]
 

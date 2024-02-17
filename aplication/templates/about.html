@@ -15,10 +15,11 @@
 
         <div class="rightPages">
             <ul class="menu" id="toggleMenu">
-                <a href="/" class="menuIcons"><li class="icon1"><ion-icon name="home-outline"></ion-icon></li></a>
-                <a href="about" class="menuIcons"><li class="icon2"><ion-icon name="person-outline"></ion-icon></li></a>
-                <a href="portfolio" class="menuIcons"><li class="icon3"><ion-icon name="folder-outline"></ion-icon></li></a>
-                <a href="contact" class="menuIcons"><li class="icon4"><ion-icon name="reader-outline"></ion-icon></li></a>
+                <a href="{% url 'index' %}" class="menuIcons"><li class="icon1"><ion-icon name="home-outline"></ion-icon></li></a>
+                <a href="{% url 'about' %}" class="menuIcons"><li class="icon2"><ion-icon name="person-outline"></ion-icon></li></a>
+                <a href="{% url 'portfolio' %}" class="menuIcons"><li class="icon3"><ion-icon name="folder-outline"></ion-icon></li></a>
+                <a href="{% url 'testimonials' %}" class="menuIcons"><li class="icon4"><ion-icon name="chatbubbles-outline"></ion-icon></li></a>
+                <a href="{% url 'contact' %}" class="menuIcons"><li class="icon4"><ion-icon name="reader-outline"></ion-icon></li></a>
             </ul>
             <div class="containerAbout">
                 <div class="titleWhoAbout">
@@ -38,9 +39,6 @@
                     {% for quality in profile.qualities.all %}
                     <li><ion-icon name="{{quality.icon}}"></ion-icon>{{quality.name}}</li>
                     {% endfor %}
-                    <!-- <li><ion-icon name="happy-outline"></ion-icon>Friendly</li>
-                    <li><ion-icon name="book-outline"></ion-icon>Self-taught</li>
-                    <li><ion-icon name="people-outline"></ion-icon>Team work</li> -->
                 </ul>
             </div>
             <div class="skills">
