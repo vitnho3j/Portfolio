@@ -17,11 +17,8 @@
         <div class="container-profile-information">
             <div class="profile-information">
                 <p id="close-info">X</p>
-                <div class="profile-socials">
-                    <a href="#"><ion-icon name="logo-github"></ion-icon></a>
-                    <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
-                    <a href="#"><ion-icon name="logo-linkedin"></ion-icon></a>
-                    <a href="#"><ion-icon name="logo-instagram"></ion-icon></a>
+                <div class="profile-socials" id="profile-socials">
+                    
                 </div>
                 <img src="{% static 'assets/man3.jpeg' %}" class="profile-information-image" id="profile-information-image">
                 <div id="person">
@@ -72,7 +69,7 @@
                             id="open-info-{{comment.id}}"
                             onclick="getIdClicked('{{comment.id}}')"
                             name="information-circle-outline"
-                            socials="{{comment.profile.medias.all|join:', '}}"
+                            socials="{% for media in comment.profile.medias.all %}{{ media.identification }}, {{media.social_media.icon}}, {{media.is_link}}{% if not forloop.last %}, {% endif %}{% endfor %}"
                             profile-name="{{comment.profile.user.first_name}} {{comment.profile.user.last_name}}"
                             occupation="{{comment.profile.occupation}}"
                             description="{{comment.profile.description}}"
