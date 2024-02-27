@@ -75,6 +75,11 @@
     font-size: 2rem;
 }
 
+.contianer-project{
+    overflow-y: auto;
+    height: 100%;
+}
+
 
 .profile-information img{
     align-content: center;
@@ -115,26 +120,22 @@
     grid-area: name-project-info;
 }
 
-.container-profile-information{
-    color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: 'Poppins', sans-serif;
-    overflow-y: auto;
-}
-
 .profile-information p{
     margin-top: 35px;
 }
 
 .profile-information{
+    position: fixed;
     width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
     /* padding: 30px; */
     gap: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 80%;
+    box-sizing: border-box;
 }
 
 .profile-information h2{
@@ -176,6 +177,19 @@
 
 .profile-information p{
     font-weight: 300;
+}
+
+.container-profile-information{
+    overflow-x: hidden;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 100%
+    
 }
 
 .container-project-information{

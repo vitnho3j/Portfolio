@@ -43,7 +43,6 @@ function getIdClicked(id){
       organized_socials.forEach(function(item){
         var a = document.createElement('a')
         var p = document.createElement('p')
-        console.log(item.Is_link)
         if(item.Is_link === true){
           a.href=`${item.Identification}`
           a.innerHTML=`<ion-icon name="${item.Icon}"</ion-icon>`;
