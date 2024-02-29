@@ -17,9 +17,13 @@
 
             <div class="container-profile-information">
                 <div class="profile-information">
-                    <p id="close-info">X</p>
+                    <div class="close-info">
+                        <p id="close-info">X</p>
+                    </div>
+                    <div class="open-links" id="open-links" onclick="toggleDiv()">
+                        <p>Show Contacts</p>
+                    </div>
                     <div class="profile-socials" id="profile-socials">
-                        
                     </div>
                     <img src="{% static 'assets/man3.jpeg' %}" class="profile-information-image" id="profile-information-image">
                     <div id="person">
@@ -48,7 +52,7 @@
             <h4 class="subtitlePortfolio">Testimonials about me from people who already work with me</h4>
         </div>
         {% for comment in comments %}
-            <div class="testimonials">
+            <div class="testimonials" id="testimonials">
                 <div class="testimonials-profile-image">
                     {% if comment.profile.photo %}
                         <img src="{{comment.profile.photo}}">
@@ -87,4 +91,5 @@
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script src="{% static 'js/toggleProfile.js' %}" defer></script>
+<script src="{% static 'js/openLinks.js' %}" defer></script>
 </html>
