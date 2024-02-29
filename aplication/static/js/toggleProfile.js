@@ -7,21 +7,26 @@ const profile_description = document.querySelector('#profile-description')
 const profile_image = document.querySelector('#profile-information-image')
 const profile_socials = document.querySelector("#profile-socials")
 const principal = document.querySelector(".rightPages#comments")
+const left = document.querySelector(".left#comments")
+const menu = document.querySelector(".menu#comments")
+var scrollPosition
 
 
 
 
 function getIdClicked(id){
     const openModalButton = document.querySelector(`#open-info-${id}`);
+    scrollPosition = window.scrollY;
     toggleModal(openModalButton)
   };
   
   const toggleModal = (openModalButton = null) => {
-    // var scrollPosition = document.querySelector('.rightPages').scrollTop;
-    // document.querySelector('.rightPages').scrollTop = scrollPosition;
-    // principal.scrollTop = scrollTopPosition;
     if (openModalButton) {
-      principal.style.height = "90px";
+      if (window.innerWidth < 1024){
+        principal.style.height = "90px";
+        left.style.display = "none";
+        menu.style.display = "none"
+      }
       person_name.innerHTML = openModalButton.getAttribute('profile-name')
       person_occupation.innerHTML = openModalButton.getAttribute('occupation')
       profile_description.innerHTML = openModalButton.getAttribute('description')
@@ -69,8 +74,11 @@ function getIdClicked(id){
       }
     } else {
       principal.style.height = "";
+      left.style.display = "flex";
+      menu.style.display = "flex"
     }
     [info, fade].forEach((el)=> el.classList.toggle("hide"))
+    window.scrollTo(0, scrollPosition);
   }
   
   [closeModalButton, fade].forEach((el) => {
