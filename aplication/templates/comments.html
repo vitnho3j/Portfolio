@@ -60,14 +60,14 @@
                         <img src="{% static 'assets/no-photo.png' %}">
                     {% endif %}
                 </div>
+                <div class="testimonials-name-occupation">
+                    <p class="testimonials-name">{{ comment.profile.user.first_name|safe }} {{ comment.profile.user.last_name|safe }}</p>
+                    <p class="occupation">{{comment.profile.occupation.name | safe}}</p>
+                </div>
                 <div class="testimonials-text">
                     <p>{{comment.comment}}</p>
                 </div>
                 <div class="testimonials-base">
-                    <div class="testimonials-name-occupation">
-                        <p class="testimonials-name">{{ comment.profile.user.first_name|safe }} {{ comment.profile.user.last_name|safe }}</p>
-                        <p class="occupation">{{comment.profile.occupation.name | safe}}</p>
-                    </div>
                     <div class="testimonials-info-person">
                         <p class="who">Who is this person ?</p>
                         <a href="#">
