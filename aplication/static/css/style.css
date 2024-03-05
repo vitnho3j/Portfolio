@@ -14,6 +14,40 @@
     --percentageNumber: 0%
 }
 
+::-webkit-scrollbar{
+    z-index: 30;
+    position: absolute;
+    width: .7vw;
+}
+
+::-webkit-scrollbar-track{
+    z-index: 30;
+    position: absolute;
+    background: hsl(256, 81%, 70%);
+    border-radius: 100vw;
+    margin-block: .5vw;
+}
+
+::-webkit-scrollbar-thumb{
+    z-index: 30;
+    position: absolute;
+    background: linear-gradient(#C67DCA, hsl(256, 81%, 60%));
+    border: .25vw solid hsl(256, 81%, 70%);;
+    border-radius: 100vw;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background: hsl(256, 81%, 50%);
+}
+
+@supports (scrollbar-color:red blue){
+    *{
+        scrollbar-color: hsl(256, 81%, 60%) hsl(256, 81%, 70%);
+        scrollbar-width: thin;
+    }
+}
+
+
 .occupation{
     font-weight: 100;
     color: gray;
@@ -812,9 +846,9 @@ body{
 
 .menu{
     position: fixed;
-    width: 50%;
+    width: 49.3%;
     display: flex;
-    top: 50; 
+    top: 50px; 
     height: 80px;
     align-items: center;
     gap: 8rem;
