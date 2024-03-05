@@ -76,6 +76,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "portfolio.wsgi.application"
 
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    # Adicione outros algoritmos de hash, se necessário
+]
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

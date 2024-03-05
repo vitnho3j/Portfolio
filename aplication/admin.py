@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 from .models import Profile, SocialMedia, ProfileSocialMedia, Category, Comment, Technology, Project, TypesTechnology, Qualities, Occupation
 
@@ -46,9 +47,8 @@ class ProfileInline(admin.StackedInline):
     model = Profile
     inlines = [SocialMediasInline]
 
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(BaseUserAdmin):
     model = User
-    fields = ['username', 'first_name', 'password', 'last_name']
     list_display = ['username', 'first_name']
     inlines = [ProfileInline]
 

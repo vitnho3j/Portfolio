@@ -1,6 +1,11 @@
 from typing import Any
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, View
 from .models import Project, ProfileSocialMedia, Profile, Technology, Comment
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from django.shortcuts import redirect
+from .models import User
+
 
 class IndexView(TemplateView):
     template_name = 'index.html'
@@ -39,4 +44,26 @@ class CommentsView(TemplateView):
         context = super(CommentsView, self).get_context_data(**kwargs)
         context['comments'] = Comment.objects.all()
         return context
+
+
+class LoginView(TemplateView):
+    template_name="login.html"
     
+    def post(self, request):
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            messages.success(request, ("You Have Been Logged In"))
+            return redirect('index')
+        else:
+            messages.error(request, ("Your username or password is incorrect, please try again"))
+            return redirect('login')
+
+
+class LogoutView(View):
+    def get(self, request):
+        logout(request)
+        messages.success(request, ("You have been logged out"))
+        return redirect('login')

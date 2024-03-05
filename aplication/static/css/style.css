@@ -132,16 +132,6 @@
     object-fit: cover;
 }
 
-.container-profile-image{
-    position: relative;
-    width: 100%;
-    background-color: green;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: 0;
-}
-
 .testimonials-profile-image{
     display: flex;
     align-items: center;
