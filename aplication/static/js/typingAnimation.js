@@ -13,7 +13,7 @@ function hiddenElement() {
 hiddenElement()
 
 function typeWrite(element, delay = 75){
-    const textArray = element.innerHTML.split('');
+    const textArray = element.textContent.trim().split('');
     element.innerHTML = ''
     element.style.display=''
     element.classList.add('blink-animation');
