@@ -1,97 +1,77 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Vitor Daniel - Portfolio</title>
-    <link href="{% static 'css/style.css' %}" rel="stylesheet"/> 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;500&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
-    <title>Document</title>
-</head>
-<body>
-    <div id="fade" class="hide"></div>
-    <div id="info-project" class="hide">
-        <div class="container-project">
-            <div class="container-project-information">
-                <p id="close-info">X</p>
-                <h1 class="name-project-info" id="name-project-info"></h1>
-                <div class="container-project-image">
-                    <img src="{{project.photo.url}}" class="project-image" id="project-image"/>
+{% extends 'base.html' %}
+{%load static %}
+
+{% block title %} Vitor Daniel - Portfolio {% endblock %}
+{% block right %}rightPages{% endblock %}
+{% block content %}
+<div id="fade" class="hide"></div>
+<div id="info-project" class="hide">
+    <div class="container-project">
+        <div class="container-project-information">
+            <p id="close-info">X</p>
+            <h1 class="name-project-info" id="name-project-info"></h1>
+            <div class="container-project-image">
+                <img src="{{project.photo.url}}" class="project-image" id="project-image"/>
+            </div>
+            <div class="container-project-description">
+                <div class="container-project-information-right">
+                    <h2 class="project-information">Project Information</h2>
+                    <p class="project-info topic" id="category">Category: <p class="project-info" id="content"></p></p>
+                    <p class="project-info topic" id="demo">Demo: <a class="project-info" id="content" href="#" target="_blank"></a></p>
                 </div>
-                <div class="container-project-description">
-                    <div class="container-project-information-right">
-                        <h2 class="project-information">Project Information</h2>
-                        <p class="project-info topic" id="category">Category: <p class="project-info" id="content"></p></p>
-                        <p class="project-info topic" id="demo">Demo: <a class="project-info" id="content" href="#" target="_blank"></a></p>
-                    </div>
-                    <p class="project-description" id="project-description"></p>
-                    <div class="container-project-technology">
-                        <p class="project-info" id="topic">Technologies</p>
-                        <div class="project-technology" id="project-technology">
-                        </div>
+                <p class="project-description" id="project-description"></p>
+                <div class="container-project-technology">
+                    <p class="project-info" id="topic">Technologies</p>
+                    <div class="project-technology" id="project-technology">
                     </div>
                 </div>
-                <div class="container-project-images" id="project-text">
-                </div>
+            </div>
+            <div class="container-project-images" id="project-text">
             </div>
         </div>
     </div>
-    <div class="left">
-        <img class="me" src="{% static 'assets/me.png' %}">
-    </div>
+</div>
 
-    <div class="rightPages">
-        <ul class="menu" id="toggleMenu">
-            <a href="{% url 'index' %}" class="menuIcons"><li class="icon1"><ion-icon name="home-outline"></ion-icon></li></a>
-            <a href="{% url 'about' %}" class="menuIcons"><li class="icon2"><ion-icon name="person-outline"></ion-icon></li></a>
-            <a href="{% url 'portfolio' %}" class="menuIcons"><li class="icon3"><ion-icon name="folder-outline"></ion-icon></li></a>
-            <a href="{% url 'testimonials' %}" class="menuIcons"><li class="icon4"><ion-icon name="chatbubbles-outline"></ion-icon></li></a>
-            <a href="{% url 'contact' %}" class="menuIcons"><li class="icon4"><ion-icon name="reader-outline"></ion-icon></li></a>
-        </ul>
-        <div class="containerPortfolio">
-            <h1 class="titlePortfolio">Portfolio</h1>
-            <h4 class="subtitlePortfolio">A little of what i can do</h4>
-        </div>
-        <div class="containerProjects">
-            {% if projects %}
-                {% for project in projects %}
-                    <div class="project" id="{{project.id}}">
-                        <p class="demo">DEMO</p>
-                        <img src="{{project.photo.url }}" class="projectThumb" alt="{{project.name}}">
-                        <div class="projectInfo">
-                            <div class="containerNameProject">
-                                <h1 class="nameProject">{{project.name}}</h1>
-                                <p class="projectCategory">{{project.category}}</p>
-                            </div>
-                            <div class="containerThumbButtons">
-                                <a href="#">
-                                    <ion-icon 
-                                    name="information-circle-outline" 
-                                    class="projectButtons" 
-                                    id="open-info-{{project.id}}"
-                                    category="{{project.category}}"
-                                    link="{{project.link}}"
-                                    description="{{project.description}}"
-                                    name-project="{{project.name}}"
-                                    text="{{project.text}}"
-                                    onclick="getIdClicked('{{project.id}}')"
-                                    image="{{project.photo.url }}"
-                                    technologys="{{ project.technology.all|join:', ' }}"
-                                    >
-                                </ion-icon>
-                            </a>
-                            </div>
-                        </div>
+<div class="containerPortfolio">
+    <h1 class="titlePortfolio">Portfolio</h1>
+    <h4 class="subtitlePortfolio">A little of what i can do</h4>
+</div>
+<div class="containerProjects">
+    {% if projects %}
+        {% for project in projects %}
+            <div class="project" id="{{project.id}}">
+                <p class="demo">DEMO</p>
+                <img src="{{project.photo.url }}" class="projectThumb" alt="{{project.name}}">
+                <div class="projectInfo">
+                    <div class="containerNameProject">
+                        <h1 class="nameProject">{{project.name}}</h1>
+                        <p class="projectCategory">{{project.category}}</p>
                     </div>
-                {% endfor %}
-            {% endif %}
-        </div>
-    </div>
-</body>
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+                    <div class="containerThumbButtons">
+                        <a href="#">
+                            <ion-icon 
+                            name="information-circle-outline" 
+                            class="projectButtons" 
+                            id="open-info-{{project.id}}"
+                            category="{{project.category}}"
+                            link="{{project.link}}"
+                            description="{{project.description}}"
+                            name-project="{{project.name}}"
+                            text="{{project.text}}"
+                            onclick="getIdClicked('{{project.id}}')"
+                            image="{{project.photo.url }}"
+                            technologys="{{ project.technology.all|join:', ' }}"
+                            >
+                        </ion-icon>
+                    </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+</div>
+{% endblock %}
+{% block scripts %}
 <script src="{% static 'js/toggleMenu.js' %}" defer></script>
-</html>
+{% endblock %}

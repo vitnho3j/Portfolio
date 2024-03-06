@@ -1,6 +1,7 @@
-*{
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 *,*::after,*before{
@@ -14,39 +15,41 @@
     --percentageNumber: 0%
 }
 
-::-webkit-scrollbar{
-    z-index: 30;
-    position: absolute;
-    width: .7vw;
-}
+@media only screen and (min-width:1024px) {
 
-::-webkit-scrollbar-track{
-    z-index: 30;
-    position: absolute;
-    background: hsl(256, 81%, 70%);
-    border-radius: 100vw;
-    margin-block: .5vw;
-}
+    ::-webkit-scrollbar{
+        z-index: 30;
+        position: absolute;
+        width: .7vw;
+    }
 
-::-webkit-scrollbar-thumb{
-    z-index: 30;
-    position: absolute;
-    background: linear-gradient(#C67DCA, hsl(256, 81%, 60%));
-    border: .25vw solid hsl(256, 81%, 70%);;
-    border-radius: 100vw;
-}
+    ::-webkit-scrollbar-track{
+        z-index: 30;
+        position: absolute;
+        background: hsl(256, 81%, 70%);
+        border-radius: 100vw;
+        margin-block: .5vw;
+    }
 
-::-webkit-scrollbar-thumb:hover{
-    background: hsl(256, 81%, 50%);
-}
+    ::-webkit-scrollbar-thumb{
+        z-index: 30;
+        position: absolute;
+        background: linear-gradient(#C67DCA, hsl(256, 81%, 60%));
+        border: .25vw solid hsl(256, 81%, 70%);;
+        border-radius: 100vw;
+    }
 
-@supports (scrollbar-color:red blue){
-    *{
-        scrollbar-color: hsl(256, 81%, 60%) hsl(256, 81%, 70%);
-        scrollbar-width: thin;
+    ::-webkit-scrollbar-thumb:hover{
+        background: hsl(256, 81%, 50%);
+    }
+
+    @supports (scrollbar-color:red blue){
+        *{
+            scrollbar-color: hsl(256, 81%, 60%) hsl(256, 81%, 70%);
+            scrollbar-width: thin;
+        }
     }
 }
-
 
 .occupation{
     font-weight: 100;
@@ -512,7 +515,7 @@ a.project-info{
 .subtitlePortfolio{
     color: #111;
     font-size: 1.7rem;
-    font-weight: 100; 
+    font-weight: 300; 
 }
 
 .linkContact{
@@ -559,7 +562,7 @@ a.linkContact{
     text-align: center;
     color: #000000;
     font-size: 1.7rem;
-    font-weight: 100;
+    font-weight: 300;
     margin-top: 20px;
 }
 
@@ -769,7 +772,7 @@ body{
     align-items: center;
     justify-content: center;
     gap: 5rem;
-    height: 100%;
+    height: 100vh;
     overflow-y: auto;
 }
 
@@ -801,7 +804,7 @@ body{
 
 .name{
     width: 100%;
-    font-size:xx-large;
+    font-size:2rem;
     text-align: left;
     color: #7844E9;
     font-family: 'Inter', sans-serif;
@@ -809,7 +812,7 @@ body{
 
 .qualification{
     width: 100%;
-    font-size: 2rem;
+    font-size: 1.8rem;
     text-align: left;
     font-family: 'Inter', sans-serif;
     font-weight: 200;
@@ -820,7 +823,7 @@ body{
     align-self: flex-start;
     display: flex;
     flex-direction: column;
-    font-size: medium;
+    font-size: 1rem;
     font-family: 'Poppins', sans-serif;
     height: 50px;
     color: #FFFFFF;
@@ -831,6 +834,7 @@ body{
     width: 80%;
     animation: welcome 1s linear;
     text-shadow: 0 0 10px #FFFFFF;
+    font-weight: 300;
 }
 
 
@@ -1295,6 +1299,15 @@ body{
     .technology-type{
         font-size: .8rem;
     }
+    .name{
+        font-size:1.5rem;
+    }
+    .titlePortfolio{
+        font-size:3rem;
+    }
+    .subtitlePortfolio{
+        font-size: 1.2rem;
+    }
 }
 
 @media only screen and (max-width:1350px){
@@ -1343,6 +1356,10 @@ body{
     
     a.linkContact{
         text-align: center;
+    }
+
+    .containerPortfolio{
+        margin-top: 2rem;
     }
     
     .container-project-information{
@@ -1444,16 +1461,24 @@ body{
         overflow-y: auto;
     }
     .name{
-        font-size:large;
         text-align: center;
     }
+    .partOne{
+        margin-top: 5px;
+        font-size: 2rem;
+    }
+    .partTwo{
+        margin-top: 5px;
+        font-size: 1.9rem;
+    }
     .qualification{
-        font-size: 1em;
+        margin-top: 5px;
+        font-size: 1.2rem;
         text-align: center;
     }
     .welcome{
         align-self: center;
-        font-size:small;
+        font-size:.8rem;
     }
     .me{
         margin: 0;
@@ -1469,6 +1494,9 @@ body{
         justify-content: flex-start;
         justify-content: center;
         height: 50%;
+    }
+    .right#index{
+        gap: 2rem;
     }
     .profile-socials{
         display: none;
@@ -1525,12 +1553,6 @@ body{
 }
 
 @media only screen and (max-width:520px) {
-    .title1Contact{
-        font-size: .8rem;
-    }
-    .title2Contact{
-        font-size: .8rem;
-    }
     .containerContacts{
         font-size: .8rem;
     }
@@ -1546,6 +1568,30 @@ body{
 }
 
 @media only screen and (max-width:350px) {
+    .welcome{
+        align-self: center;
+        font-size:.7rem;
+    }
+    .qualification{
+        font-size: 1.1rem;
+    }
+    .partOne{
+        font-size: 2rem;
+    }
+    .partTwo{
+        font-size: 1.2rem;
+    }
+    
+    .right#index{
+        gap: 1rem;
+    }
+
+    .title1Contact{
+        font-size: 1.4rem;
+    }
+    .title2Contact{
+        font-size: 1.3rem;
+    }
     .menu{
         margin-right: 0;
     }
