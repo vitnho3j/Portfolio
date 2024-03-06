@@ -11,6 +11,7 @@
     <body>
         <div class="left">
             <img class="me" src="{% static 'assets/me.png' %}">
+            <div class="gtranslate_wrapper"></div>
         </div>
 
         <div class="right">
@@ -22,14 +23,14 @@
                 <a href="{% url 'contact' %}" class="menuIcons"><li class="icon4"><ion-icon name="reader-outline"></ion-icon></li></a>
             </ul>
             <div class="name">
-                <h1 class="partOne">Hi there !</h1>
-                <h1 class="partTwo">I'm Vitor Daniel</h1>
+                <h1 class="partOne">Olá !</h1>
+                <h1 class="partTwo">Meu nome é Vitor Daniel</h1>
                 <div class="qualification">
-                    <p class="partThree">A Brazilian Software Engineer</p>
+                    <p class="partThree">Um engenheiro de software brasileiro</p>
                 </div>
             </div>
             <div class="welcome" id="welcome">
-                <h3 class="partFour">Welcome to my little space</h3>
+                <h3 class="partFour">Bem vindo ao meu pequeno espaço</h3>
             </div>
         </div>
     </body>
@@ -37,5 +38,7 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="{% static 'js/toggleMenu.js' %}"></script>
     <script src="{% static 'js/typingAnimation.js' %}"></script>
-    <script src="{% static 'js/welcomeAnimationRepeat.js' %}"
+    <script src="{% static 'js/welcomeAnimationRepeat.js' %}"></script>
+    <script>window.gtranslateSettings = {"default_language":"pt","languages":["pt","en"],"wrapper_selector":".gtranslate_wrapper","alt_flags":{"en":"usa","pt":"brazil"}}</script>
+    <script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
 </html>
