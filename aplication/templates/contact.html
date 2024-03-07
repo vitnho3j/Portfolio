@@ -4,22 +4,23 @@
 {% block title %} Vitor Daniel - Contact {% endblock %}
 {% block right %}rightPages{% endblock %}
 {% block content %}
-<div class="titleContact">
-    <h2 class="title1Contact">Let's Solve Some Problems Together ?</h2>
-    <h4 class="title2Contact">Find me in one of these channels</h4>
-</div>
-<div class="containerContacts">
-    {% for contact in contacts %}
-        <div class="contactItens">
-            <ion-icon name="{{contact.social_media.icon}}" class="iconContact"></ion-icon>
-            <p>{{contact.social_media.name}}: </p>
-            {% if contact.is_link %}
-                <a href="{{contact.identification}}" class="linkContact" target="_blank">Click here</a>
-            {% else %}
-                <p class="linkContact">{{contact.identification}}</p></p>
-            {% endif %}
-        </div>
-    {% endfor %}
-</div>
+<div class="rightPages">
+    <div class="titleContact">
+        <h2 class="title1Contact">Vamos resolver alguns problemas juntos ?</h2>
+        <h4 class="title2Contact">Me encontre em alguns destes canais</h4>
+    </div>
+    <div class="containerContacts">
+        {% for contact in contacts %}
+            <div class="contactItens">
+                <ion-icon name="{{contact.social_media.icon}}" class="iconContact"></ion-icon>
+                <p>{{contact.social_media.name}}: </p>
+                {% if contact.is_link %}
+                    <a href="{{contact.identification}}" class="linkContact" target="_blank">Clique aqui</a>
+                {% else %}
+                    <p class="linkContact">{{contact.identification}}</p></p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

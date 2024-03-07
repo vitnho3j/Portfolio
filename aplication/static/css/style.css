@@ -562,7 +562,7 @@ a.linkContact{
     text-align: center;
     color: #7844E9;
     font-size: 2.3rem;
-    margin-top: 10rem;
+    margin-top: 20px;
     text-transform: uppercase;
 }
 
@@ -571,7 +571,7 @@ a.linkContact{
     color: #000000;
     font-size: 1.7rem;
     font-weight: 300;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .titleContact{
@@ -1459,16 +1459,7 @@ body{
     }
 
     .titleContact{
-        gap: 0;
-        margin-top: 10px;
-    }
-
-    .title1Contact{
-        margin-top: 30px;
-    }
-
-    .title2Contact{
-        margin-top: 30px;
+        gap: 10px;
     }
 
     .menu {
@@ -1611,6 +1602,7 @@ body{
 }
 
 @media only screen and (max-width:350px) {
+    
     .profile-description{
         word-break: break-all;
     }
@@ -1644,12 +1636,13 @@ body{
         gap: 1rem;
     }
 
-    .title1Contact{
-        font-size: 1.4rem;
+    /* .title1Contact{
+        font-size: .8rem;
     }
+
     .title2Contact{
-        font-size: 1.3rem;
-    }
+        font-size: .8rem;
+    } */
     .menu{
         margin-right: 0;
     }
