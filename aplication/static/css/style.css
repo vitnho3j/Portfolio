@@ -67,8 +67,9 @@
     justify-content: space-between;
     max-width: 80vh;
     width: 80%;
-    min-height: 350px;
+    min-height: 385px;
     font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
 }
 
 .testimonials-name{
@@ -89,6 +90,8 @@
     justify-content: space-between;
     align-items: center;
     justify-content: center;
+    box-sizing: border-box;
+
 }
 
 
@@ -99,13 +102,14 @@
 }
 
 .testimonials-info-person{
-    align-self:flex-end;
-    text-align: center;
+    margin-top: 10px;
     color: #7844E9;
     display: flex;
+    align-items: center;
     flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
+    justify-content: center;
+    max-height: 50px;
+    width: 100%;
 }
 
 .who{
@@ -312,6 +316,10 @@
     word-wrap:break-word;
     overflow-wrap:break-work;
     color:#03bcf4;
+}
+
+.person h2{
+    font-weight: 300;
 }
 
 .image-description{
@@ -1603,6 +1611,15 @@ body{
 }
 
 @media only screen and (max-width:350px) {
+    .profile-description{
+        word-break: break-all;
+    }
+    .testimonials-name{
+        font-size: 1rem;
+    }
+    .who{
+        font-size: .7rem;
+    }
     .name-project-profile{
         font-size: 1.3rem;
     }
@@ -1649,5 +1666,14 @@ body{
     }
     .project-information{
         font-size: 1.1rem;
+    }
+    .testimonials-text{
+        font-size: .8rem
+    }
+    .occupation{
+        font-size: .8rem;
+    }
+    .person h1{
+        font-size: 1.5rem;
     }
 }
