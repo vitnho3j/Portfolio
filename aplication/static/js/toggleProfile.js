@@ -63,24 +63,41 @@ function cleanProfile(){
   profile_socials.innerHTML=''
 }
 
+function appendProfileSocials(item = null){
+  profile_socials.appendChild(item)
+}
+
+function createLink(item = null){
+  var a = document.createElement('a')
+  a.href=`${item.Identification}`
+  a.innerHTML=`<ion-icon name="${item.Icon}"</ion-icon>`;
+  a.target = '_blank'
+  appendProfileSocials(a)
+}
+
+function appendDivChild(div, element = null){
+  div.appendChild(element)
+}
+
+function createSocialNoLink(item = null){
+  var a = document.createElement('a')
+  var p = document.createElement('p')
+  var div = document.createElement('div')
+  a.innerHTML=`<ion-icon name="${item.Icon}"><p>${item.Identification}</p></ion-icon>`;
+  p.innerHTML=`${item.Identification}`
+  div.classList.add("profile-not-link")
+  appendDivChild(div, a)
+  appendDivChild(div, p)
+  appendProfileSocials(div)
+}
+
 function appendSocials(organized_socials = null){
   cleanProfile()
   organized_socials.forEach(function(item){
-    var a = document.createElement('a')
-    var p = document.createElement('p')
-    var div = document.createElement('div')
     if(item.Is_link === true){
-      a.href=`${item.Identification}`
-      a.innerHTML=`<ion-icon name="${item.Icon}"</ion-icon>`;
-      a.target = '_blank'
-      profile_socials.appendChild(a)
+      createLink(item)
     } else {
-      a.innerHTML=`<ion-icon name="${item.Icon}"><p>${item.Identification}</p></ion-icon>`;
-      p.innerHTML=`${item.Identification}`
-      div.classList.add("profile-not-link")
-      div.appendChild(a)
-      div.appendChild(p)
-      profile_socials.appendChild(div)
+      createSocialNoLink(item)
     }
   })
 }

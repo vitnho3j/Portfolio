@@ -21,7 +21,7 @@
                         <p id="close-info">X</p>
                     </div>
                     <div class="open-links" id="open-links" onclick="toggleDiv()">
-                        <p>Mostrar Contatos</p>
+                        <p>Show Contacts</p>
                     </div>
                     <div class="profile-socials" id="profile-socials">
                     </div>
@@ -48,9 +48,9 @@
             <a href="{% url 'testimonials' %}" class="menuIcons"><li class="icon4"><ion-icon name="chatbubbles-outline"></ion-icon></li></a>
             <a href="{% url 'contact' %}" class="menuIcons"><li class="icon4"><ion-icon name="reader-outline"></ion-icon></li></a>
         </ul>
-        <div class="containerPortfolio" id="containerPortfolio">
-            <h1 class="titlePortfolio" id="titlePortfolio">Testemunhos</h1>
-            <h4 class="subtitlePortfolio" id="subtitlePortfolio">Depoimentos sobre mim de pessoas que já trabalharam comigo</h4>
+        <div class="containerPortfolio">
+            <h1 class="titlePortfolio">Testemunhos</h1>
+            <h4 class="subtitlePortfolio">Depoimentos sobre mim de pessoas que já trabalharam comigo</h4>
         </div>
         {% for comment in comments %}
             <div class="testimonials" id="testimonials">
@@ -74,7 +74,7 @@
                         <a href="#">
                             <ion-icon
                             id="open-info-{{comment.id}}"
-                            onclick="getIdClicked('{{comment.id}}')"
+                            onclick="startedClose(); getIdClicked('{{comment.id}}')"
                             name="information-circle-outline"
                             socials="{% for media in comment.profile.medias.all %}{{ media.identification }}, {{media.social_media.icon}}, {{media.is_link}}{% if not forloop.last %}, {% endif %}{% endfor %}"
                             profile-name="{{comment.profile.user.first_name}} {{comment.profile.user.last_name}}"
@@ -95,3 +95,78 @@
 <script>window.gtranslateSettings = {"default_language":"pt","languages":["pt","en"],"wrapper_selector":".gtranslate_wrapper","alt_flags":{"en":"usa","pt":"brazil"}}</script>
 <script src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
 </html>
+
+
+<!--
+{%load static %}
+{% block title %} Vitor Daniel - Testimonials {% endblock %}
+{% block right %}rightPages{% endblock %}
+{% block content %}
+<div id="fade" class="hide"></div>
+<div id="info-profile" class="hide">
+
+<div class="container-profile-information">
+    <div class="profile-information">
+        <div class="close-info">
+            <p id="close-info">X</p>
+        </div>
+        <div class="open-links" id="open-links" onclick="toggleDiv()">
+            <p>Mostrar Contatos</p>
+        </div>
+        <div class="profile-socials" id="profile-socials">
+        </div>
+        <img src="{% static 'assets/man3.jpeg' %}" class="profile-information-image" id="profile-information-image">
+        <div id="person" class="person">
+            <h1></h1>
+            <h2></h2>
+        </div>
+        <p id="profile-description" class="profile-description"></p>
+    </div>
+</div>
+
+</div>
+<div class="rightPages" id="comments">
+    <div class="containerPortfolio" id="containerPortfolio">
+        <h1 class="titlePortfolio" id="titlePortfolio">Testemunhos</h1>
+        <h4 class="subtitlePortfolio" id="subtitlePortfolio">Depoimentos sobre mim de pessoas que já trabalharam comigo</h4>
+    </div>
+    {% for comment in comments %}
+        <div class="testimonials" id="testimonials">
+            <div class="testimonials-profile-image">
+                {% if comment.profile.photo %}
+                    <img src="{{comment.profile.photo}}">
+                {% else %}
+                    <img src="{% static 'assets/no-photo.png' %}">
+                {% endif %}
+            </div>
+            <div class="testimonials-name-occupation">
+                <p class="testimonials-name">{{ comment.profile.user.first_name|safe }} {{ comment.profile.user.last_name|safe }}</p>
+                <p class="occupation">{{comment.profile.occupation.name | safe}}</p>
+            </div>
+            <div class="testimonials-text">
+                <p>{{comment.comment}}</p>
+            </div>
+            <div class="testimonials-base">
+                <div class="testimonials-info-person">
+                    <p class="who">Quem é esta pessoa ?</p>
+                    <a href="#">
+                        <ion-icon
+                        id="open-info-{{comment.id}}"
+                        onclick="getIdClicked('{{comment.id}}')"
+                        name="information-circle-outline"
+                        socials="{% for media in comment.profile.medias.all %}{{ media.identification }}, {{media.social_media.icon}}, {{media.is_link}}{% if not forloop.last %}, {% endif %}{% endfor %}"
+                        profile-name="{{comment.profile.user.first_name}} {{comment.profile.user.last_name}}"
+                        occupation="{{comment.profile.occupation}}"
+                        description="{{comment.profile.description}}"
+                        photo="{{comment.profile.photo}}"
+                    ></ion-icon></a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>    
+{% endblock %}  
+{% block scripts %}
+    <script src="{% static 'js/toggleProfile.js' %}" defer></script>
+    <script src="{% static 'js/openLinks.js' %}" defer></script>
+{% endblock %} -->

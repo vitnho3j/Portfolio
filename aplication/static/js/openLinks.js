@@ -1,5 +1,10 @@
 const button = document.querySelector("#open-links")
 
+function startedClose(){
+    var div = document.querySelector(".profile-socials");
+    div.style.display = "none";
+}
+
 function cleanInnerDivButton(){
     button.innerHTML = ''
 }

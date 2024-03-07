@@ -17,27 +17,50 @@ function getIdClicked(id){
   
 };
 
+function setInnerHTMLAtribute(element, innerHtml){
+    return element.innerHTML = innerHtml
+}
+
+function setTechnologys(openModalButton = null){
+  const technologysHTML = openModalButton.getAttribute('technologys')
+  const technologysArray = technologysHTML.split(', ');
+  setInnerHTMLAtribute(technologysDiv, '')
+
+  technologysArray.forEach(technology=>{
+    div = document.createElement("div");
+    setClassName(div, "technology-type")
+    setInnerHTMLAtribute(div, `<p>${technology}`)
+    technologysDiv.appendChild(div)
+  })
+}
+
+function setSource(element, src){
+  element.src = src
+}
+
+function setHref(element, href){
+  element.setAttribute('href', href)
+}
+
+function setClassName(element, className){
+  element.className = className
+}
+
+function setAttributes(openModalButton = null){
+    setClassName(projectName, 'name-project-profile')
+    setInnerHTMLAtribute(projectName, openModalButton.getAttribute('name-project'))
+    setSource(projectImage, openModalButton.getAttribute('image'))
+    setInnerHTMLAtribute(category, openModalButton.getAttribute('category'))
+    setInnerHTMLAtribute(demo, 'Clique aqui')
+    setHref(demo, openModalButton.getAttribute('link') )
+    setInnerHTMLAtribute(projectDescription, openModalButton.getAttribute('description'))
+    setInnerHTMLAtribute(projectText, openModalButton.getAttribute('text'))
+    setTechnologys(openModalButton)
+}
+
 const toggleModal = (openModalButton = null) => {
   if (openModalButton) {
-    projectName.className = 'name-project-profile'
-    projectName.innerHTML = openModalButton.getAttribute('name-project');
-    projectImage.src = openModalButton.getAttribute('image')
-    category.innerHTML = openModalButton.getAttribute('category');
-    demo.innerHTML = 'Click here'
-    demo.setAttribute('href', openModalButton.getAttribute('link'))
-    projectDescription.innerHTML = openModalButton.getAttribute('description')
-    projectText.innerHTML = openModalButton.getAttribute('text')
-
-    const technologysHTML = openModalButton.getAttribute('technologys')
-    const technologysArray = technologysHTML.split(', ');
-    technologysDiv.innerHTML = ''
-
-    technologysArray.forEach(technology=>{
-      div = document.createElement("div");
-      div.classList.add("technology-type")
-      div.innerHTML = `<p>${technology}`;
-      technologysDiv.appendChild(div)
-    })
+    setAttributes(openModalButton)
   }
   [info, fade].forEach((el)=> el.classList.toggle("hide"))
 }
