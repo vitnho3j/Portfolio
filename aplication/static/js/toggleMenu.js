@@ -19,6 +19,7 @@ function getIdClicked(id){
 
 const toggleModal = (openModalButton = null) => {
   if (openModalButton) {
+    projectName.className = 'name-project-profile'
     projectName.innerHTML = openModalButton.getAttribute('name-project');
     projectImage.src = openModalButton.getAttribute('image')
     category.innerHTML = openModalButton.getAttribute('category');

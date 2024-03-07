@@ -1548,6 +1548,9 @@ body{
     .testimonials-text{
         overflow-y: auto;
     }
+    .projectCategory{
+        font-size: 1.4rem;
+    }
 }
 
 @media only screen and (max-width:700px) {
@@ -1586,6 +1589,9 @@ body{
         font-size: .8rem;
     }
     .nameProject{
+        font-size: .9rem;
+    }
+    .projectCategory{
         font-size: .8rem;
     }
     .titlePortfolio{
@@ -1597,6 +1603,9 @@ body{
 }
 
 @media only screen and (max-width:350px) {
+    .name-project-profile{
+        font-size: 1.3rem;
+    }
     .titleWhoAbout{
         font-size:2rem;
     }
@@ -1637,5 +1646,8 @@ body{
     .curriculumText{
         letter-spacing: 2px;
         font-size: .5rem;
+    }
+    .project-information{
+        font-size: 1.1rem;
     }
 }
