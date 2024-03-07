@@ -1285,8 +1285,18 @@ body{
     .interestsTitle{
         font-size: 2rem;
     }
+    .name{
+        font-size: 2rem;
+    }
 
 }
+
+@media only screen and (max-width:1500px) {
+    .name{
+        font-size: 1.5rem;
+    }
+}
+
 
 @media only screen and (max-width:1450px){
     .technologyName{
@@ -1299,18 +1309,28 @@ body{
     .technology-type{
         font-size: .8rem;
     }
-    .name{
-        font-size:1.5rem;
-    }
     .titlePortfolio{
         font-size:3rem;
     }
     .subtitlePortfolio{
         font-size: 1.2rem;
     }
+    .name{
+        font-size: 1.5rem;
+    }
 }
 
 @media only screen and (max-width:1350px){
+    .welcome{
+        width: 70%;
+        font-size: .8rem;
+    }
+    .name{
+        font-size: 1.2rem;
+    }
+    .qualification{
+        font-size: 1.2rem;
+    }
     .project-technology{
         grid-template-columns: 1fr;
     }
@@ -1353,7 +1373,7 @@ body{
 }
 
 @media only screen and (max-width:1024px) {
-    
+
     a.linkContact{
         text-align: center;
     }
@@ -1461,24 +1481,17 @@ body{
         overflow-y: auto;
     }
     .name{
+        font-size: 1.5rem;
         text-align: center;
-    }
-    .partOne{
-        margin-top: 5px;
-        font-size: 2rem;
-    }
-    .partTwo{
-        margin-top: 5px;
-        font-size: 1.9rem;
     }
     .qualification{
         margin-top: 5px;
-        font-size: 1.2rem;
+        font-size: 1.7rem;
         text-align: center;
     }
     .welcome{
         align-self: center;
-        font-size:.8rem;
+        font-size:1.3rem;
     }
     .me{
         margin: 0;
@@ -1547,6 +1560,15 @@ body{
     }
     .profile-information p{
         margin-top: 5px;
+    }
+    .name{
+        font-size: .9rem;
+    }
+    .qualification{
+        font-size: 1rem;
+    }
+    .welcome{
+        font-size: .7rem;
     }
     
    
