@@ -12,11 +12,19 @@ function hiddenElement() {
 
 hiddenElement()
 
-function typeWrite(element, delay = 75){
-    const textArray = element.textContent.trim().split('');
+function cleanElement(element = null){
     element.innerHTML = ''
     element.style.display=''
+}
+
+function createBlinkAnimation(element = null){
     element.classList.add('blink-animation');
+}
+
+function typeWrite(element, delay = 75){
+    const textArray = element.textContent.trim().split('');
+    cleanElement(element)
+    createBlinkAnimation(element)
 
     return new Promise((resolve)=>{
         textArray.forEach((letra, i)=> {

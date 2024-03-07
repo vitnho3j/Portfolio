@@ -48,9 +48,9 @@
             <a href="{% url 'testimonials' %}" class="menuIcons"><li class="icon4"><ion-icon name="chatbubbles-outline"></ion-icon></li></a>
             <a href="{% url 'contact' %}" class="menuIcons"><li class="icon4"><ion-icon name="reader-outline"></ion-icon></li></a>
         </ul>
-        <div class="containerPortfolio">
-            <h1 class="titlePortfolio">Testemunhos</h1>
-            <h4 class="subtitlePortfolio">Depoimentos sobre mim de pessoas que já trabalharam comigo</h4>
+        <div class="containerPortfolio" id="containerPortfolio">
+            <h1 class="titlePortfolio" id="titlePortfolio">Testemunhos</h1>
+            <h4 class="subtitlePortfolio" id="subtitlePortfolio">Depoimentos sobre mim de pessoas que já trabalharam comigo</h4>
         </div>
         {% for comment in comments %}
             <div class="testimonials" id="testimonials">
