@@ -1174,7 +1174,7 @@ body{
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;
-    margin-left: 20%;
+    margin-left: 15%;
   }
   
   .interestsUl ion-icon {
@@ -1369,6 +1369,9 @@ body{
     .profile-information p{
         margin-top: 10px;
     }
+    .titleWhoAbout{
+        font-size: 3rem;
+    }
     
 }
 
@@ -1376,6 +1379,10 @@ body{
 
     a.linkContact{
         text-align: center;
+    }
+    
+    .interestsTitle{
+        font-size: 1.4rem;
     }
 
     .containerPortfolio{
@@ -1398,11 +1405,11 @@ body{
     }
 
     .curriculumText{
-        font-size: .7rem;
+        font-size: 1rem;
         letter-spacing: 3px;
     }
     .interests{
-        width: 100%;
+        width: 95%;
     }
     .titleWhoAbout{
         margin-top: 0;
@@ -1549,7 +1556,7 @@ body{
     }
     .curriculumText{
         letter-spacing: 2px;
-        font-size: .5rem;
+        font-size: .7rem;
     }
     .nameProject{
         font-size: 1rem;
@@ -1590,6 +1597,9 @@ body{
 }
 
 @media only screen and (max-width:350px) {
+    .titleWhoAbout{
+        font-size:2rem;
+    }
     .welcome{
         align-self: center;
         font-size:.7rem;
@@ -1623,5 +1633,9 @@ body{
     }
     .profile-socials{
         font-size: .8rem;
+    }
+    .curriculumText{
+        letter-spacing: 2px;
+        font-size: .5rem;
     }
 }

@@ -6,7 +6,7 @@
 {% block content %}
     <div class="containerAbout">
         <div class="titleWhoAbout">
-            <p>Who am i ?</p>
+            <p>Quem sou eu ?</p>
         </div>
         <div class="description">
             {{profile.description | safe}}
@@ -15,7 +15,7 @@
     <div class="interests">
         <div class="interestsTitle">
 
-            <p>Some of my strong points</p>
+            <p>Alguns dos meus pontos fortes</p>
 
         </div>
         <ul class="interestsUl">
@@ -26,7 +26,7 @@
     </div>
     <div class="skills">
         <div class="languages">
-            <p class="interestsTitle">Languages</p>
+            <p class="interestsTitle">Línguagens</p>
             <div class="containerTechnology">
                 {% for technology in languages %}
                     <div class="containerProgress">
@@ -73,11 +73,11 @@
         </div>
     </div>
     <div class="curriculum">
-        <img class="curriculumIcon" src="{% static 'assets/curriculum.png' %}">
+        <!-- <img class="curriculumIcon" src="{% static 'assets/curriculum.png' %}"> -->
         <div class="containerTextCurriculum">
-            <h2 class="curriculumText">You can see my curriculum below</h2>
+            <h2 class="curriculumText">Você pode ver meu currículo abaixo</h2>
         </div>
-        <a href="#" class="clickHere"><span></span>CLICK HERE !</a>
+        <a href="#" class="clickHere"><span></span>CLIQUE AQUI !</a>
     </div>
 </div>
 {% endblock %}
