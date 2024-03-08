@@ -1,8 +1,14 @@
 const button = document.querySelector("#open-links")
 
-function startedClose(){
-    var div = document.querySelector(".profile-socials");
-    div.style.display = "none";
+function startedContactsHidden(){
+    if (window.innerWidth < 1024){
+        cleanInnerDivButton()
+        var div = document.querySelector(".profile-socials");
+        div.style.display = "none";
+        p = createParagraph()
+        changeTextParagraph(p, 'Mostrar Contatos')
+        appendChild(p)
+    }
 }
 
 function cleanInnerDivButton(){

@@ -55,7 +55,7 @@
                     <a href="#">
                         <ion-icon
                         id="open-info-{{comment.id}}"
-                        onclick="startedClose(); getIdClicked('{{comment.id}}')"
+                        onclick="startedContactsHidden(); getIdClicked('{{comment.id}}')"
                         name="information-circle-outline"
                         socials="{% for media in comment.profile.medias.all %}{{ media.identification }}, {{media.social_media.icon}}, {{media.is_link}}{% if not forloop.last %}, {% endif %}{% endfor %}"
                         profile-name="{{comment.profile.user.first_name}} {{comment.profile.user.last_name}}"
