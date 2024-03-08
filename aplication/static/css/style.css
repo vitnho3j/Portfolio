@@ -52,7 +52,7 @@
 }
 
 .occupation{
-    font-weight: 100;
+    font-weight: 300;
     color: gray;
 }
 
@@ -70,15 +70,17 @@
     min-height: 385px;
     font-family: 'Poppins', sans-serif;
     box-sizing: border-box;
+
 }
 
 .testimonials-name{
     color: #7844E9;
+    font-weight: 500;
 }
 
 .testimonials-text{
     min-height: 180px;
-    font-weight: 200;
+    font-weight: 300;
     margin-top: 20px;
     overflow-y: auto;
     max-height: 180px;
@@ -114,6 +116,7 @@
 
 .who{
     margin-top: 15px;
+    font-weight: 500;
 }
 
 .testimonials-info-person a{
