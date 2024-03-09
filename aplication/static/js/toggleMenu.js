@@ -9,10 +9,14 @@ const demo = document.querySelector("#demo a")
 const projectDescription = document.querySelector("#project-description")
 const projectText = document.querySelector("#project-text")
 const technologysDiv = document.querySelector("#project-technology");
+const left = document.querySelector(".left#portfolio")
+const principal = document.querySelector(".rightPages#portfolio")
+var scrollPosition
 
 
 function getIdClicked(id){
   const openModalButton = document.querySelector(`#open-info-${id}`);
+  scrollPosition = window.scrollY;
   toggleModal(openModalButton)
   
 };
@@ -58,10 +62,29 @@ function setAttributes(openModalButton = null){
     setTechnologys(openModalButton)
 }
 
+function hideBackground(){
+  principal.style.height = "90px";
+  principal.style.opacity = "0%"
+  left.style.display = "none";
+}
+
+function showBackground(){
+  principal.style.height = "";
+  principal.style.opacity = "100%"
+  left.style.display = "flex";
+}
+
+
 const toggleModal = (openModalButton = null) => {
   if (openModalButton) {
     setAttributes(openModalButton)
+    if (window.innerWidth < 1024){
+      hideBackground()
+    }
+  } else {
+    showBackground()
   }
+  window.scrollTo(0, scrollPosition);
   [info, fade].forEach((el)=> el.classList.toggle("hide"))
 }
 
