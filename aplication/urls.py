@@ -2,7 +2,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
-from.views import IndexView, AboutView, PortfolioView, ContactView, CommentsView, LoginView, LogoutView
+from.views import IndexView, AboutView, PortfolioView, ContactView, CommentsView, LoginView, LogoutView, ProfileView
 
 urlpatterns = [
     path('', IndexView.as_view(), name="index"),
@@ -13,6 +13,7 @@ urlpatterns = [
     path('testimonials', CommentsView.as_view(), name='testimonials'),
     path('login', LoginView.as_view(), name='login'),
     path('logout', LogoutView.as_view(), name='logout'),
+    path('profile', ProfileView.as_view(), name='profile'),
 ]
 
 if settings.DEBUG:

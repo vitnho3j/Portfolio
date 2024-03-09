@@ -1,10 +1,10 @@
-from typing import Any
 from django.views.generic import TemplateView, View
 from .models import Project, ProfileSocialMedia, Profile, Technology, Comment
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.shortcuts import redirect
-from .models import User
+from django.shortcuts import redirect, render
+from .forms import UpdateUserForm
+from django.contrib.auth.models import User
 
 
 class IndexView(TemplateView):
@@ -61,6 +61,39 @@ class LoginView(TemplateView):
             messages.error(request, ("Your username or password is incorrect, please try again"))
             return redirect('login')
 
+class ProfileView(TemplateView):
+    template_name = 'profile.html'
+
+    def get_context_data(self, request, **kwargs):
+        current_user = User.objects.get(id=request.user.id)
+        form = UpdateUserForm(instance=current_user)
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        context['form'] = form
+        context['current_user'] = current_user
+        return context
+
+
+    def get(self, request):
+        if request.user.is_authenticated:
+            return self.render_to_response(self.get_context_data(request))
+        else:
+            messages.error(request, ("Você precisa estar autenticado para acessar esta página."))
+            return redirect('index')
+    
+    def post(self, request):
+        current_user = User.objects.get(id=request.user.id)
+        form = UpdateUserForm(request.POST, instance=current_user)
+        if current_user.is_authenticated:
+            if form.is_valid():
+                form.save()
+                messages.success(request, ("Os seus dados foram atualizados."))
+            else:
+                return render(request, 'profile.html', {'form': form})
+        else:
+            messages.error(request, ("Você precisa estar autenticado para acessar esta página."))
+        print(form.is_valid())
+        print(form)
+        return redirect('index')
 
 class LogoutView(View):
     def get(self, request):
