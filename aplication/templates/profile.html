@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,27 +7,17 @@
     <title>Profile</title>
 </head>
 <body>
-    <ul>
-        <!-- {% for field, errors in form.errors.items %}
-            {% for error in errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        {% endfor %} -->
-    </ul>
-    <form method="post" action="">
-        {% csrf_token %}
-        {{form.as_p}}
-        {% for field in form %}
-            {% if field.errors %}
-                <ul class="errors">
-                    {% for error in field.errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        {% endfor %}
-        <button type="submit" class="btn-form">Atualizar Informações</button>
-    </form>
+    {% if user.is_authenticated %}
+        <div>
+            <a href="{% url 'register_data' %}">Alterar dados cadastrais</a>
+        </div>
+        <div>
+            <a a href="{% url 'personal_data' %}">Alterar dados pessoais</a>
+        </div>
+    {% else %}
+        <p>Você precisa estar autenticado para acessar esta página.</p>
+        <meta http-equiv="refresh" content="3;url={% url 'index'%}">
+    {% endif %}
 </body>
 </html>
 

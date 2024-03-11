@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informações Pessoais</title>
+</head>
+<body>
+    {% if user.is_authenticated %}
+        {% if message_save_data_successfully %}
+            <p>{{message_save_data_successfully}}</p>
+            <a href="{% url 'personal_data'%}">Voltar</a>
+        {% else %}
+            <form method="post" action="">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit" class="btn-form">Atualizar Informações</button>
+            </form>
+            <a href="{% url 'profile'%}">Voltar</a>
+        {% endif %}
+    {% else %}
+        <p>{{message_auth_error}}</p>
+        <meta http-equiv="refresh" content="3;url={% url 'index'%}">
+    {% endif %}
+</body>
+</html>
