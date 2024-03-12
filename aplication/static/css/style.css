@@ -83,6 +83,10 @@
     }
 }
 
+.update-form ul{
+    list-style-type: none;
+}
+
 .btn-dark-mode-toggle li{
     color: var(--whiteNoChange);
     list-style: none;

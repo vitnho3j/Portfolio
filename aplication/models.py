@@ -1,5 +1,7 @@
+from asyncio import format_helpers
 from django.db import models
 from django.contrib.auth.models import User
+from django.forms import ValidationError
 from stdimage.models import StdImageField
 from datetime import datetime
 import uuid
@@ -11,6 +13,16 @@ def get_file_path(__instance, filename):
     now = datetime.now()
     filename = f'{uuid.uuid4()}{now}.{ext}'
     return filename
+
+def validate_image(image):
+    limit = 2*1024*1024
+    if image:
+        if image.size > limit:
+            raise ValidationError("O arquivo de imagem é muito largo ( Limite máximo: 4mb )")
+        return image
+    else:
+        raise ValidationError("A imagem carregada não pode ser lida")
+
 
 class SocialMedia(models.Model):
     name = models.CharField("Social Media Name", max_length=30)
@@ -49,8 +61,8 @@ class Occupation(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    description = RichTextField()
-    photo = StdImageField('Photo', null=True, blank=True, upload_to=get_file_path, variations={'thumb':{'width':480, 'height': 480, 'crop':True}})
+    description = RichTextField(max_length = 1000)
+    photo = StdImageField('Photo', null=True, blank=True, upload_to=get_file_path, variations={'thumb':{'width':480, 'height': 480, 'crop':True}}, validators=[validate_image])
     qualities = models.ManyToManyField(Qualities, blank=True)
     occupation = models.ForeignKey(Occupation, related_name="professionals", on_delete=models.SET_NULL, blank=True, null=True)
 

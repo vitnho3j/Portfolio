@@ -3,7 +3,7 @@ from .models import Project, ProfileSocialMedia, Profile, Technology, Comment
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.shortcuts import redirect, render
-from .forms import UpdateRegisterForm, UpdatePersonalForm
+from .forms import UpdateRegisterForm, UpdatePersonalForm, ProfilePicForm
 from django.contrib.auth.models import User
 
 
@@ -53,13 +53,13 @@ class LoginView(TemplateView):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
+        auth_error = 'Nome de usuário ou senha incoreto(s)'
         if user is not None:
             login(request, user)
             messages.success(request, ("You Have Been Logged In"))
             return redirect('index')
         else:
-            messages.error(request, ("Your username or password is incorrect, please try again"))
-            return redirect('login')
+            return render(request, self.template_name, {'auth_error':auth_error})
         
 
 class ProfilePersonalDataView(TemplateView):
@@ -67,10 +67,12 @@ class ProfilePersonalDataView(TemplateView):
 
     def get_context_data(self, request, *args, **kwargs):
         current_user = User.objects.get(id=request.user.id)
-        form = UpdatePersonalForm(instance=current_user)
+        profile_user = Profile.objects.get(user__id=request.user.id)
+        user_form = UpdatePersonalForm(request.POST or None, request.FILES or None, instance=current_user)
+        profile_form = ProfilePicForm(request.POST or None, request.FILES or None, instance=profile_user)
         context = super().get_context_data(*args, **kwargs)
-        context['form'] = form
-        context['current_user'] = current_user
+        context['user_form'] = user_form
+        context['profile_form'] = profile_form
         return context
 
     def get(self, request):
@@ -84,13 +86,17 @@ class ProfilePersonalDataView(TemplateView):
     def post(self, request):
         message_auth_error = 'Você precisa estar autenticado para acessar esta página.'
         current_user = User.objects.get(id=request.user.id)
-        form = UpdatePersonalForm(request.POST, instance=current_user)
+        profile_user = Profile.objects.get(user__id=request.user.id)
+
+        user_form = UpdatePersonalForm(request.POST or None, request.FILES or None, instance=current_user)
+        profile_form = ProfilePicForm(request.POST or None, request.FILES or None, instance=profile_user)
         message_save_data_successfully = "Os seus dados foram atualizados."
         if current_user.is_authenticated:
-            if form.is_valid():
-                form.save()
+            if user_form.is_valid() and profile_form.is_valid():
+                user_form.save()
+                profile_form.save()
             else:
-                return render(request, self.template_name, {'form': form})
+                return render(request, self.template_name, {'user_form': user_form, 'profile_form':profile_form})
         else:
             messages.error(request, (message_auth_error), extra_tags='message_auth_error')
         messages.success(request, (message_save_data_successfully), extra_tags='message_save_data_successfully')
@@ -122,8 +128,6 @@ class ProfileRegisterDataView(TemplateView):
         message_save_data_successfully = "Os seus dados foram atualizados."
         if current_user.is_authenticated:
             if form.is_valid():
-                if form.cleaned_data['username'] == current_user.username:
-                    form.fields['username'].validators = []
                 form.save()
             else:
                 return render(request, self.template_name, {'form': form})
@@ -143,21 +147,6 @@ class ProfileView(TemplateView):
         else:
             messages.error(request, (message_auth_error), extra_tags='message_auth_error')
             return render(request, self.template_name, {'message_auth_error':message_auth_error})
-    
-    # def post(self, request):
-    #     current_user = User.objects.get(id=request.user.id)
-    #     form = UpdateUserForm(request.POST, instance=current_user)
-    #     if current_user.is_authenticated:
-    #         if form.is_valid():
-    #             form.save()
-    #             messages.success(request, ("Os seus dados foram atualizados."))
-    #         else:
-    #             return render(request, 'profile.html', {'form': form})
-    #     else:
-    #         messages.error(request, ("Você precisa estar autenticado para acessar esta página."))
-    #     print(form.is_valid())
-    #     print(form)
-    #     return redirect('index')
 
 class LogoutView(View):
     def get(self, request):

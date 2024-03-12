@@ -3,6 +3,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <!-- <link href="{% static 'css/style.css' %}" rel="stylesheet"/> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informações Pessoais</title>
 </head>
@@ -12,9 +13,11 @@
             <p>{{message_save_data_successfully}}</p>
             <a href="{% url 'personal_data'%}">Voltar</a>
         {% else %}
-            <form method="post" action="">
+            <form method="post" action="" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{form.as_p}}
+                {{user_form.as_p|safe }}
+                {{profile_form.as_p|safe }}
+                {{profile_form.media}}
                 <button type="submit" class="btn-form">Atualizar Informações</button>
             </form>
             <a href="{% url 'profile'%}">Voltar</a>
