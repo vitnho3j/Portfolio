@@ -1,4 +1,3 @@
-from asyncio import format_helpers
 from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ValidationError
@@ -7,6 +6,8 @@ from datetime import datetime
 import uuid
 from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
+import re
+from django.core.validators import URLValidator, RegexValidator
 
 def get_file_path(__instance, filename):
     ext = filename.split('.')[-1]
@@ -28,6 +29,7 @@ class SocialMedia(models.Model):
     name = models.CharField("Social Media Name", max_length=30)
     link = models.CharField("Link", max_length=200, null=True, blank=True)
     icon = models.CharField("Icon Name", max_length=30)
+    is_link = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'Social Media'
@@ -75,9 +77,8 @@ class Profile(models.Model):
 
 class ProfileSocialMedia(models.Model):
     profile = models.ForeignKey(Profile, related_name="medias", on_delete=models.CASCADE)
-    social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE)
+    social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE, blank=False)
     identification = models.CharField("Identification", max_length=3000)
-    is_link = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Profile Owner: {self.profile.user.first_name} / Social Media: {self.social_media.name}"
@@ -85,6 +86,44 @@ class ProfileSocialMedia(models.Model):
     class Meta:
         verbose_name = 'ProfileSocialMedia'
         verbose_name_plural = 'Profile Social Medias'
+    
+    def clean_social_media(self):
+        if self.social_media is None:
+            raise ValidationError("Por favor, selecione uma rede social")
+    
+    def clean_identification(self):
+        validate = URLValidator
+        try:
+            validate(self.identification)
+        except:
+            raise ValidationError("A identificação fornecida não é um URL válido")
+        if self.social_media.is_link == False:
+            validator_number = RegexValidator(regex='^\(\d{2}\)\d{11}$', message='A identificação deve estar no formato (+55)24981094563.')
+            if len(self.identification) > 16:
+                raise ValidationError("O número de telefone não pode exceder 16 caracteres, por favor, revise o número para garantir que não tenha digitado incorretamente.")
+            
+            if len(self.identification) < 16:
+                raise ValidationError("O número de telefone não pode ser menor do que 16 caracteres, por favor, revise o número para garantir que não tenha digitado incorretamente.")
+        
+            validator_number(self.identification)
+
+    # def clean(self):
+    #     self.clean_identification()
+    #     self.clean_profile()
+    
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        limit = 6
+        socials = self.profile.medias.all()
+        if socials.count() > limit:
+            raise ValidationError("Você atingiu o limite(6) de redes socias que podem ser adicionadas, altere ou exclua uma rede social existente.")
+        if self.profile == None or '':
+            raise ValidationError("Incapaz de reconhecer o usuário atual.")
+        if self.social_media.is_link:
+            if not re.match(r'^https?://', self.identification):
+                self.identification = f'https://{self.identification}'
+        super().save(*args, **kwargs)
+    
 
 class Comment(models.Model):
     comment = models.TextField("Comment", max_length=1500)

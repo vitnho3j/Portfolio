@@ -3,7 +3,7 @@ from .models import Project, ProfileSocialMedia, Profile, Technology, Comment
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.shortcuts import redirect, render
-from .forms import UpdateRegisterForm, UpdatePersonalForm, ProfilePicForm
+from .forms import UpdateRegisterForm, UpdatePersonalForm, ProfileUpdateForm, AddSocialMediaForm
 from django.contrib.auth.models import User
 
 
@@ -69,7 +69,7 @@ class ProfilePersonalDataView(TemplateView):
         current_user = User.objects.get(id=request.user.id)
         profile_user = Profile.objects.get(user__id=request.user.id)
         user_form = UpdatePersonalForm(request.POST or None, request.FILES or None, instance=current_user)
-        profile_form = ProfilePicForm(request.POST or None, request.FILES or None, instance=profile_user)
+        profile_form = ProfileUpdateForm(request.POST or None, request.FILES or None, instance=profile_user)
         context = super().get_context_data(*args, **kwargs)
         context['user_form'] = user_form
         context['profile_form'] = profile_form
@@ -89,7 +89,7 @@ class ProfilePersonalDataView(TemplateView):
         profile_user = Profile.objects.get(user__id=request.user.id)
 
         user_form = UpdatePersonalForm(request.POST or None, request.FILES or None, instance=current_user)
-        profile_form = ProfilePicForm(request.POST or None, request.FILES or None, instance=profile_user)
+        profile_form = ProfileUpdateForm(request.POST or None, request.FILES or None, instance=profile_user)
         message_save_data_successfully = "Os seus dados foram atualizados."
         if current_user.is_authenticated:
             if user_form.is_valid() and profile_form.is_valid():
@@ -144,6 +144,38 @@ class ProfileView(TemplateView):
         message_auth_error = 'Você precisa estar autenticado para acessar esta página, portanto, será redirecionado para a página inicial após 5 segundos.'
         if request.user.is_authenticated:
             return render(request, self.template_name)
+        else:
+            messages.error(request, (message_auth_error), extra_tags='message_auth_error')
+            return render(request, self.template_name, {'message_auth_error':message_auth_error})
+
+class AddSocialMediaView(TemplateView):
+    template_name = 'add_social_media.html'
+
+    def post(self, request):
+        profile_user = Profile.objects.get(user=request.user.id)
+        form = AddSocialMediaForm(data=request.POST or None, profile=profile_user)
+        message_save_data_successfully = "Os seus dados foram atualizados."
+        message_auth_error = 'Você precisa estar autenticado para acessar esta página, portanto, será redirecionado para a página inicial após 5 segundos.'
+        if request.user.is_authenticated:
+            if form.is_valid():
+                social = form.save(commit=False)
+                social.profile = profile_user
+                social.save()
+            else:
+                return render(request, self.template_name, {'form': form})
+        else:
+            messages.error(request, (message_auth_error), extra_tags='message_auth_error')
+            return render(request, self.template_name, {'message_auth_error':message_auth_error})
+        messages.success(request, (message_save_data_successfully), extra_tags='message_save_data_successfully')
+        return render(request, self.template_name, {'message_save_data_successfully':message_save_data_successfully})
+
+
+    def get(self, request):
+        profile_user = Profile.objects.get(user__id=request.user.id)
+        form = AddSocialMediaForm(data=request.GET or None, profile=profile_user)
+        message_auth_error = 'Você precisa estar autenticado para acessar esta página, portanto, será redirecionado para a página inicial após 5 segundos.'
+        if request.user.is_authenticated:
+            return render(request, self.template_name, {'form':form})
         else:
             messages.error(request, (message_auth_error), extra_tags='message_auth_error')
             return render(request, self.template_name, {'message_auth_error':message_auth_error})

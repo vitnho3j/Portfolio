@@ -1,10 +1,10 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import Profile, Qualities, Occupation
-from PIL import Image
-from django.utils.safestring import mark_safe
+from .models import Profile, Occupation, ProfileSocialMedia, SocialMedia
 from ckeditor.widgets import CKEditorWidget
+import re
+from django.core.validators import URLValidator, RegexValidator
 
 
 class UpdateRegisterForm(UserCreationForm):
@@ -59,7 +59,7 @@ class CustomCKEditorWidget(CKEditorWidget):
         self.config['removeButtons'] = ['Source', 'Table', 'Link', 'Anchor', 'Smiley', 'SpecialChar', 'Unlink', 'Resize', 'TextColor']
         self.config['removePlugins'] = 'image'
 
-class ProfilePicForm(forms.ModelForm):
+class ProfileUpdateForm(forms.ModelForm):
     def validate_description_length(value):
         max_length = 1000
         if len(value) > max_length:
@@ -74,7 +74,7 @@ class ProfilePicForm(forms.ModelForm):
         fields = ('photo', 'description', 'occupation')
     
     def __init__(self, *args, **kwargs):
-        super(ProfilePicForm, self).__init__(*args, **kwargs)
+        super(ProfileUpdateForm, self).__init__(*args, **kwargs)
 
     def clean_photo(self):
         photo = self.cleaned_data.get('photo', False)
@@ -85,3 +85,47 @@ class ProfilePicForm(forms.ModelForm):
             return photo
         else:
             raise forms.ValidationError("A imagem carregada não pode ser lida")
+
+
+class AddSocialMediaForm(forms.ModelForm):
+    social_media = forms.ModelChoiceField(label='Escolha uma rede social', empty_label=None, queryset=SocialMedia.objects.all(), widget=forms.Select(attrs={'class':'update-form'}))
+    identification = forms.CharField(required=True, label='Identificação da rede social', widget=forms.TextInput(attrs={'class':'update-form'}), help_text='Insira o número para adicionar o whatsapp no formato cód país + ddd + número, ex: (+55)24981094563 ou link do perfil para todas as outras redes.')
+
+    class Meta:
+        model = ProfileSocialMedia
+        fields = ('social_media', 'identification')
+    
+    def __init__(self, *args, profile=None, **kwargs):
+        if profile is not None:
+            self.profile = profile
+        else:
+            raise forms.ValidationError("Incapaz de reconhecer o usuário atual.")
+        super(AddSocialMediaForm, self).__init__(*args, **kwargs)
+
+    def clean_identification(self):
+        identification = self.cleaned_data.get('identification', False)
+        social_media = self.cleaned_data.get('social_media', False)
+        if social_media.is_link == False:
+            number_validator = RegexValidator(regex='^\(\d{2}\)\d{11}$', message='A identificação deve estar no formato (+55)24981094563.')
+            if len(identification) > 16:
+                raise forms.ValidationError("O número de telefone não pode exceder 16 caracteres, por favor, revise o número para garantir que não tenha digitado incorretamente.")
+            
+            if len(identification) < 16:
+                raise forms.ValidationError("O número de telefone não pode ser menor do que 16 caracteres, por favor, revise o número para garantir que não tenha digitado incorretamente.")
+            
+            number_validator(identification)
+        else:
+            validate = URLValidator
+            try:
+                validate(identification)
+            except:
+                raise forms.ValidationError("A identificação fornecida não é um URL válido")
+                
+        return identification
+
+    def clean_social_media(self):
+        limit = 6
+        socials = self.profile.medias.all()
+        if socials.count() >= limit:
+            raise forms.ValidationError("Você atingiu o limite(6) de redes socias que podem ser adicionadas, altere ou exclua uma rede social existente.")
+        return self.cleaned_data.get('social_media', False)
