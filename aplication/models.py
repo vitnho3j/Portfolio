@@ -8,6 +8,52 @@ from ckeditor.fields import RichTextField
 from ckeditor_uploader.fields import RichTextUploadingField
 import re
 from django.core.validators import URLValidator, RegexValidator
+import requests
+
+
+
+def add_https(value):
+    if not re.match(r'^https?://', value):
+        value = f'https://{value}'
+    print(value)
+    return value
+
+def validate_link(value):
+    response = requests.get(value)
+    # print(response)
+    response = requests.get(value)
+    try:
+        response = requests.get(value)
+    except requests.RequestException:
+        raise ValidationError("O link fornecido não é válido ou não está acessível")
+        
+def validate_number(value):
+    value_cleaned = value.replace("(", "").replace(")", "").replace("+", "")
+    if value_cleaned.isdigit():
+        number_validator = RegexValidator(regex='^\(\+\d{2}\)\d{11}$', message='A identificação deve estar no formato (+55)24981094563.')
+        if len(value) != 16:
+            raise ValidationError("O número de telefone deve ter exatamente 16 caracteres, por favor, revise o número para garantir que não tenha digitado incorretamente.")
+        number_validator(value)
+    else:
+        raise ValidationError("O número é inválido, por favor, revise o número e garanta que contenha apenas números.")
+
+def validate_url(value):
+    value_cleaned = add_https(value)
+    validate = URLValidator
+    try:
+        validate(value)
+    except:
+        raise ValidationError("A identificação fornecida não é um URL válido")
+
+    if not any(ext in value for ext in ['.com', '.net']):
+        raise ValidationError("A URL fornecida não contém um domínio completo (.com ou .net)")
+    
+    social_media_links = SocialMedia.objects.values_list('link', flat=True)
+    
+    if not any(link in value for link in social_media_links):
+        raise ValidationError("O link fornecido não corresponde a nenhuma mídia social cadastrada.")
+    validate_link(value_cleaned)
+    return value_cleaned
 
 def get_file_path(__instance, filename):
     ext = filename.split('.')[-1]
@@ -76,7 +122,7 @@ class Profile(models.Model):
         verbose_name_plural = 'Profiles'
 
 class ProfileSocialMedia(models.Model):
-    profile = models.ForeignKey(Profile, related_name="medias", on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, related_name="medias", on_delete=models.CASCADE, blank=False)
     social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE, blank=False)
     identification = models.CharField("Identification", max_length=3000)
 
@@ -84,7 +130,7 @@ class ProfileSocialMedia(models.Model):
         return f"Profile Owner: {self.profile.user.first_name} / Social Media: {self.social_media.name}"
 
     class Meta:
-        verbose_name = 'ProfileSocialMedia'
+        verbose_name = 'Profile Social Media'
         verbose_name_plural = 'Profile Social Medias'
     
     def clean_social_media(self):
@@ -92,36 +138,43 @@ class ProfileSocialMedia(models.Model):
             raise ValidationError("Por favor, selecione uma rede social")
     
     def clean_identification(self):
-        validate = URLValidator
-        try:
-            validate(self.identification)
-        except:
-            raise ValidationError("A identificação fornecida não é um URL válido")
-        if self.social_media.is_link == False:
-            validator_number = RegexValidator(regex='^\(\d{2}\)\d{11}$', message='A identificação deve estar no formato (+55)24981094563.')
-            if len(self.identification) > 16:
-                raise ValidationError("O número de telefone não pode exceder 16 caracteres, por favor, revise o número para garantir que não tenha digitado incorretamente.")
-            
-            if len(self.identification) < 16:
-                raise ValidationError("O número de telefone não pode ser menor do que 16 caracteres, por favor, revise o número para garantir que não tenha digitado incorretamente.")
-        
-            validator_number(self.identification)
-
-    # def clean(self):
-    #     self.clean_identification()
-    #     self.clean_profile()
+        social_media = self.social_media
+        if social_media.is_link == False:
+            validate_number(self.identification)
+        else:
+            self.identification = validate_url(self.identification)
     
-    def save(self, *args, **kwargs):
-        self.full_clean()
+    def clean_profile(self):
+        profile = self.profile
+        if profile is None:
+            raise ValueError("O perfil deve ser fornecido para a função clean.")
         limit = 6
-        socials = self.profile.medias.all()
-        if socials.count() > limit:
+        socials = profile.medias.all()
+        if socials.count() >= limit:
             raise ValidationError("Você atingiu o limite(6) de redes socias que podem ser adicionadas, altere ou exclua uma rede social existente.")
-        if self.profile == None or '':
-            raise ValidationError("Incapaz de reconhecer o usuário atual.")
-        if self.social_media.is_link:
-            if not re.match(r'^https?://', self.identification):
-                self.identification = f'https://{self.identification}'
+    
+    # def clean_profile(self):
+    #     limit = 6
+    #     socials = self.profile.medias.all()
+    #     if socials.count() >= limit:
+    #         raise ValidationError("Você atingiu o limite(6) de redes socias que podem ser adicionadas, altere ou exclua uma rede social existente.")
+    #     return self.profile
+            
+    # def clean(self):
+    #     # self.clean_social_media()
+    #     # self.clean_identification()
+        
+    def clean(self):
+        self.clean_profile()
+        self.clean_identification()
+        
+
+        
+    def save(self, *args, **kwargs):
+        # if self.social_media.is_link:
+        #     if not re.match(r'^https?://', self.identification):
+        #         self.identification = f'https://{self.identification}'
+        self.full_clean()
         super().save(*args, **kwargs)
     
 

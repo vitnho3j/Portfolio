@@ -1,10 +1,12 @@
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView, View, CreateView
 from .models import Project, ProfileSocialMedia, Profile, Technology, Comment
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.shortcuts import redirect, render
 from .forms import UpdateRegisterForm, UpdatePersonalForm, ProfileUpdateForm, AddSocialMediaForm
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
+from django.forms import ValidationError
 
 
 class IndexView(TemplateView):
@@ -148,30 +150,38 @@ class ProfileView(TemplateView):
             messages.error(request, (message_auth_error), extra_tags='message_auth_error')
             return render(request, self.template_name, {'message_auth_error':message_auth_error})
 
-class AddSocialMediaView(TemplateView):
+class AddSocialMediaView(CreateView):
     template_name = 'add_social_media.html'
 
+    def get_form_kwargs(self):
+        user = self.request.user
+        profile_user = get_object_or_404(Profile, user=user)
+        kwargs = super(AddSocialMediaView, self).get_form_kwargs()
+        kwargs.update({'profile': profile_user})
+
     def post(self, request):
-        profile_user = Profile.objects.get(user=request.user.id)
-        form = AddSocialMediaForm(data=request.POST or None, profile=profile_user)
         message_save_data_successfully = "Os seus dados foram atualizados."
         message_auth_error = 'Você precisa estar autenticado para acessar esta página, portanto, será redirecionado para a página inicial após 5 segundos.'
         if request.user.is_authenticated:
+            profile_user = Profile.objects.get(user=request.user)
+            form = AddSocialMediaForm(data=request.POST or None, profile=profile_user)
             if form.is_valid():
-                social = form.save(commit=False)
-                social.profile = profile_user
-                social.save()
+                social_media = form.save(commit=False)
+                social_media.profile = profile_user
+                social_media.save()
+                messages.success(request, "Os seus dados foram atualizados.", extra_tags='message_save_data_successfully')
+                return render(request, self.template_name, {'message_save_data_successfully': "Os seus dados foram atualizados.", 'form': form})
             else:
                 return render(request, self.template_name, {'form': form})
         else:
-            messages.error(request, (message_auth_error), extra_tags='message_auth_error')
-            return render(request, self.template_name, {'message_auth_error':message_auth_error})
+            messages.error(request, message_auth_error, extra_tags='message_auth_error')
+        
         messages.success(request, (message_save_data_successfully), extra_tags='message_save_data_successfully')
         return render(request, self.template_name, {'message_save_data_successfully':message_save_data_successfully})
 
 
     def get(self, request):
-        profile_user = Profile.objects.get(user__id=request.user.id)
+        profile_user = get_object_or_404(Profile, user=request.user)
         form = AddSocialMediaForm(data=request.GET or None, profile=profile_user)
         message_auth_error = 'Você precisa estar autenticado para acessar esta página, portanto, será redirecionado para a página inicial após 5 segundos.'
         if request.user.is_authenticated:
