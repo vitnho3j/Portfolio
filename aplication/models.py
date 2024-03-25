@@ -9,23 +9,43 @@ from ckeditor_uploader.fields import RichTextUploadingField
 import re
 from django.core.validators import URLValidator, RegexValidator
 import requests
-
+from django.core.validators import URLValidator
+import tldextract
+from requests.exceptions import RequestException, InvalidURL
 
 
 def add_https(value):
     if not re.match(r'^https?://', value):
         value = f'https://{value}'
-    print(value)
     return value
 
+
 def validate_link(value):
-    response = requests.get(value)
-    # print(response)
-    response = requests.get(value)
+    url_pattern = re.compile(
+    r'^(?:http|ftp)s?://'  # http:// or https:// or ftp://
+    r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain...
+    r'localhost|'  # localhost...
+    r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
+    r'(?::\d+)?'  # optional port
+    r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+    
+    if not re.match(url_pattern, value):
+        raise ValidationError("O valor fornecido não é um link válido.")
+    r = requests.head(value)
     try:
-        response = requests.get(value)
-    except requests.RequestException:
-        raise ValidationError("O link fornecido não é válido ou não está acessível")
+        r = requests.head(value)
+        r.raise_for_status()
+        
+    except InvalidURL:
+        raise ValidationError("A URL fornecida é inválida.")
+     
+    except requests.HTTPError as e:
+        status_code = e.response.status_code
+        if status_code not in [200, 301]:
+            raise ValidationError("O link fornecido não é válido ou não está acessível") 
+    
+    except RequestException:
+        raise ValidationError("O link fornecido não é válido ou não está acessível") 
         
 def validate_number(value):
     value_cleaned = value.replace("(", "").replace(")", "").replace("+", "")
@@ -37,7 +57,7 @@ def validate_number(value):
     else:
         raise ValidationError("O número é inválido, por favor, revise o número e garanta que contenha apenas números.")
 
-def validate_url(value):
+def validate_url(value, choosed_social_media):
     value_cleaned = add_https(value)
     validate = URLValidator
     try:
@@ -48,10 +68,12 @@ def validate_url(value):
     if not any(ext in value for ext in ['.com', '.net']):
         raise ValidationError("A URL fornecida não contém um domínio completo (.com ou .net)")
     
-    social_media_links = SocialMedia.objects.values_list('link', flat=True)
-    
-    if not any(link in value for link in social_media_links):
-        raise ValidationError("O link fornecido não corresponde a nenhuma mídia social cadastrada.")
+    ext = tldextract.extract(value)
+    domain = f"{ext.domain}.{ext.suffix}"
+    if not domain in choosed_social_media.link:
+        raise ValidationError("A URL fornecida não pertence a rede social escolhida")
+    if value == "":
+        raise ValidationError("A URL fornecida não pertence a rede social escolhida")
     validate_link(value_cleaned)
     return value_cleaned
 
@@ -142,7 +164,7 @@ class ProfileSocialMedia(models.Model):
         if social_media.is_link == False:
             validate_number(self.identification)
         else:
-            self.identification = validate_url(self.identification)
+            self.identification = validate_url(self.identification, self.social_media)
     
     def clean_profile(self):
         profile = self.profile
