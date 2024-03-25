@@ -99,47 +99,8 @@ class AddSocialMediaForm(forms.ModelForm):
         self.profile = kwargs.pop('profile', None)
         super(AddSocialMediaForm, self).__init__(*args, **kwargs)
 
-    # def validate_url(self, value):
-    #     validate = URLValidator
-    #     try:
-    #         validate(value)
-    #     except:
-    #         raise forms.ValidationError("A identificação fornecida não é um URL válido")
-
-    #     if not any(ext in value for ext in ['.com', '.net']):
-    #         raise forms.ValidationError("A URL fornecida não contém um domínio completo (.com ou .net)")
-
-    # def validate_number(self, value):
-    #     number_validator = RegexValidator(regex='^\(\d{2}\)\d{11}$', message='A identificação deve estar no formato (+55)24981094563.')
-    #     if len(value) > 16:
-    #         raise forms.ValidationError("O número de telefone não pode exceder 16 caracteres, por favor, revise o número para garantir que não tenha digitado incorretamente.")
-        
-    #     if len(value) < 16:
-    #         raise forms.ValidationError("O número de telefone não pode ser menor do que 16 caracteres, por favor, revise o número para garantir que não tenha digitado incorretamente.")
-        
-    #     number_validator(value)
-      
-    # def clean_identification(self):
-    #     identification = self.cleaned_data.get('identification', False)
-    #     social_media = self.cleaned_data.get('social_media', None)
-    #     print(social_media)
-    #     if social_media.is_link == False:
-    #         self.validate_number(identification)
-    #     else:
-    #         self.validate_url(identification)        
-    #     return identification
-    
     def clean(self):
         cleaned_data = super().clean()
         instance = super().save(commit=False)
         instance.profile = self.profile
         return cleaned_data
-
-
-    # def clean_profile(self):
-    #     limit = 6
-    #     socials = self.profile.medias.all()
-    #     if socials.count() >= limit:
-    #         raise forms.ValidationError("Você atingiu o limite(6) de redes socias que podem ser adicionadas, altere ou exclua uma rede social existente.")
-    #     return self.profile
-         

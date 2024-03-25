@@ -1,26 +1,29 @@
+{% extends 'base_authenticated_pages.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
-</head>
-<body>
+{% block title %} Profile {% endblock %}
+{% block content %}
     {% if user.is_authenticated %}
-        <div>
-            <a href="{% url 'register_data' %}">Alterar dados cadastrais</a>
-        </div>
-        <div>
-            <a a href="{% url 'personal_data' %}">Alterar dados pessoais</a>
-        </div>
-        <div>
-            <a a href="{% url 'social_add' %}">Adicionar rede social</a>
+        <div class="container-profile">
+            <h1>Seja bem vindo <b>{{user.first_name}}</b>, o que deseja ?</h1>
+            <div class="container-profile-options">
+                <div class="profile-option">
+                    <a href="{% url 'register_data' %}">Alterar dados cadastrais</a>
+                    <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+                </div class="profile-option">
+                <div class="profile-option">
+                    <a href="{% url 'personal_data' %}">Alterar dados pessoais</a>
+                    <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+                </div>
+                <div class="profile-option">
+                    <a href="{% url 'social_add' %}">Adicionar rede social</a>
+                    <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+                </div>
+            </div>
         </div>
     {% else %}
         <p>Você precisa estar autenticado para acessar esta página.</p>
         <meta http-equiv="refresh" content="3;url={% url 'index'%}">
     {% endif %}
-</body>
-</html>
+{% endblock %}
+
 

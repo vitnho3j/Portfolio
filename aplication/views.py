@@ -6,8 +6,6 @@ from django.shortcuts import redirect, render
 from .forms import UpdateRegisterForm, UpdatePersonalForm, ProfileUpdateForm, AddSocialMediaForm
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
-from django.forms import ValidationError
-
 
 class IndexView(TemplateView):
     template_name = 'index.html'
