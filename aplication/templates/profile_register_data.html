@@ -1,27 +1,25 @@
+{%extends 'base_authenticated_pages.html'%}
+{%block title%}Informações Cadastrais{%endblock%}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informações Cadastrais</title>
-</head>
-<body>
+{%block content%}
     {% if user.is_authenticated %}
+    <div class="container-login">
         {% if message_save_data_successfully %}
-            <p>{{message_save_data_successfully}}</p>
-            <a href="{% url 'personal_data'%}">Voltar</a>
+            <div class="container-logged-message" id="register-data">
+                <p>{{message_save_data_successfully}}</p>
+                <a href="{% url 'register_data'%}" class="btn-return-form" id="register-data"><button>Voltar</button></a>
+            </div>
         {% else %}
-            <form method="post" action="">
+            <h1>Informações Cadastrais</h1>
+            <form method="post" action="" class="forms-authenticated" id="no-login">
                 {% csrf_token %}
                 {{form.as_p}}
                 <button type="submit" class="btn-form">Atualizar Informações</button>
             </form>
-            <a href="{% url 'profile'%}">Voltar</a>
+            <a href="{% url 'profile'%}" class="btn-return-form"><button>Voltar</button></a>
         {% endif %}
     {% else %}
         <p>{{message_auth_error}}</p>
         <meta http-equiv="refresh" content="3;url={% url 'index'%}">
     {% endif %}
-</body>
-</html>
+{% endblock %}

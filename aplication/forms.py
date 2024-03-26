@@ -3,8 +3,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Profile, Occupation, ProfileSocialMedia, SocialMedia
 from ckeditor.widgets import CKEditorWidget
-import re
-from django.core.validators import URLValidator, RegexValidator
 
 
 class UpdateRegisterForm(UserCreationForm):
@@ -12,24 +10,28 @@ class UpdateRegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username','password1', 'password2')
+        error_messages = {
+            'password_mismatch': "As senhas não correspondem. Por favor, tente novamente."
+        }
 
     def __init__(self, *args, **kwargs):
         super(UpdateRegisterForm, self).__init__(*args, **kwargs)
 
-        self.fields['username'].widget.attrs['class'] = 'update-form'
+        self.fields['username'].widget.attrs['class'] = 'container-input'
         self.fields['username'].widget.attrs['placeholder'] = 'Nome de usuário'
         self.fields['username'].label = 'Username'
-        self.fields['username'].help_text = '<span class="spn-form-update"><small>O nome de usuário pode ter até 150 caracteres, letras, digitos, e @/./+/-/_ apenas.</small></span>'
+        self.fields['username'].help_text = '<span class="spn-form"><small>O nome de usuário pode ter até 150 caracteres, letras, digitos, e @/./+/-/_ apenas.</small></span>'
 
-        self.fields['password1'].widget.attrs['class'] = 'update-form'
+        self.fields['password1'].widget.attrs['class'] = 'container-input'
         self.fields['password1'].widget.attrs['placeholder'] = 'Senha'
         self.fields['password1'].label = 'Senha'
-        self.fields['password1'].help_text = '<ul class="spn-form-update small"><li>Sua senha não pode ser muito parecida com suas outras informações pessoais.</li><li>Sua senha deve conter pelo menos 8 caracteres.</li><li>Sua senha não pode ser uma senha comumente usada.</li><li>Sua senha não pode ser inteiramente numérica.</li></ul>'
+        self.fields['password1'].help_text = '<div><ul class="spn-form" id="ul"><small><li>Sua senha não pode ser muito parecida com suas outras informações pessoais.</li><li>Sua senha deve conter pelo menos 8 caracteres.</li><li>Sua senha não pode ser uma senha comumente usada.</li><li>Sua senha não pode ser inteiramente numérica.</li></small></ul></div>'
 
-        self.fields['password2'].widget.attrs['class'] = 'update-form'
+        self.fields['password2'].widget.attrs['class'] = 'container-input'
         self.fields['password2'].widget.attrs['placeholder'] = 'Confirme a senha'
         self.fields['password2'].label = 'Confirmação da senha'
-        self.fields['password2'].help_text = '<span class="spn-form-update"><small>Digite a mesma senha de antes, para verificação.</small></span>'
+        self.fields['password2'].help_text = '<span class="spn-form"><small>Digite a mesma senha de antes, para verificação.</small></span>'
+
 
     def clean_username(self):
         form_username = self.cleaned_data.get('username')
@@ -39,7 +41,15 @@ class UpdateRegisterForm(UserCreationForm):
         if User.objects.filter(username=form_username).exists():
             raise forms.ValidationError("Este nome de usuário já está em uso. Por favor, escolha outro.")
         return form_username
+    
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("As senhas não correspondem. Por favor, tente novamente.")
+        return password2
         
+
 class UpdatePersonalForm(UserChangeForm):
     first_name = forms.CharField(label='Primeiro nome', max_length=100, widget=forms.TextInput(attrs={'class':'update-form', 'placeholder':'Primeiro nome'}))
     last_name = forms.CharField(label='Segundo nome', max_length=100, widget=forms.TextInput(attrs={'class':'update-form', 'placeholder':'Último nome'}))
