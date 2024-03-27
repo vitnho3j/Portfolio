@@ -7,7 +7,7 @@
             {% if message_save_data_successfully %}
             <div class="container-logged-message">
                 <p>{{message_save_data_successfully}}</p>
-                <a href="{% url 'personal_data'%}">Voltar</a>
+                <a href="{% url 'profile'%}" class="btn-return-form"><button>Voltar</button></a>
             </div>
             {% else %}
                 <h1>Informações Pessoais</h1>

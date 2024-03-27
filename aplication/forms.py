@@ -85,6 +85,9 @@ class ProfileUpdateForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(ProfileUpdateForm, self).__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.error_messages = {'required':'O campo {fieldname} é obrigatório'.format(
+                fieldname=field.label)}
 
     def clean_photo(self):
         photo = self.cleaned_data.get('photo', False)
@@ -98,8 +101,8 @@ class ProfileUpdateForm(forms.ModelForm):
 
 
 class AddSocialMediaForm(forms.ModelForm):
-    social_media = forms.ModelChoiceField(label='Escolha uma rede social', empty_label=None, queryset=SocialMedia.objects.all(), widget=forms.Select(attrs={'class':'update-form'}))
-    identification = forms.CharField(required=True, label='Identificação da rede social', widget=forms.TextInput(attrs={'class':'update-form'}), help_text='Insira o número para adicionar o whatsapp no formato cód país + ddd + número, ex: (+55)24981094563 ou link do perfil para todas as outras redes.')
+    social_media = forms.ModelChoiceField(label='Escolha uma rede social', empty_label=None, queryset=SocialMedia.objects.all(), widget=forms.Select(attrs={'class':'container-input'}))
+    identification = forms.CharField(required=True, label='Identificação da rede social', widget=forms.TextInput(attrs={'class':'container-input'}), help_text='Insira o número para adicionar o whatsapp no formato cód país + ddd + número, ex: (+55)24981094563 ou link do perfil para todas as outras redes.')
 
     class Meta:
         model = ProfileSocialMedia

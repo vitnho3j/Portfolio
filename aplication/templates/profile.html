@@ -7,15 +7,15 @@
             <h1>Seja bem vindo <b>{{user.first_name}}</b>, o que deseja ?</h1>
             <div class="container-profile-options">
                 <div class="profile-option">
-                    <a href="{% url 'register_data' %}">Alterar dados cadastrais</a>
+                    <a href="{% url 'register_data' %}" class="btn-profile"><button>Alterar dados cadastrais</button></a>
                     <ion-icon name="arrow-forward-circle-outline"></ion-icon>
                 </div class="profile-option">
                 <div class="profile-option">
-                    <a href="{% url 'personal_data' %}">Alterar dados pessoais</a>
+                    <a href="{% url 'personal_data' %}" class="btn-profile"><button>Alterar dados pessoais</button></a>
                     <ion-icon name="arrow-forward-circle-outline"></ion-icon>
                 </div>
                 <div class="profile-option">
-                    <a href="{% url 'social_add' %}">Adicionar rede social</a>
+                    <a href="{% url 'social_add' %}" class="btn-profile"><button>Adicionar rede social</button></a>
                     <ion-icon name="arrow-forward-circle-outline"></ion-icon>
                 </div>
             </div>

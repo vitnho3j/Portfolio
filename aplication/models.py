@@ -32,20 +32,16 @@ def validate_link(value):
     if not re.match(url_pattern, value):
         raise ValidationError("O valor fornecido não é um link válido.")
     r = requests.head(value)
+    print(r.status_code)
+    if r.status_code not in [200]:
+        raise ValidationError("O link fornecido não é válido ou não está acessível") 
     try:
         r = requests.head(value)
         r.raise_for_status()
-        
-    except InvalidURL:
-        raise ValidationError("A URL fornecida é inválida.")
-     
-    except requests.HTTPError as e:
-        status_code = e.response.status_code
-        if status_code not in [200, 301]:
-            raise ValidationError("O link fornecido não é válido ou não está acessível") 
+
+    except requests.RequestException as e:
+        raise ValidationError("O link fornecido não é válido ou não está acessível: " + str(e))
     
-    except RequestException:
-        raise ValidationError("O link fornecido não é válido ou não está acessível") 
         
 def validate_number(value):
     value_cleaned = value.replace("(", "").replace(")", "").replace("+", "")

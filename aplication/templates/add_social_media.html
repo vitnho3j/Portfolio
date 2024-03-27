@@ -1,27 +1,26 @@
+{% extends 'base_authenticated_pages.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adicionar Redes Sociais</title>
-</head>
-<body>
-    {% if user.is_authenticated %}
+{% block title %}Redes Sociais{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+    <div class="container-form-authenticated">
         {% if message_save_data_successfully %}
+        <div class="container-logged-message" id="register-data">
             <p>{{message_save_data_successfully}}</p>
-            <a href="{% url 'social_add'%}">Voltar</a>
+            <a href="{% url 'profile'%}" class="btn-return-form" id="register-data"><button>Voltar</button></a>
+        </div>
         {% else %}
-        <form method="post" action="" enctype="multipart/form-data">
+        <h1>Redes Sociais</h1>
+        <form method="post" action="" enctype="multipart/form-data" class="forms-authenticated" id="no-login">
             {% csrf_token %}
             {{form.as_p}}
-            <a href="{% url 'profile'%}">Voltar</a>
             <button type="submit" class="btn-form">Atualizar Informações</button>
         </form>
+        <a href="{% url 'profile'%}" class="btn-return-form"><button>Voltar</button></a>
         {% endif %}
-    {% else %}
-        <p>{{message_auth_error}}</p>
-        <meta http-equiv="refresh" content="3;url={% url 'index'%}">
-    {% endif %}
-</body>
-</html>
+{% else %}
+    <p>{{message_auth_error}}</p>
+    <meta http-equiv="refresh" content="3;url={% url 'index'%}">
+{% endif %}
+{% endblock %}
+
