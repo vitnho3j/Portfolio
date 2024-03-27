@@ -51,8 +51,8 @@ class UpdateRegisterForm(UserCreationForm):
         
 
 class UpdatePersonalForm(UserChangeForm):
-    first_name = forms.CharField(label='Primeiro nome', max_length=100, widget=forms.TextInput(attrs={'class':'update-form', 'placeholder':'Primeiro nome'}))
-    last_name = forms.CharField(label='Segundo nome', max_length=100, widget=forms.TextInput(attrs={'class':'update-form', 'placeholder':'Último nome'}))
+    first_name = forms.CharField(label='Primeiro nome', max_length=100, widget=forms.TextInput(attrs={'class':'container-input', 'placeholder':'Primeiro nome'}))
+    last_name = forms.CharField(label='Segundo nome', max_length=100, widget=forms.TextInput(attrs={'class':'container-input', 'placeholder':'Último nome'}))
     password = None
 
     class Meta:
@@ -76,8 +76,8 @@ class ProfileUpdateForm(forms.ModelForm):
             raise forms.ValidationError(f'A descrição não pode exceder {max_length} caracteres (você digitou {len(value)} caracteres.)')
     
     photo = forms.ImageField(label='Foto de perfil')
-    description = forms.CharField(label='Sua descrição', max_length=1000, widget=CustomCKEditorWidget(), validators=[validate_description_length], error_messages={'max_length': ''})
-    occupation = forms.ModelChoiceField(label='Sua ocupação', queryset=Occupation.objects.all(), empty_label=None, widget=forms.Select(attrs={'class':'update-form'}))
+    description = forms.CharField(label='Descrição', max_length=1000, widget=CustomCKEditorWidget(attrs={'class': 'ck-editor', 'id': 'descricao-field'}), validators=[validate_description_length], error_messages={'max_length': ''})
+    occupation = forms.ModelChoiceField(label='Ocupação', queryset=Occupation.objects.all(), empty_label=None, widget=forms.Select(attrs={'class':'update-form'}))
 
     class Meta:
         model = Profile

@@ -3,7 +3,7 @@
 {% load static %}
 {%block content%}
     {% if user.is_authenticated %}
-    <div class="container-login">
+    <div class="container-form-authenticated">
         {% if message_save_data_successfully %}
             <div class="container-logged-message" id="register-data">
                 <p>{{message_save_data_successfully}}</p>

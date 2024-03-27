@@ -91,11 +91,16 @@
     flex-direction: column;
     gap: 30px;
     width: 90%;
+    max-height: 60vh;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .forms-authenticated#no-login input{
     display: inline;
+    min-height: 40px;
 }
+
 
 .spn-form{
     margin-top: 20px;
@@ -129,9 +134,15 @@
     transition: 600ms;
 }
 
+#descricao-field.ck-editor {
+    max-width: 98%;
+    width: 98%;
+    margin-right: 5px;
+}
+
 .forms-authenticated input{
     color: black;
-    width: 100%;
+    width: 98%;
     display: block;
     border: none;
     outline: none;
@@ -149,6 +160,19 @@
     margin-bottom: 30px;
     height: 40px;
     border-radius: 30px;
+}
+
+.btn-form{
+    min-height: 40px;
+}
+
+.btn-form#personal-data{
+    align-self: center;
+    width: 80%;
+}
+
+.btn-return-form#personal-data{
+    width: 71%;
 }
 
 .btn-return-form button{
@@ -237,7 +261,7 @@
     margin-right: 20px;
 }
 
-.container-login{
+.container-form-authenticated{
     position: relative;
     background-color: var(--background_elements);
     min-height: 400px;
@@ -252,12 +276,13 @@
     gap: 20px;
 }
 
-.container-login#register-data{
+
+.container-form-authenticated#register-data{
     display: block;
 }
 
 
-.container-login h1{
+.container-form-authenticated h1{
     margin-top: 30px;
 }
 

@@ -1,30 +1,28 @@
+{% extends 'base_authenticated_pages.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <!-- <link href="{% static 'css/style.css' %}" rel="stylesheet"/> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Informações Pessoais</title>
-</head>
-<body>
+{% block title %} Informações Pessoais {% endblock %}
+{% block content %}
     {% if user.is_authenticated %}
-        {% if message_save_data_successfully %}
-            <p>{{message_save_data_successfully}}</p>
-            <a href="{% url 'personal_data'%}">Voltar</a>
+        <div class="container-form-authenticated" id="personal-data">
+            {% if message_save_data_successfully %}
+            <div class="container-logged-message">
+                <p>{{message_save_data_successfully}}</p>
+                <a href="{% url 'personal_data'%}">Voltar</a>
+            </div>
+            {% else %}
+                <h1>Informações Pessoais</h1>
+                <form method="post" action="" enctype="multipart/form-data" class="forms-authenticated" id="no-login">
+                    {% csrf_token %}
+                    {{user_form.as_p|safe }}
+                    {{profile_form.as_p|safe }}
+                    {{profile_form.media}}
+                    <button type="submit" class="btn-form" id="personal-data">Atualizar Informações</button>
+                </form>
+                <a href="{% url 'profile'%}" class="btn-return-form" id="personal-data"><button>Voltar</button></a>
+            {% endif %}
         {% else %}
-            <form method="post" action="" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{user_form.as_p|safe }}
-                {{profile_form.as_p|safe }}
-                {{profile_form.media}}
-                <button type="submit" class="btn-form">Atualizar Informações</button>
-            </form>
-            <a href="{% url 'profile'%}">Voltar</a>
-        {% endif %}
-    {% else %}
-        <p>{{message_auth_error}}</p>
-        <meta http-equiv="refresh" content="3;url={% url 'index'%}">
+            <p>{{message_auth_error}}</p>
+            <meta http-equiv="refresh" content="3;url={% url 'index'%}">
+        </div>
     {% endif %}
-</body>
-</html>
+{% endblock %}
