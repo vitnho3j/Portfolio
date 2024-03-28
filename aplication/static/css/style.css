@@ -326,6 +326,12 @@
     max-width: 60%;
 }
 
+.container-form-authenticated#socials-edit{
+    overflow-y: auto;
+    gap: 0px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
 
 .container-form-authenticated#register-data{
     display: block;
@@ -511,7 +517,39 @@
     font-weight: 500;
 }
 
+.socials-edit-container{
+    margin: 10px;
+    border: solid 1px var(--black);
+    padding: 20px;
+}
+
+.socials-edit-container-icons{
+    display: flex;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.socials-edit-container ion-icon{
+    cursor:pointer;
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+}
+
+.socials-edit-container ion-icon#socials-edit-icon{
+    margin-bottom: 10px;
+}
+
+.socials-edit-container ion-icon#delete{
+    color: rgb(255, 131, 131);
+}
+.social-paragraph{
+    margin-top: 10px;
+    display: inline;
+}
+
 .testimonials-text{
+    white-space: pre-wrap;
     min-height: 180px;
     font-weight: 300;
     margin-top: 20px;

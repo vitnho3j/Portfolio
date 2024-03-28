@@ -222,6 +222,9 @@ class TestimonialsView(TemplateView):
             messages.error(request, (message_auth_error), extra_tags='message_auth_error')
             return render(request, self.template_name, {'message_auth_error':message_auth_error})
 
+class EditSocialsView(TemplateView):
+    template_name='edit_socials.html'
+
 class LogoutView(View):
     def get(self, request):
         logout(request)
