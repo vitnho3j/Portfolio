@@ -1,0 +1,30 @@
+{% extends 'base_authenticated_pages.html' %}
+{% load static %}
+{% block title%}Testemunho{%endblock%}
+{%block content%}
+{%if user.is_authenticated%}
+    <div class="container-form-authenticated">
+        {% if message_save_data_successfully %}
+        <div class="container-logged-message" id="register-data">
+            <p>{{message_save_data_successfully}}</p>
+            <a href="{% url 'testimonials_add'%}" class="btn-return-form" id="register-data"><button>Voltar</button></a>
+        </div>
+        {% else %}
+        <h1>Testemunho</h1>
+        <form method="post" action="" class="forms-authenticated" id="no-login">
+            {% csrf_token %}
+            {{form.as_p}}
+            <p>Quantidade de caracteres digitados: <span id="charCount">0</span></p>
+            <button type="submit" class="btn-form">Adicionar Testemunho</button>
+        </form>
+        <a href="{% url 'profile'%}" class="btn-return-form"><button>Voltar</button></a>
+        {% endif %}
+    </div>
+{%else%}
+    <p>{{message_auth_error}}</p>
+    <meta http-equiv="refresh" content="3;url={% url 'index'%}">
+{% endif %}
+{% endblock %}
+{%block scripts %}
+<script src="{% static 'js/caracteres_count.js' %}"></script>
+{% endblock %}

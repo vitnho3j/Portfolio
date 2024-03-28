@@ -2,7 +2,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
-from.views import IndexView, AboutView, PortfolioView, ContactView, CommentsView, LoginView, LogoutView, ProfileView, ProfileRegisterDataView, ProfilePersonalDataView, AddSocialMediaView
+from.views import IndexView, AboutView, PortfolioView, ContactView, CommentsView, LoginView, LogoutView, ProfileView, ProfileRegisterDataView, ProfilePersonalDataView, AddSocialMediaView, TestimonialsView
 
 urlpatterns = [
     path('', IndexView.as_view(), name="index"),
@@ -17,6 +17,7 @@ urlpatterns = [
     path('profile/register/data', ProfileRegisterDataView.as_view(), name='register_data'),
     path('profile/personal/data', ProfilePersonalDataView.as_view(), name='personal_data'),
     path('profile/social/add', AddSocialMediaView.as_view(), name='social_add'),
+    path('profile/testimonials', TestimonialsView.as_view(), name='testimonials_add'),
 ]
 
 if settings.DEBUG:

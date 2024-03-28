@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
-from .models import Profile, Occupation, ProfileSocialMedia, SocialMedia
+from .models import Profile, Occupation, ProfileSocialMedia, SocialMedia, Comment
 from ckeditor.widgets import CKEditorWidget
 
 
@@ -116,4 +116,21 @@ class AddSocialMediaForm(forms.ModelForm):
         cleaned_data = super().clean()
         instance = super().save(commit=False)
         instance.profile = self.profile
+        return cleaned_data
+    
+class AddTestimonialsForm(forms.ModelForm):
+    comment = forms.CharField(required=True, label='Escreva seu testemunho', widget=forms.Textarea(attrs={'class':'container-input', 'id': 'text-area'}), help_text="Insira seu relato sobre Vitor Daniel, o seu texto não pode ultrapassar 1500 caracteres")
+
+    class Meta:
+       model = Comment 
+       exclude = ('profile',)
+
+    def __init__(self, *args, **kwargs):
+        self.profile = kwargs.pop('profile', None)
+        super(AddTestimonialsForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        instance = super().save(commit=False)
+        instance.profile= self.profile
         return cleaned_data

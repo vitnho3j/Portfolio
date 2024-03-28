@@ -18,6 +18,7 @@
             </form>
             <a href="{% url 'profile'%}" class="btn-return-form"><button>Voltar</button></a>
         {% endif %}
+    </div>
     {% else %}
         <p>{{message_auth_error}}</p>
         <meta http-equiv="refresh" content="3;url={% url 'index'%}">

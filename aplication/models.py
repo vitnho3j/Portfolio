@@ -11,7 +11,6 @@ from django.core.validators import URLValidator, RegexValidator
 import requests
 from django.core.validators import URLValidator
 import tldextract
-from requests.exceptions import RequestException, InvalidURL
 
 
 def add_https(value):
@@ -170,28 +169,13 @@ class ProfileSocialMedia(models.Model):
         socials = profile.medias.all()
         if socials.count() >= limit:
             raise ValidationError("Você atingiu o limite(6) de redes socias que podem ser adicionadas, altere ou exclua uma rede social existente.")
-    
-    # def clean_profile(self):
-    #     limit = 6
-    #     socials = self.profile.medias.all()
-    #     if socials.count() >= limit:
-    #         raise ValidationError("Você atingiu o limite(6) de redes socias que podem ser adicionadas, altere ou exclua uma rede social existente.")
-    #     return self.profile
-            
-    # def clean(self):
-    #     # self.clean_social_media()
-    #     # self.clean_identification()
+
         
     def clean(self):
         self.clean_profile()
         self.clean_identification()
-        
-
-        
+              
     def save(self, *args, **kwargs):
-        # if self.social_media.is_link:
-        #     if not re.match(r'^https?://', self.identification):
-        #         self.identification = f'https://{self.identification}'
         self.full_clean()
         super().save(*args, **kwargs)
     
@@ -207,6 +191,22 @@ class Comment(models.Model):
         verbose_name = 'Comment'
         verbose_name_plural = 'Comments'
 
+    def clean_profile(self):
+        profile = self.profile
+        if profile is None:
+            raise ValueError("O perfil deve ser fornecido para a função clean.")
+        if profile.comments.all().count() >= 1:
+            raise ValidationError("Você só pode adicionar um testemunho, caso queira alterar alguma coisa, edite o testemunho existente.")
+        
+    def clean_comment(self):
+        comment = self.comment
+        comment_count = len(comment)
+        if comment_count > 1500:
+            raise ValidationError(f"O seu texto pode ter no máximo 1500 caracteres {comment_count}")
+    
+    def clean(self):
+        self.clean_profile()
+        self.clean_comment()
 
 class TypesTechnology(models.Model):
     name = models.CharField("Name of Type", max_length=30)
