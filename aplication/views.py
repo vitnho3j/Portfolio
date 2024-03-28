@@ -194,7 +194,8 @@ class TestimonialsView(TemplateView):
         message_auth_error = 'Você precisa estar autenticado para acessar esta página.'
         if request.user.is_authenticated:
             profile_user = get_object_or_404(Profile, user=request.user)
-            form = AddTestimonialsForm(data=request.GET or None, profile=profile_user)
+            testimonial = profile_user.comments.first()
+            form = AddTestimonialsForm(data=request.GET or None, profile=profile_user, instance=testimonial)
             return render(request, self.template_name, {'form':form})
         else:
             messages.error(request, (message_auth_error), extra_tags='message_auth_error')
@@ -205,11 +206,12 @@ class TestimonialsView(TemplateView):
         message_auth_error = 'Você precisa estar autenticado para acessar esta página, portanto, será redirecionado para a página inicial após 5 segundos.'
         if request.user.is_authenticated:
             profile_user = Profile.objects.get(user=request.user)
-            form = AddTestimonialsForm(data=request.POST or None, profile=profile_user)
+            testimonial = profile_user.comments.first()
+            form = AddTestimonialsForm(data=request.POST or None, profile=profile_user, instance=testimonial)
             if form.is_valid():
-                social_media = form.save(commit=False)
-                social_media.profile = profile_user
-                social_media.save()
+                testimonial = form.save(commit=False)
+                testimonial.profile = profile_user
+                testimonial.save()
                 messages.success(request, "Os seus dados foram atualizados.", extra_tags='message_save_data_successfully')
                 return render(request, self.template_name, {'message_save_data_successfully': message_save_data_successfully, 'form': form})
             else:

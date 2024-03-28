@@ -195,7 +195,7 @@ class Comment(models.Model):
         profile = self.profile
         if profile is None:
             raise ValueError("O perfil deve ser fornecido para a função clean.")
-        if profile.comments.all().count() >= 1:
+        if profile.comments.all().count() > 1:
             raise ValidationError("Você só pode adicionar um testemunho, caso queira alterar alguma coisa, edite o testemunho existente.")
         
     def clean_comment(self):
