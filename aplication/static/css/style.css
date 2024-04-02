@@ -468,6 +468,31 @@
     align-items: center;
     justify-content: center;
 }
+.a-left{
+    font-size: 2rem;
+    background-color: var(--purple_two);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--whiteNoChange);
+    cursor: pointer;
+    right: 80px;
+    top: 20px;
+    position: absolute;
+}
+
+.a-left#profile{
+    top: 860px;
+}
+
+.a-left:hover{
+    background-color: var(--purple_one);
+    transition: 400ms;
+}
+
 
 .btn-dark-mode-toggle{
     border: none;
@@ -540,12 +565,32 @@
     margin-bottom: 10px;
 }
 
+.container-socials-edit-message{
+    align-self: center;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    place-content: center;
+    background-color: red;
+}
+
+.container-sub-menu{
+    /* position: absolute; */
+    width: 100%;
+    background-color: red;
+}
+
 .socials-edit-container ion-icon#delete{
     color: rgb(255, 131, 131);
 }
 .social-paragraph{
     margin-top: 10px;
     display: inline;
+}
+
+.social-paragraph#link{
+    text-decoration: none;
+    color: #43BDFF;
 }
 
 .testimonials-text{
@@ -1244,6 +1289,7 @@ body{
     width: 100%;
     max-height: 100vh;
     height: 100vh;
+    position: relative;
 }
 
 .right{
@@ -1337,6 +1383,27 @@ body{
     max-width: 50%;
     animation: itens 1s ease forwards;
 }
+
+.container-sub-menu{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    top: 130px; 
+    z-index: 4;
+    position: fixed;
+    width: 49.3%;
+    gap: 50px;
+    color: var(--black);
+    background-color: var(--background_blue);
+}
+
+.container-sub-menu a{
+    border-radius: 10px;
+    padding: 10px;
+    border: solid 1px var(--black);
+}
+
 
 .menu li{
     display: flex;

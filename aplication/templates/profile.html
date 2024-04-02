@@ -22,6 +22,10 @@
                     <a href="{% url 'testimonials_add' %}" class="btn-profile"><button>{%if user.profile.comments.exists%}Editar Testemunho{%else%}Adicionar Testemunho{%endif%}</button></a>
                     <ion-icon name="arrow-forward-circle-outline"></ion-icon>
                 </div>
+                <div class="profile-option">
+                    <a href="{% url 'socials_edit' %}" class="btn-profile"><button>Editar redes socias</button></a>
+                    <ion-icon name="arrow-forward-circle-outline"></ion-icon>
+                </div>
             </div>
         </div>
     {% else %}
