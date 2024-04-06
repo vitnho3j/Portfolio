@@ -1,4 +1,4 @@
-from django.views.generic import TemplateView, View, CreateView
+from django.views.generic import TemplateView, View, CreateView, DeleteView
 from .models import Project, ProfileSocialMedia, Profile, Technology, Comment
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -169,7 +169,7 @@ class AddSocialMediaView(CreateView):
                 social_media.profile = profile_user
                 social_media.save()
                 messages.success(request, "Os seus dados foram atualizados.", extra_tags='message_save_data_successfully')
-                return render(request, self.template_name, {'message_save_data_successfully': "Os seus dados foram atualizados.", 'form': form})
+                return render(request, self.template_name, {'message_save_data_successfully': message_save_data_successfully, 'form': form})
             else:
                 return render(request, self.template_name, {'form': form})
         else:
@@ -222,8 +222,40 @@ class TestimonialsView(TemplateView):
             messages.error(request, (message_auth_error), extra_tags='message_auth_error')
             return render(request, self.template_name, {'message_auth_error':message_auth_error})
 
+class DeleteSocialsView(DeleteView):
+    template_name = "delete_socials.html"
+    model = ProfileSocialMedia
+
+    def delete(self, request, pk):
+        message_delete_sucess = "O social media foi excluido"
+        message_error_owner = "Você não é o proprietário desta rede social"
+        message_auth_error = 'Você precisa estar autenticado para acessar esta página, portanto, será redirecionado para a página inicial após 5 segundos.'
+
+        if request.user.is_authenticated:
+            social = get_object_or_404(ProfileSocialMedia, id=pk)
+            print(social)
+            if request.user.username == social.profile.user.username:
+                print(social)
+                social.delete()
+                messages.success(request, message_delete_sucess)
+                return render(request, self.template_name, {"message":message_delete_sucess})
+            else:
+                messages.error(request, message_error_owner)
+                return render(request, self.template_name, {"message":message_error_owner})
+        else:
+            messages.error(request, (message_auth_error), extra_tags='message_auth_error')
+            return render(request, self.template_name, {'message':message_auth_error})
+
 class EditSocialsView(TemplateView):
-    template_name='edit_socials.html'
+    template_name = "delete_socials.html"
+
+    def get(self, request):
+        message_auth_error = 'Você precisa estar autenticado para acessar esta página, portanto, será redirecionado para a página inicial após 5 segundos.'
+        if request.user.is_authenticated:
+            return render(request, self.template_name)
+        else:
+            messages.error(request, (message_auth_error), extra_tags='message_auth_error')
+            return render(request, self.template_name, {'message_auth_error':message_auth_error})
 
 class LogoutView(View):
     def get(self, request):

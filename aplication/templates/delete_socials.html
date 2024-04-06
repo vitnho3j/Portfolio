@@ -4,17 +4,18 @@
 {% block content %}
 {% if request.user.is_authenticated %}
 <div class="container-form-authenticated" id="socials-edit">
+    {% if message %}
+    <p>{{message}}</p>
+    {% endif %}
     {% if request.user.profile.medias.exists %}
         {% for social in request.user.profile.medias.all%}
         <div class="socials-edit-container">
             <ion-icon name="{{social.social_media.icon}}" id="socials-edit-icon"></ion-icon> 
             <p>Rede Social:{{social.social_media.name}}</p>
-            <p class="social-paragraph">Identificação: <p class="social-paragraph">Mostrar Identificação</p>{% if social.social_media.is_link %}/<a href="#" class="social-paragraph" id="link">Abrir Link</a>{%endif%}</p>
+            <p class="social-paragraph">Identificação:{% if social.social_media.is_link %}<a href="{{social.identification}}" target="_blank" class="social-paragraph" id="link"> Abrir Link</a>{% else %}<p class="social-paragraph">Mostrar Identificação</p>{%endif%}</p>
             <div class="socials-edit-container-icons">
-                <ion-icon name="create-outline"></ion-icon>
-                <ion-icon name="trash-outline" id="delete"></ion-icon>
+                <a href="{% url 'socials_delete' social.id %}"><ion-icon name="trash-outline" id="delete"></ion-icon></a>
             </div>
-            <a href="{% url 'profile'%}" class="btn-return-form"><button>Voltar</button></a>
         </div>
         {% endfor %}
     {% else %}
@@ -23,6 +24,7 @@
         <a href="{% url 'profile'%}" class="btn-return-form"><button>Voltar</button></a>
     </div>
     {% endif %}
+    <a href="{% url 'profile'%}" class="btn-return-form" id="delete"><button>Voltar</button></a>
 </div>
 {%else%}
 <p>{{message_auth_error}}</p>

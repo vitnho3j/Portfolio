@@ -485,7 +485,8 @@
 }
 
 .a-left#profile{
-    top: 860px;
+    /* top: 91%; */
+    right: 50%;
 }
 
 .a-left:hover{
@@ -546,12 +547,19 @@
     margin: 10px;
     border: solid 1px var(--black);
     padding: 20px;
+    min-width: 400px;
+    text-align: center;
 }
 
 .socials-edit-container-icons{
     display: flex;
     gap: 5px;
     margin-top: 10px;
+}
+
+.socials-edit-container-icons a{
+    height: 100%;
+    width: 100%;
 }
 
 .socials-edit-container ion-icon{
@@ -1927,6 +1935,24 @@ body{
 }
 
 @media only screen and (max-width:1024px) {
+    .socials-edit-container{
+        min-width: 100px;
+        max-width: 90%;
+    }
+    .container-form-authenticated{
+        max-height: 70%;
+    }
+    .container-form-authenticated h1{
+        font-size: 1rem;
+    }
+    .container-form-authenticated#socials-edit{
+        max-height: 70%;
+    }
+    .btn-return-form#delete{
+        position: fixed;
+        bottom: 50px;
+        width: 80%;
+    }
     .btn-dark-mode-toggle{
         height: 40px;
         width: 40px;
@@ -1938,6 +1964,13 @@ body{
         z-index: 30;
     }
     .btn-dark-mode-toggle li{
+        font-size: 1.5rem;
+    }
+    .btn-home{
+        height: 40px;
+        width: 40px;
+    }
+    .btn-home li{
         font-size: 1.5rem;
     }
     #fade{
@@ -2109,9 +2142,33 @@ body{
     .projectCategory{
         font-size: 1.4rem;
     }
+
+    .container-profile{
+        overflow-y: auto;
+        height: 80%;
+        width: 80%;
+        margin-bottom: 50px;
+    }
 }
 
 @media only screen and (max-width:700px) {
+    .container-profile h1{
+        font-size: 1.3rem;
+    }
+
+    .btn-profile button{
+        font-size: 1rem;
+    }
+    .container-profile{
+        overflow-y: auto;
+        height: 70%;
+        width: 80%;
+    }
+    .profile-option ion-icon{
+        right: 5px;
+        position: absolute;
+        font-size: 1.5rem;
+    }
     .name-project-info{
         font-size: 1.5rem;
     }
@@ -2161,6 +2218,13 @@ body{
 }
 
 @media only screen and (max-width:350px) {
+    .container-form-authenticated{
+        min-width: 0;
+        max-width: 90%;
+    }
+    .btn-profile button{
+        font-size: .6rem;
+    }
     
     .profile-description{
         word-break: break-all;
