@@ -2156,6 +2156,10 @@ body{
         font-size: 1.3rem;
     }
 
+    .btn-form#personal-data{    
+        font-size: .8rem;
+    }
+
     .btn-profile button{
         font-size: 1rem;
     }

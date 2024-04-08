@@ -13,11 +13,15 @@ from django.core.validators import URLValidator
 import tldextract
 
 
+
+def len_no_ansi(string):
+    y = re.sub(r'\r\n','\n', string)
+    return len(y)
+
 def add_https(value):
     if not re.match(r'^https?://', value):
         value = f'https://{value}'
     return value
-
 
 def validate_link(value):
     url_pattern = re.compile(
@@ -196,13 +200,13 @@ class Comment(models.Model):
         if profile is None:
             raise ValueError("O perfil deve ser fornecido para a função clean.")
         if profile.comments.all().count() > 1:
-            raise ValidationError("Você só pode adicionar um testemunho, caso queira alterar alguma coisa, edite o testemunho existente.")
+            raise ValidationError("Você só pode adicionar um testemunho, caso queira alterar alguma coisa, edite o testemunho existente.")    
         
     def clean_comment(self):
         comment = self.comment
-        comment_count = len(comment)
+        comment_count = len_no_ansi(comment)
         if comment_count > 1500:
-            raise ValidationError(f"O seu texto pode ter no máximo 1500 caracteres {comment_count}")
+            raise ValidationError(f"O seu texto pode ter no máximo 1500 caracteres, você digitou {comment_count}")
     
     def clean(self):
         self.clean_profile()
