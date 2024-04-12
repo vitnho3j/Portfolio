@@ -1,0 +1,18 @@
+{% extends 'base_authenticated_pages.html' %}
+{% load static %}
+{% block title %} Profile {% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+    <div class="container-form-authenticated" id="exclude">
+        <p>Você tem certeza que deseja apagar a rede social '{{ object.identification }} ?'</p>
+        <form action="." method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn-form">Deletar</button>
+            <a type="reset" class="btn-form" href="{% url 'profile'%}">Voltar</button>
+        </form>
+    </div>
+{% else %}
+    <p>{{message_auth_error}}</p>
+    <meta http-equiv="refresh" content="3;url={% url 'index'%}">
+{% endif %}
+{% endblock %}
