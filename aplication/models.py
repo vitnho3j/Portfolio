@@ -256,10 +256,11 @@ class Project(models.Model):
     photo = StdImageField('Photo', null=True, blank=True, upload_to=get_file_path)
     text = RichTextUploadingField(blank=True, null=True)
     description = models.TextField("Description", max_length=1000)
-    link = models.CharField("Link", null=True, blank=True, max_length=3000)
+    link = models.URLField(blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(Category, related_name="projects", on_delete=models.SET_NULL, null=True, blank=True)
     technology = models.ManyToManyField(Technology)
+    repository = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return self.name

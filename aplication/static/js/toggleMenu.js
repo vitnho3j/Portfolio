@@ -6,6 +6,9 @@ const projectName = document.querySelector("#name-project-info")
 const projectImage = document.querySelector("#project-image")
 const category = document.querySelector("p#content")
 const demo = document.querySelector("#demo a")
+const demo_paragraph = document.querySelector("#demo")
+const repository = document.querySelector("#repository a")
+const repository_paragraph = document.querySelector("#repository")
 const projectDescription = document.querySelector("#project-description")
 const projectText = document.querySelector("#project-text")
 const technologysDiv = document.querySelector("#project-technology");
@@ -57,6 +60,8 @@ function setAttributes(openModalButton = null){
     setInnerHTMLAtribute(category, openModalButton.getAttribute('category'))
     setInnerHTMLAtribute(demo, 'Clique aqui')
     setHref(demo, openModalButton.getAttribute('link') )
+    setInnerHTMLAtribute(repository, 'Clique aqui')
+    setHref(repository, openModalButton.getAttribute('repository'))
     setInnerHTMLAtribute(projectDescription, openModalButton.getAttribute('description'))
     setInnerHTMLAtribute(projectText, openModalButton.getAttribute('text'))
     setTechnologys(openModalButton)
@@ -74,9 +79,24 @@ function showBackground(){
   left.style.display = "flex";
 }
 
+function testDemo(openModalButton){
+  link = openModalButton.getAttribute('link')
+  if (link === 'None'){
+    demo_paragraph.style.display = "none"
+  }
+}
+
+function testRepository(openModalButton){
+  link = openModalButton.getAttribute("repository")
+  if (link === 'None'){
+    repository_paragraph.style.display = "none"
+  }
+}
 
 const toggleModal = (openModalButton = null) => {
   if (openModalButton) {
+    testDemo(openModalButton)
+    testRepository(openModalButton)
     setAttributes(openModalButton)
     if (window.innerWidth < 1024){
       hideBackground()

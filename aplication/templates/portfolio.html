@@ -21,6 +21,7 @@
                         <h2 class="project-information">Informações do Projeto</h2>
                         <p class="project-info topic" id="category">Categoria: <p class="project-info" id="content"></p></p>
                         <p class="project-info topic" id="demo">Demo: <a class="project-info" id="content" href="#" target="_blank"></a></p>
+                        <p class="project-info topic" id="repository">Repositório: <a class="project-info" id="content" href="#" target="_blank"></a></p>
                     </div>
                     <p class="project-description" id="project-description"></p>
                     <div class="container-project-technology">
@@ -66,6 +67,7 @@
                                 onclick="getIdClicked('{{project.id}}')"
                                 image="{{project.photo.url }}"
                                 technologys="{{ project.technology.all|join:', ' }}"
+                                repository = "{{project.repository}}"
                                 >
                             </ion-icon>
                         </a>
