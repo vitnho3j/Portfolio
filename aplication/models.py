@@ -261,6 +261,7 @@ class Project(models.Model):
     category = models.ForeignKey(Category, related_name="projects", on_delete=models.SET_NULL, null=True, blank=True)
     technology = models.ManyToManyField(Technology)
     repository = models.URLField(blank=True, null=True)
+    finished = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

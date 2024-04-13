@@ -853,6 +853,13 @@
     color:#03bcf4;
 }
 
+.container-project-image h1{
+    background-color: rgb(247, 124, 124);
+    text-align: center;
+    width: 100%;
+    position: absolute;
+}
+
 .person h2{
     font-weight: 300;
 }
@@ -919,6 +926,7 @@
     grid-area: container-project-image;
     width: 100%;
     aspect-ratio: 16/9;
+    position: relative;
 }
 
 .project-info#topic{
@@ -982,11 +990,11 @@ a.project-info{
 }
 
 .demo{
+    background-color: rgb(247, 124, 124);
+    text-align: center;
+    width: 100%;
     position: absolute;
-    left: 80%;
-    top: 5%;
-    color: var(--purple_two);
-    margin-right: 100px;
+    color: white;
 }
 
 .containerNameProject p{
@@ -1010,6 +1018,11 @@ a.project-info{
     object-fit: cover;
     width: 100%;
     vertical-align: top;
+    z-index: 5;
+}
+
+.projectThumb#no-project-image{
+    object-fit: contain;
 }
 
 .projectInfo{

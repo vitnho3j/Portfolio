@@ -14,6 +14,7 @@ const projectText = document.querySelector("#project-text")
 const technologysDiv = document.querySelector("#project-technology");
 const left = document.querySelector(".left#portfolio")
 const principal = document.querySelector(".rightPages#portfolio")
+const project_status = document.querySelector("#project-status")
 var scrollPosition
 
 
@@ -83,6 +84,8 @@ function testDemo(openModalButton){
   link = openModalButton.getAttribute('link')
   if (link === 'None'){
     demo_paragraph.style.display = "none"
+  } else {
+    demo_paragraph.style.display = 'block'
   }
 }
 
@@ -90,11 +93,25 @@ function testRepository(openModalButton){
   link = openModalButton.getAttribute("repository")
   if (link === 'None'){
     repository_paragraph.style.display = "none"
+  } else {
+    repository_paragraph.style.display = "block"
+  }
+}
+
+function testStatus(openModalButton){
+  var finished = openModalButton.getAttribute("finished")
+  console.log(finished)
+  if (finished === "False"){
+    setInnerHTMLAtribute(project_status, "Projeto em andamento")
+    project_status.style.display = 'block'
+  } else {
+    project_status.style.display = 'none'
   }
 }
 
 const toggleModal = (openModalButton = null) => {
   if (openModalButton) {
+    testStatus(openModalButton)
     testDemo(openModalButton)
     testRepository(openModalButton)
     setAttributes(openModalButton)
