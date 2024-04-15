@@ -18,13 +18,13 @@
             </div>
         </div>
         {% endfor %}
+        <a href="{% url 'profile'%}" class="btn-return-form" id="delete"><button>Voltar</button></a>
     {% else %}
     <div class="container-socials-edit-message">
         <p>Você não possui redes socias</p>
-        <a href="{% url 'profile'%}" class="btn-return-form"><button>Voltar</button></a>
+        <a href="{% url 'profile'%}" class="btn-doesnt-have-socials" id="delete"><button>Voltar</button></a>
     </div>
     {% endif %}
-    <a href="{% url 'profile'%}" class="btn-return-form" id="delete"><button>Voltar</button></a>
 </div>
 {%else%}
 <p>{{message_auth_error}}</p>

@@ -188,12 +188,28 @@
     color: var(--whiteNoChange);
 }
 
+.btn-doesnt-have-socials button{
+    text-transform: uppercase;
+    border: none;
+    outline: none;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    min-width: 100%;
+    min-height: 100%;
+    background-color: rgb(221, 220, 220);
+}
 
 .btn-return-form{
+    margin-top: 10px;
     width: 90%;
     margin-bottom: 30px;
     height: 40px;
     border-radius: 30px;
+}
+
+.btn-return-form#delete{
+    max-width: 300px;
 }
 
 .btn-form{
@@ -334,8 +350,8 @@
 .container-form-authenticated#socials-edit{
     overflow-y: auto;
     gap: 0px;
-    max-height: 80vh;
-    overflow-y: auto;
+    max-height: 90%;
+    max-width: 80%;
 }
 
 .container-form-authenticated#register-data{
@@ -585,13 +601,12 @@
     width: 100%;
     display: grid;
     place-content: center;
-    background-color: red;
+    position: absolute;
+    min-height: 100%;
 }
 
 .container-sub-menu{
-    /* position: absolute; */
     width: 100%;
-    background-color: red;
 }
 
 .socials-edit-container ion-icon#delete{
@@ -2260,6 +2275,9 @@ body{
     .container-form-authenticated{
         min-width: 0;
         max-width: 90%;
+    }
+    .container-form-authenticated#socials-edit{
+        min-width: 90%;
     }
     .btn-profile button{
         font-size: .6rem;
