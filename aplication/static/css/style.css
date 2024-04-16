@@ -208,6 +208,31 @@
     border-radius: 30px;
 }
 
+.btn-form-delete#back:hover{
+    background-color: rgb(172, 172, 172);
+}
+
+.btn-form-delete:hover{
+    background-color: rgb(190, 118, 118);
+    transition: 200ms;
+    color: white;
+}
+
+.btn-form-delete{
+    height: 50px;
+    width: 150px;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    background-color: rgb(255, 158, 158);
+}
+
+.btn-form-delete#back{
+    background-color: rgb(221, 220, 220);
+}
+
 .btn-return-form#delete{
     max-width: 300px;
 }
@@ -345,6 +370,13 @@
 .container-form-authenticated#exclude{
     justify-content: center;
     padding: 20px;
+    margin-top: 40px;
+}
+.container-form-authenticated#exclude a{
+    color: #03bcf4;
+    word-wrap:break-word;
+    overflow-wrap:break-word;
+    max-width: 100%;
 }
 
 .container-form-authenticated#socials-edit{
@@ -630,6 +662,7 @@
     overflow-y: auto;
     max-height: 180px;
     color: var(--black);
+    word-wrap: break-word;
 }
 
 .testimonials-base{
@@ -1976,6 +2009,9 @@ body{
 }
 
 @media only screen and (max-width:1024px) {
+    .btn-form-delete{
+        width: 100px;
+    }
     .socials-edit-container{
         min-width: 100px;
         max-width: 90%;

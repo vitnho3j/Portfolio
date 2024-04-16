@@ -227,30 +227,24 @@ class TestimonialsView(TemplateView):
 class DeleteSocialsView(DeleteView):
     template_name = 'profilesocialmedia_confirm_delete.html'
     queryset = ProfileSocialMedia.objects.all()
-    # success_url = reverse_lazy('socials_edit')
-    # success_url ="/"
-    # template_name = 'profilesocialmedia_confirm_delete.html'
 
-    def post(self, request, pk, *args, **kwargs):
+    def post(self, request, pk):
         message_delete_sucess = "O social media foi excluido"
         message_error_owner = "Você não é o proprietário desta rede social"
         message_auth_error = 'Você precisa estar autenticado para acessar esta página, portanto, será redirecionado para a página inicial após 5 segundos.'
-
+        
         if request.user.is_authenticated:
             social = get_object_or_404(ProfileSocialMedia, id=pk)
             if request.user.username == social.profile.user.username:
                 social.delete()
                 messages.success(request, message_delete_sucess)
                 return redirect('socials_edit')
-                # render(request, 'delete_socials.html', {"message":message_delete_sucess})
-                # return super().post(request, *args, **kwargs)
+
             else:
                 messages.error(request, message_error_owner)
-                # return render(request, self.template_name, {"message":message_error_owner})
         else:
             messages.error(request, (message_auth_error), extra_tags='message_auth_error')
-            # return render(request, self.template_name, {'message':message_auth_error})
-        return HttpResponseRedirect(self.request.path)
+        return redirect('socials_edit')
 
 class EditSocialsView(TemplateView):
     template_name = "delete_socials.html"
