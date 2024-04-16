@@ -3,7 +3,22 @@
 
 {% block title %} Vitor Daniel - Sobre {% endblock %}
 {% block right %}rightPages{% endblock %}
+{% block id %}id="about"{% endblock %}
+{% block idLeft %}id="about"{% endblock %}
 {% block content %}
+    <div id="fade" class="hide"></div>
+    <div id="info-project" class="hide">
+        <div class="container-project-information" id="curriculum">
+            <div class="container-curriculum" id="curriculum">
+                <p id="close-curriculum" class="close-curriculum">X</p>
+                <p>Qual versão você deseja ?</p>
+                <div class="languages-options">
+                    <a href="{% url 'socials_edit'%}"><button class="btn-form-delete" id="back" type="button">Português</button></a>
+                    <a href="{% url 'socials_edit'%}"><button class="btn-form-delete" id="back" type="button">Inglês</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="containerAbout">
         <div class="titleWhoAbout">
             <p>Quem sou eu ?</p>
@@ -76,8 +91,11 @@
         <div class="containerTextCurriculum">
             <h2 class="curriculumText">Você pode ver meu currículo abaixo</h2>
         </div>
-        <a href="#" class="clickHere"><span></span>CLIQUE AQUI !</a>
+        <a href="#" class="clickHere" onclick="toggleModal()"><span></span>CLIQUE AQUI !</a>
     </div>
 </div>
+{% block scripts%}
+    <script src="{% static 'js/toggleCurriculum.js' %}" defer></script>
+{% endblock %}
 {% endblock %}
 

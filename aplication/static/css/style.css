@@ -858,6 +858,37 @@
     font-weight: 300;
 }
 
+.container-curriculum{
+    position: fixed;
+    display: grid;
+    width: 40%;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -20%); 
+    box-sizing: border-box; 
+    padding: 20px;
+    font-family: "Poppins", sans-serif;
+    border: solid 1px white;
+    place-items: center;
+    color: white;
+    background-color: var(--background_resume);
+    gap: 10px;
+}
+
+.close-curriculum{
+    font-size: 2rem;
+    font-weight: 500;
+    border: solid 1px white;
+    width: 60px;
+    text-align: center;
+    background-color: rgb(250, 153, 153);
+}
+
+.close-curriculum:hover{
+    background-color: rgb(206, 107, 107);
+    transition: 200ms;
+}
+
 .technology-type{
     display: grid;
     place-content: center;
@@ -1035,6 +1066,10 @@ a.project-info{
     display: inline;
     color: var(--whiteNoChange);
     align-self: flex-end;
+}
+
+.close-curriculum{
+    cursor: pointer;
 }
 
 .demo{
@@ -2009,6 +2044,9 @@ body{
 }
 
 @media only screen and (max-width:1024px) {
+    .container-curriculum{
+        width: 90%;
+    }
     .btn-form-delete{
         width: 100px;
     }
