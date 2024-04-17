@@ -5,20 +5,22 @@
 {% block right %}rightPages{% endblock %}
 {% block id %}id="about"{% endblock %}
 {% block idLeft %}id="about"{% endblock %}
-{% block content %}
-    <div id="fade" class="hide"></div>
+{% block onclick %}
+    <div id="fade-about" class="hide"></div>
     <div id="info-project" class="hide">
         <div class="container-project-information" id="curriculum">
             <div class="container-curriculum" id="curriculum">
                 <p id="close-curriculum" class="close-curriculum">X</p>
-                <p>Qual versão você deseja ?</p>
+                <p class="curriculum-version">Qual versão você deseja ?</p>
                 <div class="languages-options">
-                    <a href="{% url 'socials_edit'%}"><button class="btn-form-delete" id="back" type="button">Português</button></a>
-                    <a href="{% url 'socials_edit'%}"><button class="btn-form-delete" id="back" type="button">Inglês</button></a>
+                    <a href="{% url 'socials_edit'%}"><button class="btn-form-delete" id="curriculum" type="button">Português</button></a>
+                    <a href="{% url 'socials_edit'%}"><button class="btn-form-delete" id="curriculum" type="button">Inglês</button></a>
                 </div>
             </div>
         </div>
     </div>
+{% endblock %}
+{% block content %}
     <div class="containerAbout">
         <div class="titleWhoAbout">
             <p>Quem sou eu ?</p>

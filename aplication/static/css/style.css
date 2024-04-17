@@ -212,6 +212,10 @@
     background-color: rgb(172, 172, 172);
 }
 
+.btn-form-delete#curriculum:hover{
+    background-color: rgb(172, 172, 172);
+}
+
 .btn-form-delete:hover{
     background-color: rgb(190, 118, 118);
     transition: 200ms;
@@ -230,6 +234,10 @@
 }
 
 .btn-form-delete#back{
+    background-color: rgb(221, 220, 220);
+}
+
+.btn-form-delete#curriculum{
     background-color: rgb(221, 220, 220);
 }
 
@@ -947,13 +955,13 @@
     margin-top: 10px;
 }
 
-#fade, #modal{
+#fade, #modal, #fade-about{
     transition: 0.5s;
     opacity: 1;
     pointer-events: all;
 }
 
-#fade{
+#fade, #fade-about{
     position:fixed;
     top: 0;
     left: 0;
@@ -988,9 +996,9 @@
     z-index: 10;
 }
 
-
 #info-profile.hide,
 #info-project.hide,
+#fade-about.hide,
 #fade.hide{
     opacity: 0;
     pointer-events: none;
@@ -1434,7 +1442,7 @@ body{
     
 }
 
-.rightPages > *:not(.menu) {
+.rightPages > *:not(.menu):not(.hide) {
     animation: itens 1s linear;
 }
 
@@ -2423,5 +2431,12 @@ body{
     }
     .person h1{
         font-size: 1.5rem;
+    }
+    .curriculum-version{
+        font-size: .9rem;
+    }
+    .btn-form-delete#curriculum{
+        width: 80px;
+        font-size: .6rem;
     }
 }
