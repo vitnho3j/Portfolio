@@ -35,7 +35,6 @@ def validate_link(value):
     if not re.match(url_pattern, value):
         raise ValidationError("O valor fornecido não é um link válido.")
     r = requests.head(value)
-    print(r.status_code)
     if r.status_code not in [200]:
         raise ValidationError("O link fornecido não é válido ou não está acessível") 
     try:

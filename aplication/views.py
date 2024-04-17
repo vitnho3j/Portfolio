@@ -1,5 +1,3 @@
-from django.http import HttpResponseRedirect
-from django.urls import reverse_lazy
 from django.views.generic import TemplateView, View, CreateView, DeleteView
 from .models import Project, ProfileSocialMedia, Profile, Technology, Comment
 from django.contrib.auth import authenticate, login, logout
@@ -8,6 +6,11 @@ from django.shortcuts import redirect, render
 from .forms import UpdateRegisterForm, UpdatePersonalForm, ProfileUpdateForm, AddSocialMediaForm, AddTestimonialsForm
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
+
+message_auth_error = 'Você precisa estar autenticado para acessar esta página.'
+message_save_data_successfully = "Os seus dados foram atualizados."
+message_delete_sucess = "O social media foi excluido"
+message_error_owner = "Você não é o proprietário desta rede social"
 
 class IndexView(TemplateView):
     template_name = 'index.html'
@@ -78,7 +81,6 @@ class ProfilePersonalDataView(TemplateView):
         return context
 
     def get(self, request):
-        message_auth_error = 'Você precisa estar autenticado para acessar esta página.'
         if request.user.is_authenticated:
             return self.render_to_response(self.get_context_data(request))
         else:
@@ -86,13 +88,11 @@ class ProfilePersonalDataView(TemplateView):
             return render(request, self.template_name, {'message_auth_error':message_auth_error})
     
     def post(self, request):
-        message_auth_error = 'Você precisa estar autenticado para acessar esta página.'
         current_user = User.objects.get(id=request.user.id)
         profile_user = Profile.objects.get(user__id=request.user.id)
 
         user_form = UpdatePersonalForm(request.POST or None, request.FILES or None, instance=current_user)
         profile_form = ProfileUpdateForm(request.POST or None, request.FILES or None, instance=profile_user)
-        message_save_data_successfully = "Os seus dados foram atualizados."
         if current_user.is_authenticated:
             if user_form.is_valid() and profile_form.is_valid():
                 user_form.save()
@@ -116,7 +116,6 @@ class ProfileRegisterDataView(TemplateView):
         return context
 
     def get(self, request):
-        message_auth_error = 'Você precisa estar autenticado para acessar esta página.'
         if request.user.is_authenticated:
             return self.render_to_response(self.get_context_data(request))
         else:
@@ -124,10 +123,8 @@ class ProfileRegisterDataView(TemplateView):
             return render(request, self.template_name, {'message_auth_error':message_auth_error})
     
     def post(self, request):
-        message_auth_error = 'Você precisa estar autenticado para acessar esta página.'
         current_user = User.objects.get(id=request.user.id)
         form = UpdateRegisterForm(request.POST, instance=current_user)
-        message_save_data_successfully = "Os seus dados foram atualizados."
         if current_user.is_authenticated:
             if form.is_valid():
                 form.save()
@@ -144,7 +141,6 @@ class ProfileView(TemplateView):
     template_name = 'profile.html'
 
     def get(self, request):
-        message_auth_error = 'Você precisa estar autenticado para acessar esta página, portanto, será redirecionado para a página inicial após 5 segundos.'
         if request.user.is_authenticated:
             return render(request, self.template_name)
         else:
@@ -161,8 +157,6 @@ class AddSocialMediaView(CreateView):
         kwargs.update({'profile': profile_user})
 
     def post(self, request):
-        message_save_data_successfully = "Os seus dados foram atualizados."
-        message_auth_error = 'Você precisa estar autenticado para acessar esta página, portanto, será redirecionado para a página inicial após 5 segundos.'
         if request.user.is_authenticated:
             profile_user = Profile.objects.get(user=request.user)
             form = AddSocialMediaForm(data=request.POST or None, profile=profile_user)
@@ -180,7 +174,6 @@ class AddSocialMediaView(CreateView):
 
 
     def get(self, request):
-        message_auth_error = 'Você precisa estar autenticado para acessar esta página.'
         if request.user.is_authenticated:
             profile_user = get_object_or_404(Profile, user=request.user)
             form = AddSocialMediaForm(data=request.GET or None, profile=profile_user)
@@ -193,7 +186,6 @@ class TestimonialsView(TemplateView):
     template_name = 'testimonials.html'
 
     def get(self, request):
-        message_auth_error = 'Você precisa estar autenticado para acessar esta página.'
         if request.user.is_authenticated:
             profile_user = get_object_or_404(Profile, user=request.user)
             testimonial = profile_user.comments.first()
@@ -204,8 +196,6 @@ class TestimonialsView(TemplateView):
             return render(request, self.template_name, {'message_auth_error':message_auth_error})
 
     def post(self, request):
-        message_save_data_successfully = "Os seus dados foram atualizados."
-        message_auth_error = 'Você precisa estar autenticado para acessar esta página, portanto, será redirecionado para a página inicial após 5 segundos.'
         if request.user.is_authenticated:
             profile_user = Profile.objects.get(user=request.user)
             testimonial = profile_user.comments.first()
@@ -229,9 +219,6 @@ class DeleteSocialsView(DeleteView):
     queryset = ProfileSocialMedia.objects.all()
 
     def post(self, request, pk):
-        message_delete_sucess = "O social media foi excluido"
-        message_error_owner = "Você não é o proprietário desta rede social"
-        message_auth_error = 'Você precisa estar autenticado para acessar esta página, portanto, será redirecionado para a página inicial após 5 segundos.'
         
         if request.user.is_authenticated:
             social = get_object_or_404(ProfileSocialMedia, id=pk)
@@ -250,7 +237,6 @@ class EditSocialsView(TemplateView):
     template_name = "delete_socials.html"
 
     def get(self, request):
-        message_auth_error = 'Você precisa estar autenticado para acessar esta página, portanto, será redirecionado para a página inicial após 5 segundos.'
         if request.user.is_authenticated:
             return render(request, self.template_name)
         else:

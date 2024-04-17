@@ -947,6 +947,11 @@
     position: absolute;
 }
 
+.text-authenticated{
+    text-align: center;
+    padding: 10px;
+}
+
 .person h2{
     font-weight: 300;
 }

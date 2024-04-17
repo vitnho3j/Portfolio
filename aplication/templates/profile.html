@@ -29,7 +29,7 @@
             </div>
         </div>
     {% else %}
-        <p>Você precisa estar autenticado para acessar esta página.</p>
+        <p class="text-authenticated">Você precisa estar autenticado para acessar esta página.</p>
         <meta http-equiv="refresh" content="3;url={% url 'index'%}">
     {% endif %}
 {% endblock %}
