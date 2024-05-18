@@ -1,0 +1,33 @@
+{% extends 'base_authenticated_pages.html'%}
+{% load static %}
+{% block title %}Editar Redes Sociais{% endblock %}
+{% block content %}
+{% if request.user.is_authenticated %}
+<div class="container-form-authenticated" id="socials-edit">
+    {% if message %}
+    <p>{{message}}</p>
+    {% endif %}
+    {% if request.user.profile.medias.exists %}
+        {% for social in request.user.profile.medias.all%}
+        <div class="socials-edit-container">
+            <ion-icon name="{{social.social_media.icon}}" id="socials-edit-icon"></ion-icon> 
+            <p>Rede Social:{{social.social_media.name}}</p>
+            <p class="social-paragraph">Identificação:{% if social.social_media.is_link %}<a href="{{social.identification}}" target="_blank" class="social-paragraph" id="link"> Abrir Link</a>{% else %}<p class="social-paragraph">Mostrar Identificação</p>{%endif%}</p>
+            <div class="socials-edit-container-icons">
+                <a href="{% url 'socials_delete' social.id %}"><ion-icon name="trash-outline" id="delete"></ion-icon></a>
+            </div>
+        </div>
+        {% endfor %}
+        <a href="{% url 'profile'%}" class="btn-return-form" id="delete"><button>Voltar</button></a>
+    {% else %}
+    <div class="container-socials-edit-message">
+        <p>Você não possui redes socias</p>
+        <a href="{% url 'profile'%}" class="btn-doesnt-have-socials" id="delete"><button>Voltar</button></a>
+    </div>
+    {% endif %}
+</div>
+{%else%}
+<p class="text-authenticated">{{message_auth_error}}</p>
+<meta http-equiv="refresh" content="3;url={% url 'index'%}">
+{% endif%}
+{%endblock%}

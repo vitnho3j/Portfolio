@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{%load static %}
+
+{% block title %} Vitor Daniel - Portfolio {% endblock %}
+{% block right %}rightPages{% endblock %}
+{% block id %}id="portfolio"{% endblock %}
+{% block idLeft %}id="portfolio"{% endblock %}
+
+{% block onclick %}
+    <div id="fade" class="hide"></div>
+    <div id="info-project" class="hide">
+        <div class="container-project">
+            <div class="container-project-information"  id="begin">
+                <p id="close-info" class="close-info">X</p>
+                <h1 class="name-project-info" id="name-project-info"></h1>
+                <div class="container-project-image">
+                    <h1 class="project-status" id="project-status"></h1>
+                    <img src="{{project.photo.url}}" class="project-image" id="project-image"/>
+                </div>
+                <div class="container-project-description">
+                    <div class="container-project-information-right">
+                        <h2 class="project-information">Informações do Projeto</h2>
+                        <p class="project-info topic" id="category">Categoria: <p class="project-info" id="content"></p></p>
+                        <p class="project-info topic" id="demo">Demo: <a class="project-info" id="content" href="#" target="_blank"></a></p>
+                        <p class="project-info topic" id="repository">Repositório: <a class="project-info" id="content" href="#" target="_blank"></a></p>
+                    </div>
+                    <p class="project-description" id="project-description"></p>
+                    <div class="container-project-technology">
+                        <p class="project-info" id="topic">Tecnologias</p>
+                        <div class="project-technology" id="project-technology">
+                        </div>
+                    </div>
+                </div>
+                <div class="container-project-images" id="project-text">
+                </div>
+            </div>
+        </div>
+        <div onclick="scrollToTop()" class="scrollTop">
+            <ion-icon name="arrow-up-circle-outline"></ion-icon>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="containerPortfolio">
+        <h1 class="titlePortfolio">Portfolio</h1>
+        <h4 class="subtitlePortfolio">Um pouquinho do que posso fazer</h4>
+    </div>
+    <div class="containerProjects">
+        {% if projects %}
+            {% for project in projects %}
+                <div class="project" id="{{project.id}}">
+                    {% if project.finished == False %}
+                        <p class="demo">Projeto em andamento</p>
+                    {% endif %}
+                    {% if project.photo %}
+                        <img src="{{project.photo.url }}" class="projectThumb" alt="{{project.name}}">
+                    {% else %}
+                        <img src="{% static 'assets/no-project-image.png' %}" class="projectThumb" id="no-project-image" alt="{{project.name}}">
+                    {% endif %}
+                    <div class="projectInfo">
+                        <div class="containerNameProject">
+                            <h1 class="nameProject">{{project.name}}</h1>
+                            <p class="projectCategory">{{project.category}}</p>
+                        </div>
+                        <div class="containerThumbButtons">
+                            <a href="#">
+                                <ion-icon 
+                                name="information-circle-outline" 
+                                class="projectButtons" 
+                                id="open-info-{{project.id}}"
+                                category="{{project.category}}"
+                                link="{{project.link}}"
+                                description="{{project.description}}"
+                                name-project="{{project.name}}"
+                                text="{{project.text}}"
+                                onclick="getIdClicked('{{project.id}}')"
+                                image="{% if project.photo %}
+                                            {{ project.photo.url }}
+                                        {% else %}
+                                            {{ request.scheme }}://{{ request.get_host }}{% static 'assets/no-project-image.png' %}
+                                        {% endif %}"
+                                technologys="{{ project.technology.all|join:', ' }}"
+                                repository = "{{project.repository}}"
+                                finished = "{{project.finished}}"
+                                >
+                            </ion-icon>
+                        </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/toggleMenu.js' %}" defer></script>
+    <script src="{% static 'js/scrollTop.js' %}" defer></script>
+{% endblock %}

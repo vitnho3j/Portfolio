@@ -1,0 +1,18 @@
+{% extends 'base_authenticated_pages.html' %}
+{% load static %}
+{% block title %} Deletar {% endblock %}
+{% block content %}
+{% if request.user.is_authenticated %}
+    <div class="container-form-authenticated" id="exclude">
+        <p>Você tem certeza que deseja apagar a rede social {{object.social_media.name}}: <a href="{{ object.identification }}" target="_blank">Link</a></p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn-form-delete">Deletar</button>
+            <a href="{% url 'socials_edit'%}"><button class="btn-form-delete" id="back" type="button">Voltar</button>
+        </form>
+    </div>
+{% else %}
+    <p class="text-authenticated">{{message_auth_error}}</p>
+    <meta http-equiv="refresh" content="3;url={% url 'index'%}">
+{% endif %}
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{%load static %}
+
+{% block title %} Vitor Daniel - Testemunhos {% endblock %}
+{% block right %}rightPages{% endblock %}
+{% block id %}id="comments"{% endblock %}
+{% block idLeft %}id="comments"{% endblock %}
+{% block onclick %}
+    <div id="fade" class="hide"></div>
+    <div id="info-profile" class="hide">
+        <div class="hide" id="toggle-social">
+        </div>
+        <div class="container-profile-information">
+            <div class="profile-information" id="begin">
+                <div class="close-info">
+                    <p id="close-info">X</p>
+                </div>
+                <div class="open-links" id="open-links" onclick="toggleDiv()">
+                    <p>Mostrar Contatos</p>
+                </div>
+                <div class="profile-socials" id="profile-socials">
+                </div>
+                <img src="" class="profile-information-image" id="profile-information-image">
+                <div id="person" class="person">
+                    <h1></h1>
+                    <h2></h2>
+                </div>
+                <p id="profile-description" class="profile-description"></p>
+            </div>
+        </div>
+        <div onclick="scrollToTop()" class="scrollTop">
+            <ion-icon name="arrow-up-circle-outline"></ion-icon>
+        </div>
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="containerPortfolio">
+        <h1 class="titlePortfolio">Testemunhos</h1>
+        <h4 class="subtitlePortfolio">Depoimentos sobre mim de pessoas que já trabalharam comigo</h4>
+    </div>
+    {% for comment in comments %}
+        <div class="testimonials" id="testimonials">
+            <div class="testimonials-profile-image">
+                {% if comment.profile.photo %}
+                    <img src="{{comment.profile.photo.url}}">
+                {% else %}
+                    <img src="{% static 'assets/no-photo.png' %}">
+                {% endif %}
+            </div>
+            <div class="testimonials-name-occupation">
+                <p class="testimonials-name">{{ comment.profile.user.first_name|safe }} {{ comment.profile.user.last_name|safe }}</p>
+                <p class="occupation">{{comment.profile.occupation.name | safe}}</p>
+            </div>
+            <div class="testimonials-text">
+                <p>{{comment.comment|linebreaksbr}}</p>
+            </div>
+            <div class="testimonials-base">
+                <div class="testimonials-info-person">
+                    <p class="who">Quem é esta pessoa ?</p>
+                    <a href="#">
+                        <ion-icon
+                        id="open-info-{{comment.id}}"
+                        onclick="startedContactsHidden(); getIdClicked('{{comment.id}}')"
+                        name="information-circle-outline"
+                        socials="{% for media in comment.profile.medias.all %}{{ media.identification }}, {{media.social_media.icon}}, {{media.social_media.is_link}}, {{media.social_media.name}}{% if not forloop.last %}, {% endif %}{% endfor %}"
+                        profile-name="{{comment.profile.user.first_name}} {{comment.profile.user.last_name}}"
+                        occupation="{{comment.profile.occupation}}"
+                        description="{{comment.profile.description}}"
+                        photo="{{comment.profile.photo.url}}"
+                    ></ion-icon></a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
+{% block scripts %}
+<script src="{% static 'js/toggleProfile.js' %}" defer></script>
+<script src="{% static 'js/openLinks.js' %}" defer></script>
+<script src="{% static 'js/scrollTop.js' %}" defer></script>
+{% endblock %}

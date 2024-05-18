@@ -1,0 +1,6 @@
+fly.toml
+.git/
+*.sqlite3
+secret_key.txt
+admin_path.txt
+login_path.txt

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{%load static %}
+
+{% block title %} Vitor Daniel - Página Inicial {% endblock %}
+{% block right %}right{% endblock %}
+{% block id %}id="index"{% endblock %}
+{% block content %}
+<div class="name">
+    <h1 class="partOne">Olá</h1>
+    <h1 class="partTwo">Meu nome é Vitor Daniel</h1>
+    <div class="qualification">
+        <p class="partThree">Um Engenheiro de Software brasileiro</p>
+    </div>
+</div>
+<div class="welcome" id="welcome">
+    <h3 class="partFour">Bem vindo ao meu pequeno espaço</h3>
+</div>
+{% endblock %}
+{% block scripts %}
+    <script src="{% static 'js/typingAnimation.js' %}"></script>
+    <script src="{% static 'js/welcomeAnimationRepeat.js' %}"></script>
+{% endblock %}

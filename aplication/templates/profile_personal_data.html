@@ -1,0 +1,28 @@
+{% extends 'base_authenticated_pages.html' %}
+{% load static %}
+{% block title %} Informações Pessoais {% endblock %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="container-form-authenticated" id="personal-data">
+            {% if message_save_data_successfully %}
+            <div class="container-logged-message" id="register-data">
+                <p>{{message_save_data_successfully}}</p>
+                <a href="{% url 'profile'%}" class="btn-return-form" id="register-data"><button>Voltar</button></a>
+            </div>
+            {% else %}
+                <h1>Informações Pessoais</h1>
+                <form method="post" action="" enctype="multipart/form-data" class="forms-authenticated" id="no-login">
+                    {% csrf_token %}
+                    {{user_form.as_p|safe }}
+                    {{profile_form.as_p|safe }}
+                    {{profile_form.media}}
+                    <button type="submit" class="btn-form" id="personal-data">Atualizar Informações</button>
+                </form>
+                <a href="{% url 'profile'%}" class="btn-return-form" id="personal-data"><button>Voltar</button></a>
+            {% endif %}
+        {% else %}
+            <p class="text-authenticated">{{message_auth_error}}</p>
+            <meta http-equiv="refresh" content="3;url={% url 'index'%}">
+        </div>
+    {% endif %}
+{% endblock %}
