@@ -102,7 +102,7 @@ class ProfileUpdateForm(forms.ModelForm):
 
 class AddSocialMediaForm(forms.ModelForm):
     social_media = forms.ModelChoiceField(label='Escolha uma rede social', empty_label=None, queryset=SocialMedia.objects.all(), widget=forms.Select(attrs={'class':'container-input'}))
-    identification = forms.CharField(required=True, label='Identificação da rede social', widget=forms.TextInput(attrs={'class':'container-input'}), help_text='Insira o número para adicionar o whatsapp no formato cód país + ddd + número, ex: (+55)24981094563 ou link do perfil para todas as outras redes.')
+    identification = forms.CharField(required=True, label='Identificação da rede social', widget=forms.TextInput(attrs={'class':'container-input'}), help_text='Insira o número para adicionar o whatsapp no formato cód país + ddd + número, ex: 5524981094563, o seu endereço de email para o email, ou link do perfil para todas as outras redes.')
 
     class Meta:
         model = ProfileSocialMedia

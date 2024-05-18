@@ -43,13 +43,13 @@
     </div>
     <div class="skills">
         <div class="languages">
-            <p class="interestsTitle">Línguagens</p>
+            <p class="interestsTitle">Linguagens</p>
             <div class="containerTechnology">
                 {% for technology in languages %}
                     <div class="containerProgress">
                         <b class="technologyName">{{technology.name}}</b>
                         <div class="containerLogo">
-                            <img class="imageBar" src="{{technology.image}}">
+                            <img class="imageBar" src="{{technology.image.url}}">
                             <div class="imageOverlay"></div>
                         </div>
                         <div class="verticalLine"></div>
@@ -72,7 +72,7 @@
                 <div class="containerProgress">
                     <b class="technologyName">{{item.name}}</b>
                     <div class="containerLogo">
-                        <img class="imageBar" src="{{item.image}}">
+                        <img class="imageBar" src="{{item.image.url}}">
                         <div class="imageOverlay"></div>
                     </div>
                     <div class="verticalLine"></div>

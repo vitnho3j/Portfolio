@@ -100,6 +100,7 @@ function testRepository(openModalButton){
 
 function testStatus(openModalButton){
   var finished = openModalButton.getAttribute("finished")
+  console.log(finished)
   if (finished === "False"){
     setInnerHTMLAtribute(project_status, "Projeto em andamento")
     project_status.style.display = 'block'

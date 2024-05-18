@@ -10,7 +10,7 @@
     <div id="fade" class="hide"></div>
     <div id="info-project" class="hide">
         <div class="container-project">
-            <div class="container-project-information">
+            <div class="container-project-information"  id="begin">
                 <p id="close-info" class="close-info">X</p>
                 <h1 class="name-project-info" id="name-project-info"></h1>
                 <div class="container-project-image">
@@ -34,6 +34,9 @@
                 <div class="container-project-images" id="project-text">
                 </div>
             </div>
+        </div>
+        <div onclick="scrollToTop()" class="scrollTop">
+            <ion-icon name="arrow-up-circle-outline"></ion-icon>
         </div>
     </div>
 {% endblock %}
@@ -93,4 +96,5 @@
 {% endblock %}
 {% block scripts %}
     <script src="{% static 'js/toggleMenu.js' %}" defer></script>
+    <script src="{% static 'js/scrollTop.js' %}" defer></script>
 {% endblock %}

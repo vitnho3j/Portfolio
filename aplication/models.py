@@ -11,6 +11,7 @@ from django.core.validators import URLValidator, RegexValidator
 import requests
 from django.core.validators import URLValidator
 import tldextract
+from django.core.validators import validate_email
 
 
 
@@ -35,23 +36,25 @@ def validate_link(value):
     if not re.match(url_pattern, value):
         raise ValidationError("O valor fornecido não é um link válido.")
     r = requests.head(value)
-    if r.status_code not in [200]:
-        raise ValidationError("O link fornecido não é válido ou não está acessível") 
     try:
         r = requests.head(value)
         r.raise_for_status()
 
     except requests.RequestException as e:
         raise ValidationError("O link fornecido não é válido ou não está acessível: " + str(e))
+
+def email_validation(value):
+    try:
+        validate_email(value)
+    except ValidationError:
+        raise ValidationError("O endereço de email fornecido é inválido.")
     
-        
+    
 def validate_number(value):
     value_cleaned = value.replace("(", "").replace(")", "").replace("+", "")
     if value_cleaned.isdigit():
-        number_validator = RegexValidator(regex='^\(\+\d{2}\)\d{11}$', message='A identificação deve estar no formato (+55)24981094563.')
-        if len(value) != 16:
-            raise ValidationError("O número de telefone deve ter exatamente 16 caracteres, por favor, revise o número para garantir que não tenha digitado incorretamente.")
-        number_validator(value)
+        if len(value) != 13:
+            raise ValidationError("O número de telefone deve ter exatamente 13 caracteres, por favor, revise o número para garantir que não tenha digitado incorretamente.")
     else:
         raise ValidationError("O número é inválido, por favor, revise o número e garanta que contenha apenas números.")
 
@@ -130,7 +133,7 @@ class Occupation(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     description = RichTextField(max_length = 1000)
-    photo = StdImageField('Photo', null=True, blank=True, upload_to=get_file_path, variations={'thumb':{'width':480, 'height': 480, 'crop':True}}, validators=[validate_image])
+    photo = StdImageField('Photo', null=True, blank=True, upload_to=get_file_path, validators=[validate_image])
     qualities = models.ManyToManyField(Qualities, blank=True)
     occupation = models.ForeignKey(Occupation, related_name="professionals", on_delete=models.SET_NULL, blank=True, null=True)
 
@@ -159,8 +162,10 @@ class ProfileSocialMedia(models.Model):
     
     def clean_identification(self):
         social_media = self.social_media
-        if social_media.is_link == False:
+        if social_media.name == "Whatsapp":
             validate_number(self.identification)
+        elif social_media.name == "Email":
+            email_validation(self.identification)
         else:
             self.identification = validate_url(self.identification, self.social_media)
     
@@ -238,7 +243,7 @@ class Technology(models.Model):
     name = models.CharField("Name", max_length=30)
     acronym = models.CharField("Acronym", max_length=10, blank=True, null=True)
     description = models.TextField("Description", max_length=1000)
-    image = StdImageField('Photo', null=True, blank=True, upload_to=get_file_path, variations={'thumb':{'width':480, 'height': 480, 'crop':True}})
+    image = StdImageField('Photo', null=True, blank=True, upload_to=get_file_path)
     percentage = models.IntegerField('Percentage', default=0)
     category = models.ForeignKey(Category, related_name="technologys", on_delete=models.SET_NULL, null=True, blank=True)
     technology_type = models.ForeignKey(TypesTechnology, related_name="technologys", on_delete=models.SET_NULL, null=True, blank=True)

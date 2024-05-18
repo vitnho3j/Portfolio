@@ -5,9 +5,9 @@
     {% if user.is_authenticated %}
         <div class="container-form-authenticated" id="personal-data">
             {% if message_save_data_successfully %}
-            <div class="container-logged-message">
+            <div class="container-logged-message" id="register-data">
                 <p>{{message_save_data_successfully}}</p>
-                <a href="{% url 'profile'%}" class="btn-return-form"><button>Voltar</button></a>
+                <a href="{% url 'profile'%}" class="btn-return-form" id="register-data"><button>Voltar</button></a>
             </div>
             {% else %}
                 <h1>Informações Pessoais</h1>

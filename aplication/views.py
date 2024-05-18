@@ -20,7 +20,8 @@ class AboutView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(AboutView, self).get_context_data(**kwargs)
-        context['profile'] = Profile.objects.get(id = 1)
+        profile = User.objects.get(is_superuser = True).profile
+        context['profile'] = profile
         context['languages'] = Technology.objects.filter(technology_type__name = 'Language')
         context['frameworks_libs'] = Technology.objects.filter(technology_type__name__in=['Framework', 'Lib'])
         return context
@@ -39,7 +40,8 @@ class ContactView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(ContactView, self).get_context_data(**kwargs)
-        context['contacts'] = ProfileSocialMedia.objects.filter(profile = 1)
+        profile = User.objects.get(is_superuser = True).profile
+        context['contacts'] = ProfileSocialMedia.objects.filter(profile = profile.id)
         return context
     
 class CommentsView(TemplateView):

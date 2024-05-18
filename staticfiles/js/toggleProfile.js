@@ -8,7 +8,6 @@ const profile_image = document.querySelector('#profile-information-image')
 const profile_socials = document.querySelector("#profile-socials")
 const principal = document.querySelector(".rightPages#comments")
 const left = document.querySelector(".left#comments")
-const toggleSocial = document.querySelector("#toggle-social")
 var scrollPosition
 
 
@@ -50,13 +49,12 @@ function generateSocialsArray(socials = null){
 function organizeList(socialsArray = null){
   var organized_socials = []
   var icon, identification, is_link;
-  for (let i = 0; i < socialsArray.length; i += 4) {
+  for (let i = 0; i < socialsArray.length; i += 3) {
     identification = socialsArray[i];
     icon = socialsArray[i + 1];
     is_link = socialsArray[i + 2]
     is_link = (is_link === "True");
-    social_name = socialsArray[i + 3]
-    organized_socials.push({ Icon: icon, Identification: identification, Is_link: is_link, Name:social_name });
+    organized_socials.push({ Icon: icon, Identification: identification, Is_link: is_link });
   }
   return organized_socials
 }
@@ -71,28 +69,10 @@ function appendProfileSocials(item = null){
 
 function createLink(item = null){
   var a = document.createElement('a')
-  var a_text = document.createElement('a')
-  var div = document.createElement('div')
+  a.href=`${item.Identification}`
   a.innerHTML=`<ion-icon name="${item.Icon}"</ion-icon>`;
   a.target = '_blank'
-  a_text.innerHTML = "Clique aqui"
-  a_text.target = "_blank"
-  if (item.Name == "Email") {
-    a.href=`mailto:${item.Identification}`
-    a_text.href=`mailto:${item.Identification}`
-  } else if (item.Name == "Whatsapp") {
-    a.href=`https://wa.me/${item.Identification}`
-    a_text.href=`https://wa.me/${item.Identification}`
-  } else {
-    a.href=`${item.Identification}`
-    a_text.href=`${item.Identification}`
-  }
-
-  a_text.id = "social-link"
-  div.appendChild(a)
-  div.appendChild(a_text)
-  div.classList.add("container-social-link")
-  appendProfileSocials(div)
+  appendProfileSocials(a)
 }
 
 function appendDivChild(div, element = null){
@@ -104,11 +84,7 @@ function createSocialNoLink(item = null){
   var p = document.createElement('p')
   var div = document.createElement('div')
   a.innerHTML=`<ion-icon name="${item.Icon}"><p>${item.Identification}</p></ion-icon>`;
-  a.onclick = function() {
-    if(item.Identification.length > 30) {
-      openNoLinkModal(item.identification);
-    }
-  };
+  p.innerHTML=`${item.Identification}`
   div.classList.add("profile-not-link")
   appendDivChild(div, a)
   appendDivChild(div, p)

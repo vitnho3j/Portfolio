@@ -15,11 +15,3 @@ def create_profile(sender, instance, created, **kwargs):
             user_profile = Profile(user=instance)
             user_profile.save()
 
-
-# @receiver(pre_save, sender=ProfileSocialMedia)
-# def validate_social_media_limit(sender, instance, **kwargs):
-#     profile = instance.profile
-#     instance.clean_socials(profile)
-#     profile = instance.profile
-#     if profile and profile.medias.count() >= 6:
-#         raise forms.ValidationError("Você atingiu o limite (6) de redes sociais que podem ser adicionadas, altere ou exclua uma rede social existente.")
