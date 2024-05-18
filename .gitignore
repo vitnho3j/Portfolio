@@ -171,6 +171,13 @@ cython_debug/
 .admin_path
 .login_path.txt
 .login_path
+login_path
+admin_path
+secret_key
+login_path.txt
+admin_path.txt
+secret_key.txt
+
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
