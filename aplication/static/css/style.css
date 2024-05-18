@@ -1246,13 +1246,6 @@ a.project-info{
  
 }
 
-@-moz-document url-prefix() {
-    .containerProjects {
-        margin-top: 0;
-        height: 150px;
-    }
-}
-
 .containerPortfolio{
     margin-top: 9rem;
     text-align: center;
@@ -2173,6 +2166,7 @@ body{
 }
 
 @media only screen and (max-width:1024px) {
+<<<<<<< HEAD
     @-moz-document url-prefix() {
         .containerProjects {
             margin-top: 0;
@@ -2206,6 +2200,8 @@ body{
         padding-bottom: 90px;
         max-height: 90%;
     }
+=======
+>>>>>>> parent of 4183281 (Adaptations for mozila firefox)
     .container-curriculum{
         width: 90%;
     }
