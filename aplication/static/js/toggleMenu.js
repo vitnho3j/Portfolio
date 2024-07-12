@@ -149,7 +149,7 @@ function createFinalPartText(openModalButton){
   const a = document.createElement('a')
   a.appendChild(b)
   a.href = `${openModalButton.getAttribute("repository")}`
-  a_text.target = "_blank"
+  a.target = "_blank"
   div.appendChild(h1)
   div.appendChild(p)
   div.appendChild(a)
