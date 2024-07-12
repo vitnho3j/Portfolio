@@ -4,14 +4,12 @@ from django.forms import ValidationError
 from stdimage.models import StdImageField
 from datetime import datetime
 import uuid
-from ckeditor.fields import RichTextField
-from ckeditor_uploader.fields import RichTextUploadingField
 import re
-from django.core.validators import URLValidator, RegexValidator
 import requests
 from django.core.validators import URLValidator
 import tldextract
 from django.core.validators import validate_email
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 
@@ -132,7 +130,7 @@ class Occupation(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    description = RichTextField(max_length = 1000)
+    description = CKEditor5Field(max_length = 1000, config_name='extends')
     photo = StdImageField('Photo', null=True, blank=True, upload_to=get_file_path, validators=[validate_image])
     qualities = models.ManyToManyField(Qualities, blank=True)
     occupation = models.ForeignKey(Occupation, related_name="professionals", on_delete=models.SET_NULL, blank=True, null=True)
@@ -258,7 +256,7 @@ class Technology(models.Model):
 class Project(models.Model):
     name = models.CharField("Name", max_length=100)
     photo = StdImageField('Photo', null=True, blank=True, upload_to=get_file_path)
-    text = RichTextUploadingField(blank=True, null=True)
+    text = CKEditor5Field(blank=True, null=True, config_name='extends')
     description = models.TextField("Description", max_length=1000)
     link = models.URLField(blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)

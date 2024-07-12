@@ -948,6 +948,7 @@ a#social-link{
     font-family: 'Poppins', sans-serif;
     color: var(--whiteNoChange);
     font-weight: 300;
+    overflow-x: hidden;
 }
 
 .container-curriculum{
@@ -1002,7 +1003,11 @@ a#social-link{
     text-align: left;
 }
 
-.container-project-images{
+.prt-txt-final-part{
+    margin-bottom: 20px;
+}
+
+.container-project-images {
     grid-area: container-project-images;
     margin-top: 60px;
     display: flex;
@@ -1013,11 +1018,24 @@ a#social-link{
     max-width: 100%;
     aspect-ratio: 16/9;
 }
-.container-project-images img{
-    max-width:100%; 
-    object-fit:cover;
+.container-project-images img {
+    max-width: 100%;
+    object-fit: cover;
     width: auto !important;
     height: auto !important;
+    cursor: zoom-in;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    max-height: 100%;
+}
+
+.container-project-images img.zoom-in {
+    transform: scale(var(--zoom, 1));
+    transform-origin: var(--x) var(--y);
+    cursor: zoom-out;
+}
+.container-project-images img#zoom-in:hover{
+    --zoom:2;
 }
 
 .container-project-images a {
@@ -1031,6 +1049,29 @@ a#social-link{
     text-align: center;
     width: 100%;
     position: absolute;
+}
+
+#project-text h1{
+    color: #e64c4c;
+    font-size: 2.2rem;
+}
+
+#project-text h2{
+    font-size: 1.7rem;
+}
+
+#project-text h3{
+    font-size: 1.2rem;
+}
+
+#project-text table{
+    word-break:inherit;
+    width: 100%;
+}
+
+#project-text tr td {
+    padding-bottom: 10px; 
+    border: solid 1px #000;
 }
 
 .text-authenticated{
@@ -2166,13 +2207,20 @@ body{
 }
 
 @media only screen and (max-width:1024px) {
-<<<<<<< HEAD
     @-moz-document url-prefix() {
         .containerProjects {
             margin-top: 0;
             height: 100%;
             margin-bottom: 150px;
         }
+    }
+    #project-text table{
+        display: flex;
+        font-size: .8rem;
+    }
+    #project-text tr td {
+        border: solid 1px #000;
+        max-width: 80%;
     }
     .profile-not-link p{
         height: auto !important;
@@ -2200,8 +2248,6 @@ body{
         padding-bottom: 90px;
         max-height: 90%;
     }
-=======
->>>>>>> parent of 4183281 (Adaptations for mozila firefox)
     .container-curriculum{
         width: 90%;
     }
@@ -2267,7 +2313,11 @@ body{
         margin-top: 2rem;
     }
     
-    .container-project-information{
+    .container-project-information#begin{
+        display: block;
+        width: 95%;
+    }
+    .container-project-information#curriculum{
         display: block;
         width: 95%;
     }
@@ -2508,9 +2558,15 @@ body{
     .subtitlePortfolio{
         font-size: 1.3rem;
     }
+    #project-text tr td {
+        font-size: .6rem;
+    }
 }
 
 @media only screen and (max-width:350px) {
+    #project-text tr td {
+        font-size: .4rem;
+    }
     .container-form-authenticated{
         min-width: 0;
         max-width: 90%;

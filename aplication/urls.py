@@ -22,7 +22,6 @@ urlpatterns = [
     path('about', AboutView.as_view(), name='about'),
     path('portfolio', PortfolioView.as_view(), name='portfolio'),
     path('contact', ContactView.as_view(), name='contact'),
-    path('ckeditor', include('ckeditor_uploader.urls')),
     path('testimonials', CommentsView.as_view(), name='testimonials'),
     path(f'{login_path}', LoginView.as_view(), name='login'),
     path('logout', LogoutView.as_view(), name='logout'),
@@ -33,6 +32,9 @@ urlpatterns = [
     path('profile/testimonials', TestimonialsView.as_view(), name='testimonials_add'),
     path('profile/social/edit', EditSocialsView.as_view(), name='socials_edit'),
     path('profile/social/delete/<int:pk>', DeleteSocialsView.as_view(), name='socials_delete'),
+
+    #CKEditor
+    path("ckeditor5/", include("django_ckeditor_5.urls"))
 ]
 
 if settings.DEBUG:
