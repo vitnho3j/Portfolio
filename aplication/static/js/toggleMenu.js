@@ -16,7 +16,8 @@ const principal = document.querySelector(".rightPages#portfolio")
 const project_status = document.querySelector("#project-status")
 let isZoomedIn = false;
 var scrollPosition
-
+var repository_link
+var demo_link
 
 function imgAddEventListenerMouseLeave(img){
   img.addEventListener("mouseleave", () => {
@@ -141,28 +142,61 @@ function testDemo(openModalButton){
   }
 }
 
-function createFinalPartText(openModalButton){
-  const div = document.createElement('div')
+function createRepositoryLinkFinalPart(openModalButton){
+  const b_repository = document.createElement('b')
+  const a_repository = document.createElement('a')
+  setInnerHTMLAtribute(a_repository, 'Repositório: ')
+  a_repository.appendChild(b_repository)
+  a_repository.href = `${openModalButton.getAttribute("repository")}`
+  a_repository.target = "_blank"
+  setInnerHTMLAtribute(b_repository, `Clique aqui`)
+  return a_repository
+}
+
+function createDemoLinkFinalPart(openModalButton){
+  const b_demo = document.createElement('b')
+  const a_demo = document.createElement('a')
+  setInnerHTMLAtribute(a_demo, "Demo: ")
+  a_demo.appendChild(b_demo)
+  a_demo.href = `${openModalButton.getAttribute("demo")}`
+  a_demo.target = "_blank"
+  setInnerHTMLAtribute(b_demo, `Clique aqui`)
+  return a_demo
+}
+
+function setDivItemsFinalPart(div, a_repository, a_demo){
   const h1 = document.createElement('h1')
   const p = document.createElement('p')
-  const b = document.createElement('b')
-  const a = document.createElement('a')
-  a.appendChild(b)
-  a.href = `${openModalButton.getAttribute("repository")}`
-  a.target = "_blank"
+  div.id = "lst-prt-div"
   div.appendChild(h1)
   div.appendChild(p)
-  div.appendChild(a)
-  setClassName(div, 'prt-txt-final-part')
-  setInnerHTMLAtribute(h1, 'Onde posso testar o projeto ?')
-  setInnerHTMLAtribute(p, `Você pode testar este projeto no link abaixo:`)
-  setInnerHTMLAtribute(b, `${openModalButton.getAttribute("repository")}`)
-  projectText.appendChild(div);
+  setInnerHTMLAtribute(h1, 'Onde posso ver a demo/repositório deste projeto ?')
+  setInnerHTMLAtribute(p, `Você pode testar (caso haja uma demo) ou ver o código deste projeto (caso haja um repositório) no(s) link(s) abaixo:`)
+  if (repository_link !== "None"){
+    div.appendChild(a_repository)
+  }
+  if (demo_link !== "None"){
+    div.appendChild(a_demo)
+  }
+  return div
+}
+
+function createFinalPartText(openModalButton){
+  var div_final_part = document.createElement('div')
+  const a_repository = createRepositoryLinkFinalPart(openModalButton)
+  const a_demo = createDemoLinkFinalPart(openModalButton)
+  div_final_part = setDivItemsFinalPart(div_final_part, a_repository, a_demo)
+  projectText.appendChild(div_final_part);
+}
+
+function setVariablesFinalPart(openModalButton){
+  repository_link = openModalButton.getAttribute("repository")
+  demo_link = openModalButton.getAttribute("link")
 }
 
 function testRepository(openModalButton){
-  link = openModalButton.getAttribute("repository")
-  if (link === 'None'){
+  setVariablesFinalPart(openModalButton)
+  if (repository_link === 'None' && demo_link === 'None'){
     repository_paragraph.style.display = "none"
   } else {
     repository_paragraph.style.display = "block"
