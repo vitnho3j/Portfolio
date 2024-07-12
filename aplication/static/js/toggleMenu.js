@@ -1,7 +1,6 @@
 const closeModalButton = document.querySelector("#close-info");
 const info = document.querySelector("#info-project")
 const fade = document.querySelector("#fade")
-
 const projectName = document.querySelector("#name-project-info")
 const projectImage = document.querySelector("#project-image")
 const category = document.querySelector("p#content")
@@ -15,7 +14,60 @@ const technologysDiv = document.querySelector("#project-technology");
 const left = document.querySelector(".left#portfolio")
 const principal = document.querySelector(".rightPages#portfolio")
 const project_status = document.querySelector("#project-status")
+let isZoomedIn = false;
 var scrollPosition
+
+
+function imgAddEventListenerMouseLeave(img){
+  img.addEventListener("mouseleave", () => {
+    img.classList.remove("zoom-in");
+    isZoomedIn = false;
+});
+}
+
+function imgAddEventListenerMouseMove(img){
+  img.addEventListener("mousemove", (e) => {
+    if (isZoomedIn) {
+        const size = img.getBoundingClientRect();
+        const x = (e.clientX - size.left) / size.width * 100;
+        const y = (e.clientY - size.top) / size.height * 100;
+
+        img.style.setProperty('--x', x + '%');
+        img.style.setProperty('--y', y + '%');
+    }
+});
+}
+
+function imgAddEventListenerClick(img, index){
+  img.classList.add(`image-${index}`);
+  img.addEventListener("click", (e) => {
+      const size = img.getBoundingClientRect();
+      const x = (e.clientX - size.left) / size.width * 100;
+      const y = (e.clientY - size.top) / size.height * 100;
+
+      if (img.classList.contains("zoom-in")) {
+          img.classList.remove("zoom-in");
+          isZoomedIn = false;
+      } else {
+          img.style.setProperty('--x', x + '%');
+          img.style.setProperty('--y', y + '%');
+          img.style.setProperty('--zoom', 2);
+          img.classList.add("zoom-in");
+          isZoomedIn = true;
+      }
+  });
+}
+
+function addZoomToImages() {
+  const projectText = document.getElementById('project-text');
+  const images = projectText.getElementsByTagName('img');
+
+  Array.from(images).forEach((img, index) => {
+      imgAddEventListenerClick(img, index)
+      imgAddEventListenerMouseMove(img)
+      imgAddEventListenerMouseLeave(img)
+  });
+}
 
 
 function getIdClicked(id){
@@ -89,12 +141,31 @@ function testDemo(openModalButton){
   }
 }
 
+function createFinalPartText(openModalButton){
+  const div = document.createElement('div')
+  const h1 = document.createElement('h1')
+  const p = document.createElement('p')
+  const b = document.createElement('b')
+  const a = document.createElement('a')
+  a.appendChild(b)
+  a.href = `${openModalButton.getAttribute("repository")}`
+  div.appendChild(h1)
+  div.appendChild(p)
+  div.appendChild(a)
+  setClassName(div, 'prt-txt-final-part')
+  setInnerHTMLAtribute(h1, 'Onde posso testar o projeto ?')
+  setInnerHTMLAtribute(p, `Você pode testar este projeto no link abaixo:`)
+  setInnerHTMLAtribute(b, `${openModalButton.getAttribute("repository")}`)
+  projectText.appendChild(div);
+}
+
 function testRepository(openModalButton){
   link = openModalButton.getAttribute("repository")
   if (link === 'None'){
     repository_paragraph.style.display = "none"
   } else {
     repository_paragraph.style.display = "block"
+    createFinalPartText(openModalButton)
   }
 }
 
@@ -112,9 +183,10 @@ const toggleModal = (openModalButton = null) => {
   if (openModalButton) {
     testStatus(openModalButton)
     testDemo(openModalButton)
-    testRepository(openModalButton)
     setAttributes(openModalButton)
-    if (window.innerWidth < 1024){
+    testRepository(openModalButton)
+    addZoomToImages()
+    if (window.innerWidth <= 1024){
       hideBackground()
     }
   } else {

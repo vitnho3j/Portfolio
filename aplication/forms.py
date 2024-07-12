@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import Profile, Occupation, ProfileSocialMedia, SocialMedia, Comment
-from ckeditor.widgets import CKEditorWidget
+from django_ckeditor_5.widgets import CKEditor5Widget
 
 
 class UpdateRegisterForm(UserCreationForm):
@@ -62,21 +62,13 @@ class UpdatePersonalForm(UserChangeForm):
     def __init__(self, *args, **kwargs):
         super(UpdatePersonalForm, self).__init__(*args, **kwargs)
 
-
-class CustomCKEditorWidget(CKEditorWidget):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.config['removeButtons'] = ['Source', 'Table', 'Link', 'Anchor', 'Smiley', 'SpecialChar', 'Unlink', 'Resize', 'TextColor']
-        self.config['removePlugins'] = 'image'
-
 class ProfileUpdateForm(forms.ModelForm):
     def validate_description_length(value):
         max_length = 1000
         if len(value) > max_length:
             raise forms.ValidationError(f'A descrição não pode exceder {max_length} caracteres (você digitou {len(value)} caracteres.)')
-    
     photo = forms.ImageField(label='Foto de perfil')
-    description = forms.CharField(label='Descrição', max_length=1000, widget=CustomCKEditorWidget(attrs={'class': 'ck-editor', 'id': 'descricao-field'}), validators=[validate_description_length], error_messages={'max_length': ''})
+    description = forms.CharField(label='Descrição', max_length=1000, widget=CKEditor5Widget(), validators=[validate_description_length], error_messages={'max_length': ''})
     occupation = forms.ModelChoiceField(label='Ocupação', queryset=Occupation.objects.all(), empty_label=None, widget=forms.Select(attrs={'class':'update-form'}))
 
     class Meta:
