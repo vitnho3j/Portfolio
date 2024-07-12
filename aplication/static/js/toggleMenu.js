@@ -158,7 +158,7 @@ function createDemoLinkFinalPart(openModalButton){
   const a_demo = document.createElement('a')
   setInnerHTMLAtribute(a_demo, "Demo: ")
   a_demo.appendChild(b_demo)
-  a_demo.href = `${openModalButton.getAttribute("demo")}`
+  a_demo.href = `${openModalButton.getAttribute("link")}`
   a_demo.target = "_blank"
   setInnerHTMLAtribute(b_demo, `Clique aqui`)
   return a_demo
