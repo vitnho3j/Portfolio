@@ -1051,6 +1051,12 @@ a#social-link{
     position: absolute;
 }
 
+#lst-prt-div {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 #project-text h1{
     color: #e64c4c;
     font-size: 2.2rem;
