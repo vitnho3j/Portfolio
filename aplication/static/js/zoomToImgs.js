@@ -1,4 +1,4 @@
-import PinchZoom from 'https://unpkg.com/pinch-zoom-js@2.3.5/dist/pinch-zoom.min.js';
+import PinchZoom from './pinchzoom.js';
 
 let isZoomedIn = false;
 let currentZoom = 1;

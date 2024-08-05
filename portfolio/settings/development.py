@@ -1,6 +1,6 @@
 import os
 from .commons import *
-from csp.constants import SELF, NONCE, UNSAFE_HASHES, UNSAFE_INLINE
+from csp.constants import SELF, NONCE, UNSAFE_HASHES
 
 
 SECRET_KEY = "django-insecure-9g(s@ntdxu%bl=z#l+2xx*8maaq^w%8vht2&uz+2!x6g^e)+0&"
@@ -120,7 +120,6 @@ CONTENT_SECURITY_POLICY = {
             NONCE,
             UNSAFE_HASHES,
             "https://fonts.googleapis.com",
-            "https://unpkg.com",
             "https://cdn.gtranslate.net",
             "'sha256-uTMR0myRPuS/CaY9Wwm9o/PloGR0On61SBQgXRUlZog='"
         ],
@@ -150,7 +149,6 @@ CONTENT_SECURITY_POLICY = {
         "script-src-elem":[
             SELF,
             NONCE,
-            "https://unpkg.com",
             "https://cdn.gtranslate.net",
             "https://translate.google.com",
             "https://translate.googleapis.com",
@@ -170,7 +168,6 @@ CONTENT_SECURITY_POLICY = {
         ],
         "connect-src":[
             SELF,
-            "https://unpkg.com",
             "https://translate.googleapis.com",
             "https://translate-pa.googleapis.com",
         ],

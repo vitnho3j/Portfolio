@@ -99,7 +99,7 @@
     </div>
 {% endblock %}
 {% block scripts %}
-    <script src="https://unpkg.com/pinch-zoom-js@2.3.5/dist/pinch-zoom.min.js" type="module"></script>
+    <script src="{% static 'js/pinchzoom.js' %}" type="module"></script>
     <script src="{% static 'js/zoomToImgs.js' %}" type="module"></script> 
     <script src="{% static 'js/toggleMenu.js' %}" nonce="'{{request.csp_nonce}}'"></script>
     <script src="{% static 'js/scrollTop.js' %}"></script>

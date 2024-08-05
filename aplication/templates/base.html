@@ -5,7 +5,6 @@
     <head>
         <title>{% block title %}{% endblock %}</title>
         <meta charset="UTF-8">
-        <!-- <meta http-equiv="Content-Security-Policy" content="style-src '{{ request.csp_nonce }}';"> -->
         <link href="{% static 'css/style.css' %}" rel="stylesheet" nonce="{{request.csp_nonce}}"/> 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" nonce="{{request.csp_nonce}}">
         <link rel="preconnect" href="https://fonts.googleapis.com" nonce="{{request.csp_nonce}}">
@@ -38,9 +37,8 @@
             {% endblock %}
         </div>
     </body>
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js" nonce="nonce-{{request.csp_nonce}}"></script>
+    <script src="{% static 'js/ionicons/ionicons.esm.js' %}" type="module"></script>
     <script src="{% static 'js/darkmode.js' %}" nonce="{{request.csp_nonce}}"></script>
-    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js" nonce="{{request.csp_nonce}}"></script>
     <script src="{% static 'js/translation.js' %}" nonce="{{request.csp_nonce}}"></script>
     <script nonce="nonce-{{request.csp_nonce}}" src="https://cdn.gtranslate.net/widgets/latest/float.js" defer></script>
     {% block scripts %}
