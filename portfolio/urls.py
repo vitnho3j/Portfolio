@@ -18,3 +18,4 @@ urlpatterns = [
     path(f"{admin_path}", admin.site.urls),
     path('', include('aplication.urls')),
 ]
+

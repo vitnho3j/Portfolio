@@ -11,7 +11,15 @@ const left = document.querySelector(".left#comments")
 const toggleSocial = document.querySelector("#toggle-social")
 var scrollPosition
 
-
+document.addEventListener('DOMContentLoaded', (event) => {
+  document.querySelectorAll('.toggleButtons').forEach(button => {
+      button.addEventListener('click', (event) => {
+          const id = event.target.getAttribute('data-id');
+          startedContactsHidden();
+          getIdClicked(id);
+      });
+  });
+});
 
 function hideBackground(){
   principal.style.height = "90px";
@@ -35,9 +43,11 @@ function selectPhoto(openModalButton = null){
 }
 
 function setAttributes(openModalButton = null){
-  person_name.innerHTML = openModalButton.getAttribute('profile-name')
-  person_occupation.innerHTML = openModalButton.getAttribute('occupation')
-  profile_description.innerHTML = openModalButton.getAttribute('description')
+  const template = document.getElementById(`template-description-${openModalButton.getAttribute('data-id')}`)
+  person_name.textContent = openModalButton.getAttribute('profile-name')
+  person_occupation.textContent = openModalButton.getAttribute('occupation')
+  profile_description.textContent = ''
+  profile_description.appendChild(template.content.cloneNode(true))
 }
 
 function generateSocialsArray(socials = null){
@@ -62,7 +72,7 @@ function organizeList(socialsArray = null){
 }
 
 function cleanProfile(){
-  profile_socials.innerHTML=''
+  profile_socials.textContent=''
 }
 
 function appendProfileSocials(item = null){
@@ -73,9 +83,11 @@ function createLink(item = null){
   var a = document.createElement('a')
   var a_text = document.createElement('a')
   var div = document.createElement('div')
-  a.innerHTML=`<ion-icon name="${item.Icon}"</ion-icon>`;
+  const ionIcon = document.createElement('ion-icon');
+  ionIcon.setAttribute('name', item.Icon)
+  a.appendChild(ionIcon)
   a.target = '_blank'
-  a_text.innerHTML = "Clique aqui"
+  a_text.textContent = "Clique aqui"
   a_text.target = "_blank"
   if (item.Name == "Email") {
     a.href=`mailto:${item.Identification}`
@@ -103,7 +115,12 @@ function createSocialNoLink(item = null){
   var a = document.createElement('a')
   var p = document.createElement('p')
   var div = document.createElement('div')
-  a.innerHTML=`<ion-icon name="${item.Icon}"><p>${item.Identification}</p></ion-icon>`;
+  const ionIcon = document.createElement('ion-icon')
+  const p2 = document.createElement('p')
+  ionIcon.setAttribute('name', item.Icon)
+  p2.textContent = item.Identification
+  ionIcon.appendChild(p2)
+  a.appendChild(ionIcon)
   a.onclick = function() {
     if(item.Identification.length > 30) {
       openNoLinkModal(item.identification);
@@ -132,7 +149,7 @@ function generateOrganizedSocials(socialsArray = null){
 }
 
 function setNoSocials(){
-  profile_socials.innerHTML='Este perfil não possui redes sociais'
+  profile_socials.textContent='Este perfil não possui redes sociais'
 }
 
 function setSocials(openModalButton = null){

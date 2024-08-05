@@ -1,3 +1,4 @@
+from bs4 import BeautifulSoup
 from django.views.generic import TemplateView, View, CreateView, DeleteView
 from .models import Project, ProfileSocialMedia, Profile, Technology, Comment
 from django.contrib.auth import authenticate, login, logout
@@ -11,6 +12,33 @@ message_auth_error = 'Você precisa estar autenticado para acessar esta página.
 message_save_data_successfully = "Os seus dados foram atualizados."
 message_delete_sucess = "O social media foi excluido"
 message_error_owner = "Você não é o proprietário desta rede social"
+
+#Cria uma função que pega o texto gerando no texto dos projetos para adicionar a tag html "<style>" para cada estilo inline, e então adiciona um nonce para todas essas tags.
+def process_html_with_nonce(html_content, nonce):
+    soup = BeautifulSoup(html_content, 'html.parser')
+    styles = []
+    
+    for tag in soup.find_all(style=True):
+        tag_class = tag.get('class', [None])[0]  # Pega a primeira classe, ou None
+        if tag_class:
+            styles.append(f"{tag.name}.{tag_class} {{{tag['style']}}}")
+        else:
+            # Se o elemento não tiver uma classe, crie um identificador único
+            unique_class = f"unique-class-{id(tag)}"
+            tag['class'] = unique_class
+            styles.append(f"{tag.name}.{unique_class} {{{tag['style']}}}")
+        
+        del tag['style']
+    
+    if styles:
+        style_tag = soup.new_tag("style", nonce=nonce)
+        style_tag.string = "\n".join(styles)
+        if soup.body:
+            soup.body.insert(0, style_tag)
+        else:
+            soup.insert(0, style_tag)
+    
+    return str(soup)
 
 class IndexView(TemplateView):
     template_name = 'index.html'
@@ -31,9 +59,17 @@ class PortfolioView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(PortfolioView, self).get_context_data(**kwargs)
-        context['projects'] = Project.objects.all()
-        return context
+        projects = Project.objects.all()  
 
+        # Resolver o nonce para uma string
+        csp_nonce = str(self.request.csp_nonce)
+
+        for project in projects:
+            project.text = process_html_with_nonce(project.text, csp_nonce)
+
+        
+        context['projects'] = projects
+        return context
 
 class ContactView(TemplateView):
     template_name = 'contact.html'
@@ -250,4 +286,3 @@ class LogoutView(View):
         logout(request)
         messages.success(request, ("You have been logged out"))
         return redirect('login')
-    

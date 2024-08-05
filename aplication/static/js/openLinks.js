@@ -1,5 +1,12 @@
 const button = document.querySelector("#open-links")
 
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    button.addEventListener('click', (event) => {
+    toggleDiv()
+    })
+})
+
 function startedContactsHidden(){
     if (window.innerWidth < 1024){
         cleanInnerDivButton()
@@ -12,7 +19,7 @@ function startedContactsHidden(){
 }
 
 function cleanInnerDivButton(){
-    button.innerHTML = ''
+    button.textContent = ''
 }
 
 function getcomputedStyle(div = null) {
@@ -39,7 +46,7 @@ function closeDiv(div = null){
 }
 
 function changeTextParagraph(paragraph = null, text){
-    paragraph.innerHTML = text
+    paragraph.textContent = text
 }
 
 function appendChild(paragraph = null){

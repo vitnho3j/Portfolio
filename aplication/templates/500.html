@@ -1,0 +1,14 @@
+{% extends 'base_errors_pages.html' %}
+{%load static %}
+
+{% block title %} Not Found {% endblock %}
+{% block content %}
+    <div class="errors-container">
+        <img src="{% static 'assets/500.png' %}" class="error-img">
+        <h1> Erro no servidor </h1>
+        <p>Parece que ocorreu um erro inesperado no servidor, ou ele esta indisponível. Em todos os casos, estamos trabalhando incessantemente
+            para voltar o mais rápido possível, por favor, tente novamente mais tarde
+        </p>
+        <a href="{% url 'index'%}" class="btn-return-form" id="error-btn"><button id="error-btn">Página Inicial</button></a>
+    </div>
+{% endblock %}

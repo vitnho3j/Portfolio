@@ -13,7 +13,7 @@ function hiddenElement() {
 hiddenElement()
 
 function cleanElement(element = null){
-    element.innerHTML = ''
+    element.textContent = ''
     element.style.display=''
 }
 
@@ -29,7 +29,7 @@ function typeWrite(element, delay = 75){
     return new Promise((resolve)=>{
         textArray.forEach((letra, i)=> {
         setTimeout(function(){
-            element.innerHTML += letra
+            element.textContent += letra
             if (i===textArray.length - 1) {
                 resolve()
             }

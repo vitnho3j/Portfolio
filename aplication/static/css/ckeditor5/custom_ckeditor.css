@@ -24,3 +24,11 @@
 .ck.ck-editor__editable table {
     color: white !important;
 }
+
+textarea#id_description {
+    display: block !important;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+}

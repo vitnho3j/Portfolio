@@ -5,20 +5,20 @@
     {% if user.is_authenticated %}
         <div class="container-form-authenticated" id="personal-data">
             {% if message_save_data_successfully %}
-            <div class="container-logged-message" id="register-data">
+            <div class="container-logged-message" id="register-data"> 
                 <p>{{message_save_data_successfully}}</p>
                 <a href="{% url 'profile'%}" class="btn-return-form" id="register-data"><button>Voltar</button></a>
             </div>
             {% else %}
                 <h1>Informações Pessoais</h1>
-                <form method="post" action="" enctype="multipart/form-data" class="forms-authenticated" id="no-login">
+                <form method="post" action="" class="forms-authenticated" id="no-login" enctype="multipart/form-data">
                     {% csrf_token %}
                     {{user_form.as_p|safe }}
                     {{profile_form.as_p|safe }}
                     {{profile_form.media}}
                     <button type="submit" class="btn-form" id="personal-data">Atualizar Informações</button>
                 </form>
-                <a href="{% url 'profile'%}" class="btn-return-form" id="personal-data"><button>Voltar</button></a>
+                <a href="{% url 'profile'%}" class="btn-return-form" id="personal-data" type="button"><button>Voltar</button></a>
             {% endif %}
         {% else %}
             <p class="text-authenticated">{{message_auth_error}}</p>

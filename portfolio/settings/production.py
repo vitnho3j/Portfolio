@@ -20,14 +20,68 @@ SESSION_COOKIE_SECURE = True
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-CSP_DEFAULT_SRC = ("'self'", "https://translate-pa.googleapis.com", "https://fonts.googleapis.com", "https://unpkg.com", "https://cdn.gtranslate.net", "https://www.gstatic.com", "https://translate.googleapis.com", "https://fonts.gstatic", "'unsafe-inline'")
-CSP_STYLE_SRC = ("'self'", "https://fonts.googleapis.com", "https://unpkg.com", "https://cdn.gtranslate.net", "'unsafe-inline'", "https://www.gstatic.com", "https://translate.googleapis.com", "https://fonts.gstatic.com")
-CSP_SCRIPT_SRC = ("'self'","https://translate-pa.googleapis.com", "https://cdn.gtranslate.net", "https://unpkg.com", "'unsafe-inline'", "https://translate.google.com", "https://www.gstatic.com", "https://translate.googleapis.com", "https://fonts.gstatic.com", "https://translate.google.com")
-CSP_IMG_SRC = ("'self'", "https://vddv-portfolio-storage.s3.amazonaws.com", "https://translate.google.com", "https://www.google.com", "https://translate-pa.googleapis.com", "https://fonts.googleapis.com", "https://unpkg.com", "https://cdn.gtranslate.net", "data:", "https://www.gstatic.com", "https://translate.googleapis.com", "https://fonts.gstatic.com", "'unsafe-inline'")
-CSP_FONT_SRC = ("'self'", "https://fonts.googleapis.com", "https://unpkg.com", "https://cdn.gtranslate.net", "https://www.gstatic.com", "https://translate.googleapis.com", "https://fonts.gstatic.com", "'unsafe-inline'")
+# CSP_DEFAULT_SRC = (
+#     "'self'", 
+#     "https://translate-pa.googleapis.com", 
+#     "https://fonts.googleapis.com", 
+#     "https://unpkg.com", 
+#     "https://cdn.gtranslate.net",
+#     "https://www.gstatic.com", 
+#     "https://translate.googleapis.com", 
+#     "https://fonts.gstatic", 
+#     "'unsafe-inline'"
+# )
+# CSP_STYLE_SRC = (
+#     "'self'", 
+#     "https://fonts.googleapis.com", 
+#     "https://unpkg.com", 
+#     "https://cdn.gtranslate.net", 
+#     "'unsafe-inline'", 
+#     "https://www.gstatic.com", 
+#     "https://translate.googleapis.com", 
+#     "https://fonts.gstatic.com"
+# )
+# CSP_SCRIPT_SRC = (
+#     "'self'",
+#     "https://translate-pa.googleapis.com", 
+#     "https://cdn.gtranslate.net", 
+#     "https://unpkg.com", 
+#     "'unsafe-inline'", 
+#     "https://translate.google.com", 
+#     "https://www.gstatic.com", 
+#     "https://translate.googleapis.com", 
+#     "https://fonts.gstatic.com", 
+#     "https://translate.google.com"
+# )
+# CSP_IMG_SRC = (
+#     "'self'", 
+#     "https://vddv-portfolio-storage.s3.amazonaws.com", 
+#     "https://translate.google.com", 
+#     "https://www.google.com", 
+#     "https://translate-pa.googleapis.com", 
+#     "https://fonts.googleapis.com", 
+#     "https://unpkg.com", 
+#     "https://cdn.gtranslate.net", 
+#     "data:", 
+#     "https://www.gstatic.com", 
+#     "https://translate.googleapis.com", 
+#     "https://fonts.gstatic.com", 
+#     "'unsafe-inline'"
+# )
+# CSP_FONT_SRC = (
+#     "'self'", 
+#     "https://fonts.googleapis.com", 
+#     "https://unpkg.com", 
+#     "https://cdn.gtranslate.net", 
+#     "https://www.gstatic.com", 
+#     "https://translate.googleapis.com", 
+#     "https://fonts.gstatic.com", 
+#     "'unsafe-inline'"
+# )
 CSP_INCLUDE_NONCE_IN = [
     'script-src',
-    'script-src-elem'
+    'script-src-elem',
+    'style-src'
 ]
 
 
