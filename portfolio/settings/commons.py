@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
+    "csp",
     "aplication",
     "django_ckeditor_5",
     "django_cleanup.apps.CleanupConfig",
@@ -63,6 +64,9 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
+            "libraries": {
+                "csp": "csp.templatetags.csp",
+            },
         },
     },
 ]
@@ -138,8 +142,31 @@ CKEDITOR_5_CONFIGS = {
     'default': {
         'toolbar': ['heading', '|', 'bold', 'italic', 'link',
                     'bulletedList', 'numberedList', 'blockQuote', 'horizontalLine'],
-        'table': {},
+        'removePlugins': [
+            'MediaEmbedToolbar', 
+            'Image', 
+            'ImageToolbar', 
+            'ImageCaption', 
+            'ImageStyle', 
+            'ImageResize', 
+            'ImageUpload', 
+            'ImageInsert'
+        ]
     },
+    # 'form':{
+    #     'toolbar': ['heading', '|', 'bold', 'italic', 'link',
+    #         'bulletedList', 'numberedList', 'blockQuote', 'horizontalLine'],
+    #     'removePlugins': [
+    #         'MediaEmbedToolbar', 
+    #         'Image', 
+    #         'ImageToolbar', 
+    #         'ImageCaption', 
+    #         'ImageStyle', 
+    #         'ImageResize', 
+    #         'ImageUpload', 
+    #         'ImageInsert'
+    #     ]
+    # },
     'extends': {
         'blockToolbar': [
             'paragraph', 'heading1', 'heading2', 'heading3',

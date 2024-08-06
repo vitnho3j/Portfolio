@@ -1,4 +1,4 @@
-from django.db import models
+from django.db import IntegrityError, models
 from django.contrib.auth.models import User
 from django.forms import ValidationError
 from stdimage.models import StdImageField
@@ -130,7 +130,7 @@ class Occupation(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    description = CKEditor5Field(max_length = 1000, config_name='extends')
+    description = CKEditor5Field(max_length = 1000, config_name='default', blank=True, null=True)
     photo = StdImageField('Photo', null=True, blank=True, upload_to=get_file_path, validators=[validate_image])
     qualities = models.ManyToManyField(Qualities, blank=True)
     occupation = models.ForeignKey(Occupation, related_name="professionals", on_delete=models.SET_NULL, blank=True, null=True)
@@ -141,7 +141,7 @@ class Profile(models.Model):
     class Meta:
         verbose_name = 'Profile'
         verbose_name_plural = 'Profiles'
-
+        
 class ProfileSocialMedia(models.Model):
     profile = models.ForeignKey(Profile, related_name="medias", on_delete=models.CASCADE, blank=False)
     social_media = models.ForeignKey(SocialMedia, on_delete=models.CASCADE, blank=False)

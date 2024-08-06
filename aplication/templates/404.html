@@ -1,0 +1,12 @@
+{% extends 'base_errors_pages.html' %}
+{%load static %}
+
+{% block title %} Not Found {% endblock %}
+{% block content %}
+    <div class="errors-container">
+        <img src="{% static 'assets/404.png' %}" class="error-img">
+        <h1> Página não encontrada </h1>
+        <p>A página que você procura pode não existir, ter sido removida, ter tido seu nome alterado ou está temporariamente indisponível</p>
+        <a href="{% url 'index'%}" class="btn-return-form" id="error-btn"><button id="error-btn">Página Inicial</button></a>
+    </div>
+{% endblock %}

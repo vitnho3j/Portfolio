@@ -54,9 +54,9 @@
                         </div>
                         <div class="verticalLine"></div>
                         <div class="containerWave">
-                            <div class="water_wave" style='--percentageNumber: {{ technology.percentage}}%'>
+                            <div class="water_wave" id="water_wave_{{ forloop.counter }}" data-percentage="{{ technology.percentage }}">
                             </div>
-                            <div class="percentage">
+                            <div class="percentage" nonce="nonce-{{CSP_NONCE}}">
                                 <span>{{technology.percentage}}%</span>
                             </div>
                         </div>
@@ -77,9 +77,10 @@
                     </div>
                     <div class="verticalLine"></div>
                     <div class="containerWave">
-                        <div class="water_wave" style="--percentageNumber: {{item.percentage}}%">
+                        <div class="water_wave" id="water_wave_{{ forloop.counter }}" data-percentage="{{ item.percentage }}">
+                        <!-- <div class="water_wave" id="water_wave-{{technology.id}}" onload="setWavePercentage('{{item.percentage}}, {{item.id}}')"> -->
                         </div>
-                        <div class="percentage">
+                        <div class="percentage" nonce="nonce-{{CSP_NONCE}}">
                             <span>{{item.percentage}}%</span>
                         </div>
                     </div>
@@ -93,11 +94,12 @@
         <div class="containerTextCurriculum">
             <h2 class="curriculumText">Você pode ver meu currículo abaixo</h2>
         </div>
-        <a href="#" class="clickHere" onclick="toggleModal()"><span></span>CLIQUE AQUI !</a>
+        <a href="#" class="clickHere" id="clickHere"><span></span>CLIQUE AQUI !</a>
     </div>
 </div>
 {% block scripts%}
     <script src="{% static 'js/toggleCurriculum.js' %}" defer></script>
+    <script src="{% static 'js/controlWave.js' %}"></script>
 {% endblock %}
 {% endblock %}
 

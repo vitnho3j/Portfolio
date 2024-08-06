@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div>
-        <div onclick="scrollToTop()" class="scrollTop">
+        <div class="scrollTop" id="scrollTop">
             <ion-icon name="arrow-up-circle-outline"></ion-icon>
         </div>
     </div>
@@ -58,6 +58,9 @@
                     {% else %}
                         <img src="{% static 'assets/no-project-image.png' %}" class="projectThumb" id="no-project-image" alt="{{project.name}}">
                     {% endif %}
+                    <template id="project-text-template-{{project.id}}" nonce="{{request.csp_nonce}}">
+                        {{project.text | safe}}
+                    </template>
                     <div class="projectInfo">
                         <div class="containerNameProject">
                             <h1 class="nameProject">{{project.name}}</h1>
@@ -67,6 +70,7 @@
                             <a href="#">
                                 <ion-icon 
                                 name="information-circle-outline" 
+                                data-id="{{project.id}}"
                                 class="projectButtons" 
                                 id="open-info-{{project.id}}"
                                 category="{{project.category}}"
@@ -74,7 +78,6 @@
                                 description="{{project.description}}"
                                 name-project="{{project.name}}"
                                 text="{{project.text}}"
-                                onclick="getIdClicked('{{project.id}}')"
                                 image="{% if project.photo %}
                                             {{ project.photo.url }}
                                         {% else %}
@@ -83,9 +86,10 @@
                                 technologys="{{ project.technology.all|join:', ' }}"
                                 repository = "{{project.repository}}"
                                 finished = "{{project.finished}}"
+                                nonce="'nonce-{{request.csp_nonce}}'"
                                 >
-                            </ion-icon>
-                        </a>
+                                </ion-icon>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -95,6 +99,8 @@
     </div>
 {% endblock %}
 {% block scripts %}
-    <script src="{% static 'js/toggleMenu.js' %}" defer></script>
-    <script src="{% static 'js/scrollTop.js' %}" defer></script>
+    <script src="{% static 'js/pinchzoom.js' %}" type="module"></script>
+    <script src="{% static 'js/zoomToImgs.js' %}" type="module"></script> 
+    <script src="{% static 'js/toggleMenu.js' %}" nonce="'{{request.csp_nonce}}'"></script>
+    <script src="{% static 'js/scrollTop.js' %}"></script>
 {% endblock %}
